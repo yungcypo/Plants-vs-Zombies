@@ -1,5 +1,7 @@
+import hernaPlocha.Hra;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Hra hra = new Hra();
     }
 }
