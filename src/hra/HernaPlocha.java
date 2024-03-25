@@ -1,9 +1,9 @@
-package hernaPlocha;
+package hra;
 
-public class Plocha {
+public class HernaPlocha {
     private Riadok[] riadky;
 
-    public Plocha() {
+    public HernaPlocha() {
         this.riadky = new Riadok[5];
 
         for (int i = 0; i < 5; i++) {

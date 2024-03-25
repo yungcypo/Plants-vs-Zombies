@@ -1,4 +1,4 @@
-package hernaPlocha;
+package hra;
 
 import entity.zombies.Zombie;
 import fri.shapesge.Manazer;
@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Hra {
-    private Plocha plocha;
+    private HernaPlocha hernaPlocha;
     private ArrayList<Zombie> zombies;
 
     public Hra() {
-        this.plocha = new Plocha();
+        this.hernaPlocha = new HernaPlocha();
         this.zombies = new ArrayList<Zombie>();
 
         Random random = new Random();

@@ -1,4 +1,4 @@
-package hernaPlocha;
+package hra;
 
 public enum FarbyPolicka {
     ZELENA1,
