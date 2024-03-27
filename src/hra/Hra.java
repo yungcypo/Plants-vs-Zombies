@@ -39,8 +39,5 @@ public class Hra {
         for (Zombie z : this.zombies) {
             z.animacia();
         }
-        for (Rastlina r : this.rastliny) {
-            r.animacia();
-        }
     }
 }
