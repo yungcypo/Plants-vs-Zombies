@@ -10,11 +10,6 @@ public abstract class Entita {
     private int aktualnyObrazok = 0;
     private String nazovAnimacieObrazku;
 
-    public Entita(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
     public Entita(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov) {
         this.x = x;
         this.y = y;
@@ -34,16 +29,18 @@ public abstract class Entita {
         this.obrazok.zobraz();
     }
 
-    public void posun(int x, int y) {
+    public void posunO(int x, int y) {
         this.x += x;
         this.y += y;
         this.obrazok.zmenPolohu(this.x, this.y);
+        this.obrazok.zobraz();
     }
 
-    public void zmenPolohu(int x, int y) {
+    public void posunNa(int x, int y) {
         this.x = x;
         this.y = y;
         this.obrazok.zmenPolohu(this.x, this.y);
+        this.obrazok.zobraz();
     }
 
     public void zobraz() {

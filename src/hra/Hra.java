@@ -26,7 +26,7 @@ public class Hra {
 
     public void tikPohybu() {
         for (Zombie z : this.zombies) {
-            z.posun(-1, 0);
+            z.posunO(-1, 0);
         }
     }
 
