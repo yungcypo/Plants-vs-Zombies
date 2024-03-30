@@ -1,16 +1,11 @@
 package hra;
 
 import entity.rastliny.Rastlina;
-import entity.rastliny.nestrielajuceRastliny.Slnecnica;
-import entity.strely.Bubliny;
-import entity.strely.Hrach;
-import entity.strely.Strela;
-import entity.strely.Trn;
+import entity.rastliny.neutociaceRastliny.Slnecnica;
 import entity.zombies.Zombie;
 import fri.shapesge.Manazer;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Hra {
     private HernaPlocha hernaPlocha;

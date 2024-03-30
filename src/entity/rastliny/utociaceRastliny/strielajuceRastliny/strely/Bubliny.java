@@ -1,4 +1,4 @@
-package entity.strely;
+package entity.rastliny.utociaceRastliny.strielajuceRastliny.strely;
 
 public class Bubliny extends Strela {
     public Bubliny(int x, int y) {
