@@ -15,7 +15,7 @@ public abstract class Entita {
         this.y = y;
         this.nazovAnimacieObrazku = nazovAnimacieObrazku;
         this.pocetObrazkov = pocetObrazokov;
-        this.obrazok = new Obrazok("images/animacie/" + this.nazovAnimacieObrazku + "/0.png", this.x, this.y);
+        this.obrazok = new Obrazok("obrazky/animacie/" + this.nazovAnimacieObrazku + "/0.png", this.x, this.y);
         this.obrazok.zmenPolohu(this.x, this.y);
         this.obrazok.zobraz();
     }
@@ -25,7 +25,7 @@ public abstract class Entita {
         if (this.aktualnyObrazok >= this.pocetObrazkov) {
             this.aktualnyObrazok = 0;
         }
-        this.obrazok.zmenObrazok("images/animacie/" + this.nazovAnimacieObrazku + "/" + this.aktualnyObrazok + ".png");
+        this.obrazok.zmenObrazok("obrazky/animacie/" + this.nazovAnimacieObrazku + "/" + this.aktualnyObrazok + ".png");
         this.obrazok.zobraz();
     }
 
