@@ -2,6 +2,7 @@ package hra;
 
 import entity.rastliny.Rastlina;
 import entity.rastliny.neutociaceRastliny.Slnecnica;
+import entity.rastliny.utociaceRastliny.strielajuceRastliny.HrachoStrielac;
 import entity.zombies.Zombie;
 import fri.shapesge.Manazer;
 
@@ -21,7 +22,8 @@ public class Hra {
         this.zombies.add(new Zombie(800, 200));
 
         this.rastliny = new ArrayList<Rastlina>();
-        this.rastliny.add(new Slnecnica(0, 0));
+        //this.rastliny.add(new Slnecnica(0, 0));
+        this.rastliny.add(new HrachoStrielac(0, 2));
     }
 
     public void tikPohybu() {
@@ -31,8 +33,15 @@ public class Hra {
     }
 
     public void tikAnimacie() {
-        for (Zombie z : this.zombies) {
-            z.animacia();
+        if (this.zombies != null) {
+            for (Zombie z : this.zombies) {
+                z.animacia();
+            }
+        }
+        if (this.rastliny != null) {
+            for (Rastlina r : this.rastliny) {
+                r.animacia();
+            }
         }
     }
 }
