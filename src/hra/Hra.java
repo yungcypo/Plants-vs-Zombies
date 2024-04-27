@@ -1,10 +1,11 @@
 package hra;
 
+import entity.Kosacka;
 import entity.rastliny.Rastlina;
 import entity.rastliny.neutociaceRastliny.Slnecnica;
-import entity.rastliny.utociaceRastliny.strielajuceRastliny.HrachoStrielac;
+import entity.rastliny.utociaceRastliny.strielajuceRastliny.Hrach;
+import entity.strely.HrachDvojity;
 import entity.zombies.Zombie;
-import fri.shapesge.Manazer;
 
 import java.util.ArrayList;
 
@@ -12,36 +13,23 @@ public class Hra {
     private HernaPlocha hernaPlocha;
     private ArrayList<Zombie> zombies;
     private ArrayList<Rastlina> rastliny;
+    private ArrayList<Kosacka> kosacky;
 
     public Hra() {
         this.hernaPlocha = new HernaPlocha();
-        Manazer manazer = new Manazer();
-        manazer.spravujObjekt(this);
 
         this.zombies = new ArrayList<Zombie>();
         this.zombies.add(new Zombie(800, 200));
 
         this.rastliny = new ArrayList<Rastlina>();
         this.rastliny.add(new Slnecnica(0, 0));
-        this.rastliny.add(new HrachoStrielac(0, 2));
-    }
+        this.rastliny.add(new Hrach(0, 2));
+        this.rastliny.add(new HrachDvojity(0, 4));
 
-    public void tikPohybu() {
-        for (Zombie z : this.zombies) {
-            z.posunO(-1, 0);
+        this.kosacky = new ArrayList<Kosacka>();
+        for (int i = 0; i < 5; i++) {
+            this.kosacky.add(new Kosacka(-25, i * 100 + 65));
         }
-    }
-
-    public void tikAnimacie() {
-        if (this.zombies != null) {
-            for (Zombie z : this.zombies) {
-                z.animacia();
-            }
-        }
-        if (this.rastliny != null) {
-            for (Rastlina r : this.rastliny) {
-                r.animacia();
-            }
-        }
+        this.kosacky.get(3).zapni();
     }
 }
