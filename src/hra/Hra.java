@@ -22,7 +22,7 @@ public class Hra {
         this.zombies.add(new Zombie(800, 200));
 
         this.rastliny = new ArrayList<Rastlina>();
-        //this.rastliny.add(new Slnecnica(0, 0));
+        this.rastliny.add(new Slnecnica(0, 0));
         this.rastliny.add(new HrachoStrielac(0, 2));
     }
 
