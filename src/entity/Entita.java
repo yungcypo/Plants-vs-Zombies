@@ -20,9 +20,6 @@ public abstract class Entita {
         this.obrazok = new Obrazok("obrazky/animacie/" + this.nazovAnimacieObrazku + "/0.png", this.x, this.y);
         this.obrazok.zmenPolohu(this.x, this.y);
         this.obrazok.zobraz();
-
-        this.manazer = new Manazer();
-        this.manazer.spravujObjekt(this);
     }
 
     public void posunO(int x, int y) {
@@ -37,6 +34,11 @@ public abstract class Entita {
         this.y = y;
         this.obrazok.zmenPolohu(this.x, this.y);
         this.obrazok.zobraz();
+    }
+
+    public void otocO(int uhol) {
+        this.obrazok.zmenUhol(uhol);
+
     }
 
     public void zobraz() {

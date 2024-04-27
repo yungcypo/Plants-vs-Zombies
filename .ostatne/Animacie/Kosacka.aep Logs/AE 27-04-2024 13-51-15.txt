@@ -1,17 +1,0 @@
-Adobe After Effects v24.3 Windows 64 render log for project “Kosacka.aep”
-
-Rendering started on 27/04/2024 at 13:51:15
-
-  27/04/2024 13:51:15: Starting composition “KosackaVypnuta”.
-
-  Output To: C:\Users\cyprich\PVZ\obrazky\animacie\kosackaVypnuta\KosackaVypnuta_[###].png    27/04/2024 13:51:15: Finished composition “KosackaVypnuta”.
-
-
-  27/04/2024 13:51:15: Starting composition “KosackaZapnuta”.
-
-  Output To: C:\Users\cyprich\PVZ\obrazky\animacie\kosackaZapnuta\KosackaZapnuta_[###].png    27/04/2024 13:51:15: Finished composition “KosackaZapnuta”.
-
-
-  Total Time Elapsed: 0 Seconds
-Log closed on 27/04/2024 at 13:51:15
-
