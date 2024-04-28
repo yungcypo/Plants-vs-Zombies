@@ -1,15 +1,28 @@
 package hra;
 
+/**
+ * Reprezentuje riadok na hracej ploche
+ * Sklada sa z Policka
+ */
+
 public class Riadok {
     private int pocetPolicok;
     private Policko[] policka;
     private int y;
+
+    /**
+     * Konstruktor triedy Riadok
+     * Zadava sa iba suradnica y riadku, pretoze na x-ovej osi zabera (takmer) celu sirku okna
+     *
+     * @param y suradnica y riadku
+     */
 
     public Riadok(int y) {
         this.pocetPolicok = 10;
         this.policka = new Policko[this.pocetPolicok];
         this.y = y;
 
+        // Vytvorenie policok + priradenie farby
         for (int i = 0; i < this.pocetPolicok; i++) {
             FarbyPolicka farba = null;
             boolean jeParny = this.y / 100 % 2 == 0;

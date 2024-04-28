@@ -4,7 +4,7 @@ import entity.Kosacka;
 import entity.rastliny.Rastlina;
 import entity.rastliny.neutociaceRastliny.Slnecnica;
 import entity.rastliny.utociaceRastliny.strielajuceRastliny.Hrach;
-import entity.strely.HrachDvojity;
+import entity.rastliny.utociaceRastliny.strielajuceRastliny.HrachDvojity;
 import entity.zombies.Zombie;
 import fri.shapesge.Manazer;
 
