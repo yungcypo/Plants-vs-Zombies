@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class Hra {
     private HernaPlocha hernaPlocha;
+    private Manazer manazer;
     private ArrayList<Zombie> zombies;
     private ArrayList<Rastlina> rastliny;
     private ArrayList<Kosacka> kosacky;
@@ -21,35 +22,22 @@ public class Hra {
     private ArrayList<TypKarty> odomknuteKarty;
 
     public Hra() {
-        Manazer manazer = new Manazer();
-        manazer.spravujObjekt(this);
+        this.manazer = new Manazer();
+        this.manazer.spravujObjekt(this);
 
         this.hernaPlocha = new HernaPlocha();
 
         // docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
         this.zombies = new ArrayList<Zombie>();
-        this.zombies.add(new Zombie(800, 200));
+        this.zombies.add(new Zombie(950, 200));
+        this.zombies.add(new Zombie(950, 300));
 
         // docasne vytvorenie Rastlin, neskor sa budu pridavat klikanim na karty v HUD
         this.rastliny = new ArrayList<Rastlina>();
-        this.rastliny.add(new Slnecnica(0, 0, manazer));
-        this.rastliny.add(new Hrach(0, 2, manazer));
-        this.rastliny.add(new HrachDvojity(0, 4, manazer));
 
         this.kosacky = new ArrayList<Kosacka>();
         for (int i = 0; i < 5; i++) {
             this.kosacky.add(new Kosacka(-25, i * 100 + 65));
-        }
-        this.kosacky.get(3).zapni();
-
-        for (Zombie z : this.zombies) {
-            manazer.spravujObjekt(z);
-        }
-        for (Rastlina r : this.rastliny) {
-            manazer.spravujObjekt(r);
-        }
-        for (Kosacka k : this.kosacky) {
-            manazer.spravujObjekt(k);
         }
 
         // vytvorenie HUD
@@ -59,6 +47,8 @@ public class Hra {
         this.odomknuteKarty.add(TypKarty.HRACH_DVOJITY);
 
         this.hud = new HUD(this.odomknuteKarty);
+
+        this.spravujVsetkyZoznamy();
     }
 
     public void vyberSuradnice(int x, int y) {
@@ -69,11 +59,46 @@ public class Hra {
         }
 
         // ak sa kliklo na hernu plochu
+        // TODO NIEKDE JE CHYBA, PRI PRIDAVANI VIAC RASTLIN SA ZRYCHLUJE ANIMACIA STARYCH RASTLIN!!
         if (x > this.hernaPlocha.getX() && x < this.hernaPlocha.getX2() && y > this.hernaPlocha.getY() && y < this.hernaPlocha.getY2()) {
             // ak je nejaka zvyraznena karta, spawni ju
             if (this.hud.getZvyraznenaKarta() != null) {
+                int noveX = (x - 50) / 100;
+                int noveY = (y - 50) / 100;
 
+                switch (this.hud.getZvyraznenaKarta().getTyp()) {
+                    case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY, this.manazer));
+                    case HRACH -> this.rastliny.add(new Hrach(noveX, noveY, this.manazer));
+                    case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY, this.manazer));
+
+                    default -> System.out.println("nemame taku kartu");
+                }
+
+                this.hud.odzvyrazniKarty();
+                this.spravujZoznamRastlin();
             }
+        }
+    }
+    
+    public void spravujVsetkyZoznamy() {
+        this.spravujZoznamZombie();
+        this.spravujZoznamRastlin();
+        
+        // zoznam kosaciek som zatial nepotreboval mat osamostatneny
+        for (Kosacka k : this.kosacky) {
+            this.manazer.spravujObjekt(k);
+        }
+    }
+    
+    public void spravujZoznamZombie() {
+        for (Zombie z : this.zombies) {
+            this.manazer.spravujObjekt(z);
+        }
+    }
+    
+    public void spravujZoznamRastlin() {
+        for (Rastlina r : this.rastliny) {
+            this.manazer.spravujObjekt(r);
         }
     }
 }

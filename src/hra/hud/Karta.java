@@ -7,6 +7,7 @@ import hra.Klikatelne;
 public class Karta implements Klikatelne {
     private int x;
     private int y;
+    private TypKarty typ;
     private String cesta;
     private int cena;
     private Obrazok obrazok;
@@ -15,11 +16,12 @@ public class Karta implements Klikatelne {
 
     //TODO dlzka nacitavania
 
-    public Karta(int x, int y, String cesta, int cena, int sirkaZvyraznenia) {
+    public Karta(int x, int y, TypKarty typKarty, int sirkaZvyraznenia) {
         this.x = x;
         this.y = y;
-        this.cesta = cesta;
-        this.cena = cena;
+        this.typ = typKarty;
+        this.cesta = typKarty.getCesta();
+        this.cena = typKarty.getCena();
 
         this.zvyraznenieObdlznik = new Obdlznik(this.x, this.y);
         this.zvyraznenieObdlznik.zmenStrany(100 + sirkaZvyraznenia * 2, 150 + sirkaZvyraznenia * 2);
@@ -48,6 +50,10 @@ public class Karta implements Klikatelne {
 
     public boolean boloNaMnaKliknute(int x, int y) {
         return x >= this.x && x <= this.getX2() && y >= this.y && y <= this.getY2();
+    }
+
+    public TypKarty getTyp() {
+        return this.typ;
     }
 
     @Override

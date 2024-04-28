@@ -32,12 +32,10 @@ public class HUD implements Klikatelne {
         this.pozadie.zobraz();
 
         for (int i = 0; i < karty.size(); i++) {
-            TypKarty k = karty.get(i);
             this.karty.add(new Karta(
                     this.x + this.sirkaZvyraznenia + i * (100 + this.padding),
                     this.y + this.sirkaZvyraznenia,
-                    k.getCesta(),
-                    k.getCena(),
+                    karty.get(i),
                     this.sirkaZvyraznenia
             ));
         }
@@ -47,10 +45,7 @@ public class HUD implements Klikatelne {
         // prechadza vsetkymi kartami a zistuje, ci na ne bolo kliknute
         for (Karta k : this.karty) {
             if (k.boloNaMnaKliknute(x, y)) {
-                // zrusi zvyraznenie vsetkych kariet
-                for (Karta k1 : this.karty) {
-                    k1.setZvyraznena(false);
-                }
+                this.odzvyrazniKarty();
 
                 if (this.zvyraznenaKarta == null) {
                     // ak nie je ziadna karta zvyraznena
@@ -75,6 +70,13 @@ public class HUD implements Klikatelne {
 
     public Karta getZvyraznenaKarta() {
         return this.zvyraznenaKarta;
+    }
+
+    public void odzvyrazniKarty() {
+        for (Karta k : this.karty) {
+            k.setZvyraznena(false);
+        }
+        this.zvyraznenaKarta = null;
     }
 
     public int getX() {

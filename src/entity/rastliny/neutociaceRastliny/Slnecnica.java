@@ -32,8 +32,7 @@ public class Slnecnica extends NeutociacaRastlina {
      */
     public void tikSekunda() {
         this.casOdSpawnu += 1;
-        // TODO zmenit z 8 na 24, toto je len na testovanie
-        if (this.casOdSpawnu % 8 == 0) {
+        if (this.casOdSpawnu % 24 == 0) {
             this.slnka.add(new Slnko(this.getX() + 25, this.getY() - 10, this.slnka, this.manazer));
         }
     }
