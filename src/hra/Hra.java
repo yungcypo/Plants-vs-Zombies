@@ -59,7 +59,6 @@ public class Hra {
         }
 
         // ak sa kliklo na hernu plochu
-        // TODO NIEKDE JE CHYBA, PRI PRIDAVANI VIAC RASTLIN SA ZRYCHLUJE ANIMACIA STARYCH RASTLIN!!
         if (x > this.hernaPlocha.getX() && x < this.hernaPlocha.getX2() && y > this.hernaPlocha.getY() && y < this.hernaPlocha.getY2()) {
             // ak je nejaka zvyraznena karta, spawni ju
             if (this.hud.getZvyraznenaKarta() != null) {
@@ -86,18 +85,21 @@ public class Hra {
         
         // zoznam kosaciek som zatial nepotreboval mat osamostatneny
         for (Kosacka k : this.kosacky) {
+            this.manazer.prestanSpravovatObjekt(k);
             this.manazer.spravujObjekt(k);
         }
     }
     
     public void spravujZoznamZombie() {
         for (Zombie z : this.zombies) {
+            this.manazer.prestanSpravovatObjekt(z);
             this.manazer.spravujObjekt(z);
         }
     }
     
     public void spravujZoznamRastlin() {
         for (Rastlina r : this.rastliny) {
+            this.manazer.prestanSpravovatObjekt(r);
             this.manazer.spravujObjekt(r);
         }
     }
