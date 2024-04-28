@@ -59,19 +59,22 @@ public class HUD implements Klikatelne {
                 } else {
                     // ak uz je najaka karta zvyraznena
                     if (this.zvyraznenaKarta == k) {
-                        // ak sa kliklo na uz zvyraznenu kartu, zrusi zvyraznenie
+                        // ak sa znova kliklo na kartu, ktora uz je zvyraznena, zrusi sa zvyraznenie
                         this.zvyraznenaKarta.setZvyraznena(false);
                         this.zvyraznenaKarta = null;
                     } else {
-                        // ak sa kliklo na inu kartu, zrusi zvyraznenie starej a zvyrazni novu
+                        // ak sa kliklo na inu kartu, zvyrazni novu
                         this.zvyraznenaKarta = k;
                         this.zvyraznenaKarta.setZvyraznena(true);
                     }
                 }
-
                 break;
             }
         }
+    }
+
+    public Karta getZvyraznenaKarta() {
+        return this.zvyraznenaKarta;
     }
 
     public int getX() {

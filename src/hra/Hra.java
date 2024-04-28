@@ -68,5 +68,12 @@ public class Hra {
             return;
         }
 
+        // ak sa kliklo na hernu plochu
+        if (x > this.hernaPlocha.getX() && x < this.hernaPlocha.getX2() && y > this.hernaPlocha.getY() && y < this.hernaPlocha.getY2()) {
+            // ak je nejaka zvyraznena karta, spawni ju
+            if (this.hud.getZvyraznenaKarta() != null) {
+
+            }
+        }
     }
 }
