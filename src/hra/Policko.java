@@ -5,7 +5,6 @@ import fri.shapesge.Stvorec;
 /**
  * Reprezentuje jednotlive policka na hracej ploche
  */
-
 public class Policko {
     private Stvorec stvorec;
     private int x;

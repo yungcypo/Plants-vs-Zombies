@@ -1,15 +1,15 @@
 package hra.hud;
 
 import fri.shapesge.Obdlznik;
-import hra.Klikatelne;
+import hra.IKlikatelne;
 
 import java.util.ArrayList;
 
 /**
- * Head Up Display
+ * Head-Up Display
  * Reprezentuje dolny riadok so slnieckami a kartami
  */
-public class HUD implements Klikatelne {
+public class HUD implements IKlikatelne {
     private int x;
     private int y;
     private Obdlznik pozadie;
@@ -18,6 +18,11 @@ public class HUD implements Klikatelne {
     private int padding = this.sirkaZvyraznenia * 2;
     private Karta zvyraznenaKarta = null;
 
+    /**
+     * Vytvori HUD
+     *
+     * @param karty zoznam kariet, ktore sa maju zobrazit v HUD
+     */
     public HUD(ArrayList<TypKarty> karty) {
         this.karty = new ArrayList<>();
         this.x = 50;
@@ -41,6 +46,12 @@ public class HUD implements Klikatelne {
         }
     }
 
+    /**
+     * Metoda, ktoru zavola trieda Hra, ked sa kliklo na HUD
+     *
+     * @param x suradnica x, na ktoru sa kliklo
+     * @param y suradnica y, na ktoru sa kliklo
+     */
     public void klikloSaNaHUD(int x, int y) {
         // prechadza vsetkymi kartami a zistuje, ci na ne bolo kliknute
         for (Karta k : this.karty) {
@@ -68,10 +79,17 @@ public class HUD implements Klikatelne {
         }
     }
 
+    /**
+     * Vrati zvyraznenu kartu
+     * @return zvyraznena karta
+     */
     public Karta getZvyraznenaKarta() {
         return this.zvyraznenaKarta;
     }
 
+    /**
+     * Zrusi zvyraznenie vsetkych kariet a nastavi zvyraznenu kartu na null
+     */
     public void odzvyrazniKarty() {
         for (Karta k : this.karty) {
             k.setZvyraznena(false);
@@ -79,29 +97,39 @@ public class HUD implements Klikatelne {
         this.zvyraznenaKarta = null;
     }
 
+    /**
+     * Vrati suradnicu x laveho okraja pozadia
+     *
+     * @return x suradnica laveho okraja pozadia
+     */
     public int getX() {
         return this.x;
     }
 
+    /**
+     * Vrati suradnicu y horneho okraja pozadia
+     *
+     * @return y suradnica horneho okraja pozadia
+     */
     public int getY() {
         return this.y;
     }
 
-    // vrati x suradnicu praveho okraja pozadia
+    /**
+     * Vrati suradnicu x praveho okraja pozadia
+     *
+     * @return x suradnica praveho okraja pozadia
+     */
     public int getX2() {
         return this.x + this.karty.size() * (100 + this.padding) + this.padding;
     }
 
-    // vrati y suradnicu dolneho okraja pozadia
+    /**
+     * Vrati suradnicu y dolneho okraja pozadia
+     *
+     * @return y suradnica dolneho okraja pozadia
+     */
     public int getY2() {
         return this.y + this.padding * 2 + 150;
-    }
-
-    public int getSirkaZvyraznenia() {
-        return this.sirkaZvyraznenia;
-    }
-
-    public int getPadding() {
-        return this.padding;
     }
 }

@@ -2,9 +2,8 @@ package hra;
 
 /**
  * Reprezentuje riadok na hracej ploche
- * Sklada sa z Policka
+ * Sklada sa z instancii triedy Policko
  */
-
 public class Riadok {
     private int pocetPolicok;
     private Policko[] policka;
@@ -16,7 +15,6 @@ public class Riadok {
      *
      * @param y suradnica y riadku
      */
-
     public Riadok(int y) {
         this.pocetPolicok = 10;
         this.policka = new Policko[this.pocetPolicok];

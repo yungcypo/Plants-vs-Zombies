@@ -4,7 +4,7 @@ package hra;
  * Reprezentuje hernu plochu
  */
 
-public class HernaPlocha implements Klikatelne {
+public class HernaPlocha implements IKlikatelne {
     private Riadok[] riadky;
 
     /**
@@ -21,21 +21,41 @@ public class HernaPlocha implements Klikatelne {
 
     // TODO toto nejak lepsie vymysliet, pomocou poctu policok a riadkov
 
+    /**
+     * Vrati suradnicu x laveho okraja hernej plochy
+     *
+     * @return suradnica x laveho okraja hernej plochy
+     */
     @Override
     public int getX() {
         return 50;
     }
 
+    /**
+     * Vrati suradnicu y horneho okraja hernej plochy
+     *
+     * @return suradnica y horneho okraja hernej plochy
+     */
     @Override
     public int getY() {
         return 50;
     }
 
+    /**
+     * Vrati suradnicu x praveho okraja hernej plochy
+     *
+     * @return suradnica x praveho okraja hernej plochy
+     */
     @Override
     public int getX2() {
         return 50 + 100 * 10;
     }
 
+    /**
+     * Vrati suradnicu y dolneho okraja hernej plochy
+     *
+     * @return suradnica y dolneho okraja hernej plochy
+     */
     @Override
     public int getY2() {
         return 50 + 100 * 5;

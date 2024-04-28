@@ -3,7 +3,7 @@ package entity;
 /**
  * Reprezentuje kosacku
  */
-public class Kosacka extends Entita implements HybajucaSaEntita {
+public class Kosacka extends Entita implements IHybajucaSaEntita {
     private boolean zapnuta = false;
 
     /**

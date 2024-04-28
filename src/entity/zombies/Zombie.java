@@ -1,9 +1,11 @@
 package entity.zombies;
 
+import entity.IHybajucaSaEntita;
+
 /**
  * Reprezentuje zakladneho Zombie
  */
-public class Zombie extends entity.Entita implements entity.HybajucaSaEntita {
+public class Zombie extends entity.Entita implements IHybajucaSaEntita {
     /**
      * Vytvori Zombia
      *
