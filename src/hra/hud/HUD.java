@@ -16,6 +16,7 @@ public class HUD implements Klikatelne {
     private ArrayList<Karta> karty;
     private int sirkaZvyraznenia = 10;
     private int padding = this.sirkaZvyraznenia * 2;
+    private Karta zvyraznenaKarta = null;
 
     public HUD(ArrayList<TypKarty> karty) {
         this.karty = new ArrayList<>();
@@ -43,12 +44,31 @@ public class HUD implements Klikatelne {
     }
 
     public void klikloSaNaHUD(int x, int y) {
+        // prechadza vsetkymi kartami a zistuje, ci na ne bolo kliknute
         for (Karta k : this.karty) {
             if (k.boloNaMnaKliknute(x, y)) {
+                // zrusi zvyraznenie vsetkych kariet
                 for (Karta k1 : this.karty) {
                     k1.setZvyraznena(false);
                 }
-                k.setZvyraznena(true);
+
+                if (this.zvyraznenaKarta == null) {
+                    // ak nie je ziadna karta zvyraznena
+                    this.zvyraznenaKarta = k;
+                    this.zvyraznenaKarta.setZvyraznena(true);
+                } else {
+                    // ak uz je najaka karta zvyraznena
+                    if (this.zvyraznenaKarta == k) {
+                        // ak sa kliklo na uz zvyraznenu kartu, zrusi zvyraznenie
+                        this.zvyraznenaKarta.setZvyraznena(false);
+                        this.zvyraznenaKarta = null;
+                    } else {
+                        // ak sa kliklo na inu kartu, zrusi zvyraznenie starej a zvyrazni novu
+                        this.zvyraznenaKarta = k;
+                        this.zvyraznenaKarta.setZvyraznena(true);
+                    }
+                }
+
                 break;
             }
         }

@@ -42,6 +42,10 @@ public class Karta implements Klikatelne {
         }
     }
 
+    public boolean getZvyraznena() {
+        return this.zvyraznena;
+    }
+
     public boolean boloNaMnaKliknute(int x, int y) {
         return x >= this.x && x <= this.getX2() && y >= this.y && y <= this.getY2();
     }
