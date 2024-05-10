@@ -1,7 +1,5 @@
 package entity.strely;
 
-import fri.shapesge.Manazer;
-
 import java.util.ArrayList;
 
 /**
@@ -20,5 +18,16 @@ public class Hrach extends Strela {
      */
     public Hrach(int x, int y, ArrayList<Strela> strely) {
         super(x, y, "strelaHrach", 1, strely);
+    }
+
+
+    @Override
+    public int getX2() {
+        return this.getX() + 20;
+    }
+
+    @Override
+    public int getY2() {
+        return this.getY() + 20;
     }
 }

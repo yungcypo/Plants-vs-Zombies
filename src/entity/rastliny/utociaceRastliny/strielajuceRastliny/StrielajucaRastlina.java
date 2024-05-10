@@ -22,7 +22,7 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
      */
     public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov, Hra hra) {
         super(x, y, nazovAnimacieObrazku, pocetObrazokov, hra);
-        this.strely = new ArrayList<Strela>();
+        this.strely = new ArrayList<>();
     }
 
     /**
@@ -33,7 +33,8 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
     public void vystrel(int cisloObrazku) {
         if (this.jeObrazokCislo(cisloObrazku)) {
             this.strely.add(new Hrach(this.getX() + 100, this.getY() + 20, this.strely));
-            this.getHra().spravujStrelu(this.strely.getLast());
+            this.getHra().pridajStrelu(this.strely.getLast());  // strela sa automaticky aj spravuje
+            // TODO strely sa furt pridavaju a pridavaju, ale neodstranuju sa!!
         }
     }
 

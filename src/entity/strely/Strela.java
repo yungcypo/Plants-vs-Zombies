@@ -12,11 +12,11 @@ public abstract class Strela extends entity.Entita {
     /**
      * Konstruktor pre potomkov triedy
      *
-     * @param x suradnica x
-     * @param y suradnica y
+     * @param x                    suradnica x
+     * @param y                    suradnica y
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
-     * @param pocetObrazkov pocet obrazkov v animacii
-     * @param strely zoznam vsetkych striel ktore vytvorila jedna strielajuca rastlina
+     * @param pocetObrazkov        pocet obrazkov v animacii
+     * @param strely               zoznam vsetkych striel ktore vytvorila jedna strielajuca rastlina
      */
     public Strela(int x, int y, String nazovAnimacieObrazku, int pocetObrazkov, ArrayList<Strela> strely) {
         super(x, y, nazovAnimacieObrazku, pocetObrazkov);
@@ -35,4 +35,8 @@ public abstract class Strela extends entity.Entita {
             this.posunO(10, 0);
         }
     }
+
+    public abstract int getX2();
+
+    public abstract int getY2();
 }

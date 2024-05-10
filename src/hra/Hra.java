@@ -6,7 +6,6 @@ import entity.rastliny.Rastlina;
 import entity.rastliny.neutociaceRastliny.Slnecnica;
 import entity.rastliny.utociaceRastliny.strielajuceRastliny.Hrach;
 import entity.rastliny.utociaceRastliny.strielajuceRastliny.HrachDvojity;
-import entity.rastliny.utociaceRastliny.strielajuceRastliny.StrielajucaRastlina;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 import fri.shapesge.Manazer;
@@ -21,8 +20,10 @@ public class Hra {
     private ArrayList<Zombie> zombies;
     private ArrayList<Rastlina> rastliny;
     private ArrayList<Kosacka> kosacky;
+    private ArrayList<Strela> strely;
     private HUD hud;
     private ArrayList<TypKarty> odomknuteKarty;
+    private Kolizie kolizie;
 
     public Hra() {
         this.manazer = new Manazer();
@@ -32,11 +33,12 @@ public class Hra {
 
         // docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
         this.zombies = new ArrayList<Zombie>();
-        this.zombies.add(new Zombie(950, 200));
-        this.zombies.add(new Zombie(950, 300));
+        for (int i = 0; i <= 4; i++) {
+            this.zombies.add(new Zombie(950, 100 * i));
+        }
 
-        // docasne vytvorenie Rastlin, neskor sa budu pridavat klikanim na karty v HUD
         this.rastliny = new ArrayList<Rastlina>();
+        this.strely = new ArrayList<Strela>();
 
         this.kosacky = new ArrayList<Kosacka>();
         for (int i = 0; i < 5; i++) {
@@ -52,6 +54,9 @@ public class Hra {
         this.hud = new HUD(this.odomknuteKarty);
 
         this.spravujVsetkyZoznamy();
+
+        this.kolizie = new Kolizie(this.zombies, this.strely, this.rastliny, this.kosacky, this);
+        this.manazer.spravujObjekt(this.kolizie);
     }
 
     public void vyberSuradnice(int x, int y) {
@@ -81,25 +86,24 @@ public class Hra {
             }
         }
     }
-    
+
     public void spravujVsetkyZoznamy() {
         this.spravujZoznamZombie();
         this.spravujZoznamRastlin();
-        
+
         // zoznam kosaciek som zatial nepotreboval mat osamostatneny
         for (Kosacka k : this.kosacky) {
             this.manazer.prestanSpravovatObjekt(k);
             this.manazer.spravujObjekt(k);
         }
     }
-    
+
     public void spravujZoznamZombie() {
         for (Zombie z : this.zombies) {
             this.manazer.prestanSpravovatObjekt(z);
             this.manazer.spravujObjekt(z);
         }
     }
-
 
     public void spravujZoznamRastlin() {
         for (Rastlina r : this.rastliny) {
@@ -118,4 +122,28 @@ public class Hra {
         this.manazer.spravujObjekt(s);
     }
 
+    public void prestanSpravovatZombie(Zombie z) {
+        this.manazer.prestanSpravovatObjekt(z);
+    }
+
+    public void prestanSpravovatRastlinu(Rastlina r) {
+        this.manazer.prestanSpravovatObjekt(r);
+    }
+
+    public void prestanSpravovatStrelu(Strela s) {
+        this.manazer.prestanSpravovatObjekt(s);
+    }
+
+    public void prestanSpravovatSlnko(Slnko s) {
+        this.manazer.prestanSpravovatObjekt(s);
+    }
+
+    public void prestanSpravovatKosacku(Kosacka k) {
+        this.manazer.prestanSpravovatObjekt(k);
+    }
+
+    public void pridajStrelu(Strela s) {
+        this.strely.add(s);
+        this.manazer.spravujObjekt(s);
+    }
 }
