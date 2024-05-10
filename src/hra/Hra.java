@@ -1,6 +1,7 @@
 package hra;
 
 import entity.Kosacka;
+import entity.Slnko;
 import entity.rastliny.Rastlina;
 import entity.rastliny.neutociaceRastliny.Slnecnica;
 import entity.rastliny.utociaceRastliny.strielajuceRastliny.Hrach;
@@ -68,9 +69,9 @@ public class Hra {
                 int noveY = (y - 50) / 100;
 
                 switch (this.hud.getZvyraznenaKarta().getTyp()) {
-                    case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY));
-                    case HRACH -> this.rastliny.add(new Hrach(noveX, noveY));
-                    case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY));
+                    case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY, this));
+                    case HRACH -> this.rastliny.add(new Hrach(noveX, noveY, this));
+                    case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY, this));
 
                     default -> System.out.println("nemame taku kartu");
                 }
@@ -105,12 +106,16 @@ public class Hra {
             this.manazer.prestanSpravovatObjekt(r);
             this.manazer.spravujObjekt(r);
 
-            if (r instanceof StrielajucaRastlina) {
-                for (Strela s : ((StrielajucaRastlina)r).getStrely()) {
-                    this.manazer.prestanSpravovatObjekt(s);
-                    this.manazer.spravujObjekt(s);
-                }
-            }
+            // spravuj zoznam rastlin ?
         }
     }
+
+    public void spravujStrelu(Strela s) {
+        this.manazer.spravujObjekt(s);
+    }
+
+    public void spravujSlnko(Slnko s) {
+        this.manazer.spravujObjekt(s);
+    }
+
 }

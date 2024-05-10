@@ -110,6 +110,11 @@ public abstract class Entita {
      * Stara sa o animaciu entity
      */
     public void tikAnimacie() {
+        // ak ma entita iba jeden obrazok (napr. Hrach), ignoruje sa
+        if (this.pocetObrazkov == 1) {
+            return;
+        }
+
         this.aktualnyObrazok += 1;
         if (this.aktualnyObrazok >= this.pocetObrazkov) {
             this.aktualnyObrazok = 0;

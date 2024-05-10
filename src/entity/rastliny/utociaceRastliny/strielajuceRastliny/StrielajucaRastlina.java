@@ -2,6 +2,7 @@ package entity.rastliny.utociaceRastliny.strielajuceRastliny;
 
 import entity.strely.Hrach;
 import entity.strely.Strela;
+import hra.Hra;
 
 import java.util.ArrayList;
 
@@ -19,8 +20,8 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
      * @param pocetObrazokov pocet obrazkov v animacii
      */
-    public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov) {
-        super(x, y, nazovAnimacieObrazku, pocetObrazokov);
+    public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov, Hra hra) {
+        super(x, y, nazovAnimacieObrazku, pocetObrazokov, hra);
         this.strely = new ArrayList<Strela>();
     }
 
@@ -32,12 +33,13 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
     public void vystrel(int cisloObrazku) {
         if (this.jeObrazokCislo(cisloObrazku)) {
             this.strely.add(new Hrach(this.getX() + 100, this.getY() + 20, this.strely));
+            this.getHra().spravujStrelu(this.strely.getLast());
         }
     }
 
     /**
      * Stara sa o animaciu
-     * Pouziva sa pri rastlinach, ktore vytvaraju jednut strelu v jednom animacnom cykle (napr. HrachDvojity)
+     * Pouziva sa pri rastlinach, ktore vytvaraju jednut strelu v jednom animacnom cykle (napr. Hrach)
      *
      * @param cisloObrazku cislo obrazku, pri ktorom sa ma vytvorit nova strela
      */

@@ -1,6 +1,7 @@
 package entity.rastliny.neutociaceRastliny;
 
 import entity.rastliny.Rastlina;
+import hra.Hra;
 
 /**
  * Reprezentuje neutociacu rastlinu
@@ -14,7 +15,7 @@ public abstract class NeutociacaRastlina extends Rastlina {
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
      * @param pocetObrazokov pocet obrazkov v animacii
      */
-    public NeutociacaRastlina(int polickoX, int polickoY, String nazovAnimacieObrazku, int pocetObrazokov) {
-        super(polickoX, polickoY, nazovAnimacieObrazku, pocetObrazokov);
+    public NeutociacaRastlina(int polickoX, int polickoY, String nazovAnimacieObrazku, int pocetObrazokov, Hra hra) {
+        super(polickoX, polickoY, nazovAnimacieObrazku, pocetObrazokov, hra);
     }
 }
