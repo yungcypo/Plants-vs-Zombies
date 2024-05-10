@@ -1,7 +1,5 @@
 package entity;
 
-import fri.shapesge.Manazer;
-
 import java.util.ArrayList;
 
 /**
@@ -10,7 +8,6 @@ import java.util.ArrayList;
 public class Slnko extends Entita {
     private int uhol = 0;
     private ArrayList<Slnko> slnka;
-    private Manazer manazer;
     private int casOdSpawnu = 0;
 
     /**
@@ -19,13 +16,10 @@ public class Slnko extends Entita {
      * @param x suradnica x
      * @param y suradnica y
      * @param slnka zoznam instancii triedy Slnko, ktore vytvorila jedna Slnecnica
-     * @param manazer instancia Manazera pre potreby animacie
      */
-    public Slnko(int x, int y, ArrayList<Slnko> slnka, Manazer manazer) {
+    public Slnko(int x, int y, ArrayList<Slnko> slnka) {
         super(x, y, "slnko", 1);
         this.slnka = slnka;
-        this.manazer = manazer;
-        this.manazer.spravujObjekt(this);
     }
 
     /**
@@ -61,6 +55,5 @@ public class Slnko extends Entita {
     public void despawn() {
         this.skry();
         this.slnka.remove(this);
-        this.manazer.prestanSpravovatObjekt(this);
     }
 }

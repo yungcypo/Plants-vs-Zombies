@@ -1,6 +1,5 @@
 package entity;
 
-import fri.shapesge.Manazer;
 import fri.shapesge.Obrazok;
 
 /**
@@ -13,7 +12,6 @@ public abstract class Entita {
     private int pocetObrazkov;
     private int aktualnyObrazok = 0;
     private String nazovAnimacieObrazku;
-    private Manazer manazer;
 
     /**
      * Konstruktor pre potomkov triedy

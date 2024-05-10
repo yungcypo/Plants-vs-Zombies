@@ -17,9 +17,8 @@ public class Hrach extends Strela {
      * @param x suradnica x
      * @param y suradnica y
      * @param strely zoznam vsetkych striel ktore vytvorila jedna strielajuca rastlina
-     * @param manazer instancia Manazera pre potreby animacie
      */
-    public Hrach(int x, int y, ArrayList<Strela> strely, Manazer manazer) {
-        super(x, y, "strelaHrach", 1, strely, manazer);
+    public Hrach(int x, int y, ArrayList<Strela> strely) {
+        super(x, y, "strelaHrach", 1, strely);
     }
 }

@@ -5,6 +5,8 @@ import entity.rastliny.Rastlina;
 import entity.rastliny.neutociaceRastliny.Slnecnica;
 import entity.rastliny.utociaceRastliny.strielajuceRastliny.Hrach;
 import entity.rastliny.utociaceRastliny.strielajuceRastliny.HrachDvojity;
+import entity.rastliny.utociaceRastliny.strielajuceRastliny.StrielajucaRastlina;
+import entity.strely.Strela;
 import entity.zombies.Zombie;
 import fri.shapesge.Manazer;
 import hra.hud.HUD;
@@ -66,9 +68,9 @@ public class Hra {
                 int noveY = (y - 50) / 100;
 
                 switch (this.hud.getZvyraznenaKarta().getTyp()) {
-                    case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY, this.manazer));
-                    case HRACH -> this.rastliny.add(new Hrach(noveX, noveY, this.manazer));
-                    case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY, this.manazer));
+                    case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY));
+                    case HRACH -> this.rastliny.add(new Hrach(noveX, noveY));
+                    case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY));
 
                     default -> System.out.println("nemame taku kartu");
                 }
@@ -96,11 +98,19 @@ public class Hra {
             this.manazer.spravujObjekt(z);
         }
     }
-    
+
+
     public void spravujZoznamRastlin() {
         for (Rastlina r : this.rastliny) {
             this.manazer.prestanSpravovatObjekt(r);
             this.manazer.spravujObjekt(r);
+
+            if (r instanceof StrielajucaRastlina) {
+                for (Strela s : ((StrielajucaRastlina)r).getStrely()) {
+                    this.manazer.prestanSpravovatObjekt(s);
+                    this.manazer.spravujObjekt(s);
+                }
+            }
         }
     }
 }
