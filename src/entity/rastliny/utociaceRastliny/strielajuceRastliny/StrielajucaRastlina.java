@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * Reprezentuje strielaciu utociacu rastlinu
  */
 public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
-    // TODO potrebuje rastlina strely? mozno ich staci iba v hre
+    // TODO potrebuje rastlina zoznam striel? mozno ich staci iba v hre
     private ArrayList<Strela> strely;
-    private boolean striela = false;  // ci ma rastlina strielat (true ak je zombie v riadku)
+    private boolean striela = false;  // ci ma rastlina strielat (true ak je zombie v riadku) TODO
 
     /**
      * Konstruktor pre potomkov triedy
@@ -22,8 +22,8 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
      * @param pocetObrazokov pocet obrazkov v animacii
      */
-    public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov, int hp, Hra hra) {
-        super(x, y, nazovAnimacieObrazku, pocetObrazokov, hp, hra);
+    public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov, int hp) {
+        super(x, y, nazovAnimacieObrazku, pocetObrazokov, hp);
         this.strely = new ArrayList<>();
     }
 
@@ -35,7 +35,7 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
     public void vystrel(int cisloObrazku) {
         if (this.jeObrazokCislo(cisloObrazku)) {
             this.strely.add(new Hrach(this.getX() + 100, this.getY() + 20, this.strely));
-            this.getHra().pridajStrelu(this.strely.getLast());  // strela sa automaticky aj spravuje
+            Hra.getHra().pridajStrelu(this.strely.getLast());  // strela sa automaticky aj spravuje
             // TODO strely sa furt pridavaju a pridavaju, ale neodstranuju sa!!
         }
     }

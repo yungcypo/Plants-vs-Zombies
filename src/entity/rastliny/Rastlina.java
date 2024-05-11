@@ -7,7 +7,6 @@ import hra.Hra;
  * Reprezentuje rastlinu
  */
 public abstract class Rastlina extends Entita {
-    private Hra hra;
     private int hp;
     private boolean jeJedena = false; // ci zombie akutalne zerie rastlinu
 
@@ -21,9 +20,8 @@ public abstract class Rastlina extends Entita {
      * @param polickoY             suradnica y
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
      * @param pocetObrazokov       pocet obrazkov v animacii
-     * @param hra                  instancia triedy Hra potrebna pre manazovanie objektov vytvaranych rastlinamy (strely, slniecka)
      */
-    public Rastlina(int polickoX, int polickoY, String nazovAnimacieObrazku, int pocetObrazokov, int hp, Hra hra) {
+    public Rastlina(int polickoX, int polickoY, String nazovAnimacieObrazku, int pocetObrazokov, int hp) {
         // TODO: zmenit na (podla rozmerov obrazka)
         super(
                 polickoX * 100 + 50,
@@ -32,14 +30,6 @@ public abstract class Rastlina extends Entita {
                 pocetObrazokov
         );
         this.hp = hp;
-        this.hra = hra;
-    }
-
-    /**
-     * Vrati instanciu triedy Hra
-     */
-    public Hra getHra() {
-        return this.hra;
     }
 
     public void zjedz() {

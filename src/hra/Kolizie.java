@@ -13,14 +13,12 @@ public class Kolizie {
     private ArrayList<Strela> strely;
     private ArrayList<Rastlina> rastliny;
     private ArrayList<Kosacka> kosacky;
-    private Hra hra;
 
-    public Kolizie(ArrayList<Zombie> zombies, ArrayList<Strela> strely, ArrayList<Rastlina> rastliny, ArrayList<Kosacka> kosacky, Hra hra) {
+    public Kolizie(ArrayList<Zombie> zombies, ArrayList<Strela> strely, ArrayList<Rastlina> rastliny, ArrayList<Kosacka> kosacky) {
         this.zombies = zombies;
         this.strely = strely;
         this.rastliny = rastliny;
         this.kosacky = kosacky;
-        this.hra = hra;
     }
 
     // detekuje kolizie pri kazdom pohybe
@@ -191,6 +189,6 @@ public class Kolizie {
             }
         }
 
-        this.hra.prestanSpravovat(e);
+        Hra.getHra().prestanSpravovat(e);
     }
 }
