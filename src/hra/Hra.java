@@ -39,7 +39,7 @@ public class Hra {
         this.zombies = new ArrayList<Zombie>();
         for (int i = 0; i <= 4; i++) {
             this.zombies.add(new Zombie(
-                    950 + random.nextInt(10, 50),
+                    100 + random.nextInt(50, 250),
                     100 * i
             ));
         }
@@ -129,25 +129,6 @@ public class Hra {
         this.manazer.spravujObjekt(s);
     }
 
-    public void prestanSpravovatZombie(Zombie z) {
-        this.manazer.prestanSpravovatObjekt(z);
-    }
-
-    public void prestanSpravovatRastlinu(Rastlina r) {
-        this.manazer.prestanSpravovatObjekt(r);
-    }
-
-    public void prestanSpravovatStrelu(Strela s) {
-        this.manazer.prestanSpravovatObjekt(s);
-    }
-
-    public void prestanSpravovatSlnko(Slnko s) {
-        this.manazer.prestanSpravovatObjekt(s);
-    }
-
-    public void prestanSpravovatKosacku(Kosacka k) {
-        this.manazer.prestanSpravovatObjekt(k);
-    }
 
     public void prestanSpravovat(Entita e) {
         this.manazer.prestanSpravovatObjekt(e);

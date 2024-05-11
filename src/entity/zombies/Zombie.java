@@ -51,4 +51,10 @@ public class Zombie extends entity.Entita implements IHybajucaSaEntita {
     public void setJeRastlinu(boolean jeRastlinu) {
         this.jeRastlinu = jeRastlinu;
     }
+
+    public void zraz() {
+        // TODO mozno nejaka animacia na zrazenie?
+        this.hp = 0;
+        this.skry();
+    }
 }

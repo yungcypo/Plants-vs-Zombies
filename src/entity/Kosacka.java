@@ -24,7 +24,7 @@ public class Kosacka extends Entita implements IHybajucaSaEntita {
     public void tikPohybu() {
         if (this.zapnuta) {
             if (this.getX() < 1100) {
-                this.posunO(5, 0);
+                this.posunO(16, 0);
             } else {
                 // TODO manazer - prestan spravovat?
                 this.skry();
@@ -39,5 +39,17 @@ public class Kosacka extends Entita implements IHybajucaSaEntita {
         this.zapnuta = true;
         this.setNazovAnimacieObrazku("kosackaZapnuta");
         this.setPocetObrazkov(30);
+    }
+
+    public boolean getZapnuta() {
+        return this.zapnuta;
+    }
+
+    public int getX2() {
+        return this.getX() + 75;
+    }
+
+    public int getY2() {
+        return this.getY() + 75;
     }
 }

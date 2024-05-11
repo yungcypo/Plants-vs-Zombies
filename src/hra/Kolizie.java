@@ -27,6 +27,7 @@ public class Kolizie {
     public void tikPohybu() {
         this.kolizieStrelyZombies();
         this.kolizieZombieRastliny();
+        this.kolizieZombieKosacky();
     }
 
     private void kolizieStrelyZombies() {
@@ -53,7 +54,8 @@ public class Kolizie {
             Rastlina r = this.getRastlinaNajviacVpravo(i);
 
             if (z != null && r != null) {
-                if (z.getX() <= r.getX2() && z.getX2() >= r.getX()) {
+                // zombie trochu posunuty blizsie ku rastline, nech to lepsie vyzera
+                if (z.getX() + 20 <= r.getX2() && z.getX2() + 20 >= r.getX()) {
                     r.setJeJedena(true);
                     z.setJeRastlinu(true);
 
@@ -61,6 +63,23 @@ public class Kolizie {
                         this.vymaz(r);
                         z.setJeRastlinu(false);
                     }
+                }
+            }
+        }
+    }
+
+    private void kolizieZombieKosacky() {
+        for (int i = 0; i < 5; i++) {
+            Zombie z = this.getZombieNajviacVlavo(i);
+            Kosacka k = this.kosacky.get(i);
+
+            if (z != null) {
+                if (z.getX() <= k.getX2() && z.getX2() >= k.getX()) {
+                    if (!k.getZapnuta()) {
+                        k.zapni();
+                    }
+                    z.zraz();
+                    this.vymaz(z);
                 }
             }
         }
