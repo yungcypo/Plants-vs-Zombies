@@ -90,8 +90,8 @@ public class Hra {
                     case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY));
                     case HRACH -> this.rastliny.add(new Hrach(noveX, noveY));
                     case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY));
-
-                    default -> System.out.println("nemame taku kartu");
+                    default -> {
+                    }
                 }
 
                 this.hud.odzvyrazniKarty();

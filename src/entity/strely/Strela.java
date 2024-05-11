@@ -45,7 +45,6 @@ public abstract class Strela extends entity.Entita {
     public abstract int getY2();
 
     public void nechParentPrestaneStrielat() {
-        System.out.println("sme tu");
         this.parent.setMaStrielat(false);
     }
 }

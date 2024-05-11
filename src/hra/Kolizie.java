@@ -40,7 +40,6 @@ public class Kolizie {
                 if (z.getCisloRiadku() == r.getCisloRiadku()) {
                     // osetrenie strielania strielajucich rastlin
                     if (r instanceof StrielajucaRastlina) {
-                        System.out.println(r.getCisloRiadku() + ":" + pocetZombieVRiadkoch[r.getCisloRiadku()]);
                         if (pocetZombieVRiadkoch[r.getCisloRiadku()] > 0) {
                             ((StrielajucaRastlina)r).setMaStrielat(true);
                         } else {

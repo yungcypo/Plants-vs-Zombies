@@ -163,4 +163,8 @@ public abstract class Entita {
             this.dataObrazku.add(new DataObrazku("obrazky/animacie/" + this.nazovAnimacieObrazku + "/" + i + ".png"));
         }
     }
+
+    public int getCisloRiadku() {
+        return this.y / 100;
+    }
 }
