@@ -1,6 +1,9 @@
 package entity;
 
+import fri.shapesge.DataObrazku;
 import fri.shapesge.Obrazok;
+
+import java.util.ArrayList;
 
 /**
  * Reprezentuje vsetky entity v hre, ako napr. rastliny, zombie alebo strely
@@ -12,6 +15,7 @@ public abstract class Entita {
     private int pocetObrazkov;
     private int aktualnyObrazok = 0;
     private String nazovAnimacieObrazku;
+    private ArrayList<DataObrazku> dataObrazku;
 
     /**
      * Konstruktor pre potomkov triedy
@@ -26,7 +30,10 @@ public abstract class Entita {
         this.y = y;
         this.nazovAnimacieObrazku = nazovAnimacieObrazku;
         this.pocetObrazkov = pocetObrazkov;
-        this.obrazok = new Obrazok("obrazky/animacie/" + this.nazovAnimacieObrazku + "/0.png", this.x, this.y);
+        this.dataObrazku = new ArrayList<>();
+        this.nacitajDataObrazku();
+
+        this.obrazok = new Obrazok(this.dataObrazku.get(this.aktualnyObrazok), this.x, this.y);
         this.obrazok.zmenPolohu(this.x, this.y);
         this.obrazok.zobraz();
     }
@@ -110,7 +117,7 @@ public abstract class Entita {
      * Stara sa o animaciu entity
      */
     public void tikAnimacie() {
-        // ak ma entita iba jeden obrazok (napr. Hrach), ignoruje sa
+        // ak ma entita iba jeden obrazok (napr. strela Hrach), ignoruje sa
         if (this.pocetObrazkov == 1) {
             return;
         }
@@ -119,7 +126,7 @@ public abstract class Entita {
         if (this.aktualnyObrazok >= this.pocetObrazkov) {
             this.aktualnyObrazok = 0;
         }
-        this.obrazok.zmenObrazok("obrazky/animacie/" + this.nazovAnimacieObrazku + "/" + this.aktualnyObrazok + ".png");
+        this.obrazok.zmenObrazok(this.dataObrazku.get(this.aktualnyObrazok));
     }
 
     /**
@@ -128,7 +135,7 @@ public abstract class Entita {
      *
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami animacie
      */
-    public void setNazovAnimacieObrazku(String nazovAnimacieObrazku) {
+    private void setNazovAnimacieObrazku(String nazovAnimacieObrazku) {
         this.nazovAnimacieObrazku = nazovAnimacieObrazku;
     }
 
@@ -139,8 +146,21 @@ public abstract class Entita {
      *
      * @param pocetObrazkov pocet obrazkov v animacii
      */
-    public void setPocetObrazkov(int pocetObrazkov) {
+    private void setPocetObrazkov(int pocetObrazkov) {
         this.aktualnyObrazok = 0;
         this.pocetObrazkov = pocetObrazkov;
+    }
+
+    public void zmenAnimaciu(String nazovAnimacieObrazku, int pocetObrazkov) {
+        this.setNazovAnimacieObrazku(nazovAnimacieObrazku);
+        this.setPocetObrazkov(pocetObrazkov);
+        this.nacitajDataObrazku();
+    }
+
+    public void nacitajDataObrazku() {
+        this.dataObrazku.clear();
+        for (int i = 0; i < this.pocetObrazkov; i++) {
+            this.dataObrazku.add(new DataObrazku("obrazky/animacie/" + this.nazovAnimacieObrazku + "/" + i + ".png"));
+        }
     }
 }

@@ -37,8 +37,7 @@ public class Kosacka extends Entita implements IHybajucaSaEntita {
      */
     public void zapni() {
         this.zapnuta = true;
-        this.setNazovAnimacieObrazku("kosackaZapnuta");
-        this.setPocetObrazkov(30);
+        this.zmenAnimaciu("kosackaZapnuta", 30);
     }
 
     public boolean getZapnuta() {

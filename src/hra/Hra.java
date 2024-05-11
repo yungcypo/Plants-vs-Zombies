@@ -39,10 +39,11 @@ public class Hra {
         this.zombies = new ArrayList<Zombie>();
         for (int i = 0; i <= 4; i++) {
             this.zombies.add(new Zombie(
-                    100 + random.nextInt(50, 250),
+                    100 + random.nextInt(100, 1000),
                     100 * i
             ));
         }
+
 
         this.rastliny = new ArrayList<Rastlina>();
         this.strely = new ArrayList<Strela>();
