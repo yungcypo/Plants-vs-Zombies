@@ -6,7 +6,8 @@ import entity.IHybajucaSaEntita;
  * Reprezentuje zakladneho Zombie
  */
 public class Zombie extends entity.Entita implements IHybajucaSaEntita {
-    private int hp = 10;
+    private int hp = 10;  // zivoty
+    private boolean jeRastlinu = false; // ci zombie akutalne zerie rastlinu
 
     /**
      * Vytvori Zombia
@@ -23,7 +24,9 @@ public class Zombie extends entity.Entita implements IHybajucaSaEntita {
      */
     @Override
     public void tikPohybu() {
-        this.posunO(-1, 0);
+        if (!this.jeRastlinu) {
+            this.posunO(-1, 0);
+        }
     }
 
     public int getX2() {
@@ -43,5 +46,9 @@ public class Zombie extends entity.Entita implements IHybajucaSaEntita {
         }
 
         return false;
+    }
+
+    public void setJeRastlinu(boolean jeRastlinu) {
+        this.jeRastlinu = jeRastlinu;
     }
 }

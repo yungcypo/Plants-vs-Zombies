@@ -1,5 +1,6 @@
 package hra;
 
+import entity.Entita;
 import entity.Kosacka;
 import entity.Slnko;
 import entity.rastliny.Rastlina;
@@ -146,6 +147,10 @@ public class Hra {
 
     public void prestanSpravovatKosacku(Kosacka k) {
         this.manazer.prestanSpravovatObjekt(k);
+    }
+
+    public void prestanSpravovat(Entita e) {
+        this.manazer.prestanSpravovatObjekt(e);
     }
 
     public void pridajStrelu(Strela s) {

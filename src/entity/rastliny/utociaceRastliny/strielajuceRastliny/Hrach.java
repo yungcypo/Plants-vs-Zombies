@@ -14,7 +14,7 @@ public class Hrach extends StrielajucaRastlina {
      * @param y suradnica y
      */
     public Hrach(int x, int y, Hra hra) {
-        super(x, y, "hrach", 120, hra);
+        super(x, y, "hrach", 120, 8, hra);
     }
 
     /**

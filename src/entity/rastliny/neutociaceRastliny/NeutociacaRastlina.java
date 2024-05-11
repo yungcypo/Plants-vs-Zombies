@@ -15,7 +15,7 @@ public abstract class NeutociacaRastlina extends Rastlina {
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
      * @param pocetObrazokov pocet obrazkov v animacii
      */
-    public NeutociacaRastlina(int polickoX, int polickoY, String nazovAnimacieObrazku, int pocetObrazokov, Hra hra) {
-        super(polickoX, polickoY, nazovAnimacieObrazku, pocetObrazokov, hra);
+    public NeutociacaRastlina(int polickoX, int polickoY, String nazovAnimacieObrazku, int pocetObrazokov, int hp, Hra hra) {
+        super(polickoX, polickoY, nazovAnimacieObrazku, pocetObrazokov, hp, hra);
     }
 }

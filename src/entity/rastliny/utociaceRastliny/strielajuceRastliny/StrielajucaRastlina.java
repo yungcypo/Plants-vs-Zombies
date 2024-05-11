@@ -10,7 +10,9 @@ import java.util.ArrayList;
  * Reprezentuje strielaciu utociacu rastlinu
  */
 public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
+    // TODO potrebuje rastlina strely? mozno ich staci iba v hre
     private ArrayList<Strela> strely;
+    private boolean striela = false;  // ci ma rastlina strielat (true ak je zombie v riadku)
 
     /**
      * Konstruktor pre potomkov triedy
@@ -20,8 +22,8 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
      * @param pocetObrazokov pocet obrazkov v animacii
      */
-    public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov, Hra hra) {
-        super(x, y, nazovAnimacieObrazku, pocetObrazokov, hra);
+    public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov, int hp, Hra hra) {
+        super(x, y, nazovAnimacieObrazku, pocetObrazokov, hp, hra);
         this.strely = new ArrayList<>();
     }
 

@@ -1,5 +1,6 @@
 package hra;
 
+import entity.Entita;
 import entity.Kosacka;
 import entity.rastliny.Rastlina;
 import entity.strely.Strela;
@@ -25,6 +26,7 @@ public class Kolizie {
     // detekuje kolizie pri kazdom pohybe
     public void tikPohybu() {
         this.kolizieStrelyZombies();
+        this.kolizieZombieRastliny();
     }
 
     private void kolizieStrelyZombies() {
@@ -35,18 +37,33 @@ public class Kolizie {
             if (s != null && z != null) {
                 if (s.getX2() >= z.getX() && s.getX() <= z.getX2()) {
                     if (z.zasiahni()) {
-                        z.skry();
-                        this.zombies.remove(z);
-                        this.hra.prestanSpravovatZombie(z);
+                        this.vymaz(z);
                     }
-                    s.skry();
-                    this.strely.remove(s);
-                    this.hra.prestanSpravovatStrelu(s);
+                    this.vymaz(s);
                 }
             }
         }
 
 
+    }
+
+    private void kolizieZombieRastliny() {
+        for (int i = 0; i < 5; i++) {
+            Zombie z = this.getZombieNajviacVlavo(i);
+            Rastlina r = this.getRastlinaNajviacVpravo(i);
+
+            if (z != null && r != null) {
+                if (z.getX() <= r.getX2() && z.getX2() >= r.getX()) {
+                    r.setJeJedena(true);
+                    z.setJeRastlinu(true);
+
+                    if (r.getHp() <= 0) {
+                        this.vymaz(r);
+                        z.setJeRastlinu(false);
+                    }
+                }
+            }
+        }
     }
 
     // vrati zombie, ktory je najviac vpravo pre konkretny riadok
@@ -111,6 +128,50 @@ public class Kolizie {
         }
     }
 
+    // vrati rasltinu, ktora je najviac vpravo pre kontkretny riadok
+    private Rastlina getRastlinaNajviacVpravo(int cisloRiadku) {
+        if (this.rastliny.isEmpty()) {
+            return null;
+        }
 
+        ArrayList<Rastlina> rastlinyVRiadku = new ArrayList<>();  // rastliny, ktore sa nachadzaju v danom riadku
+        for (Rastlina r : this.rastliny) {
+            // TODO upravit ked bude lepsie vymysleny padding na hraciu plochu
+            int rY = (r.getY() - 50) / 100;  // riadok, ktorom sa nachadza rastlina
+            if (rY == cisloRiadku) {
+                rastlinyVRiadku.add(r);
+            }
+        }
+
+        if (rastlinyVRiadku.isEmpty()) {
+            return null;
+        } else if (rastlinyVRiadku.size() == 1) {
+            return rastlinyVRiadku.getFirst();
+        } else {
+            Rastlina vyslednaRastlina = rastlinyVRiadku.getFirst();
+            for (Rastlina r : rastlinyVRiadku) {
+                if (r.getX() > vyslednaRastlina.getX()) {
+                    vyslednaRastlina = r;
+                }
+            }
+
+            return vyslednaRastlina;
+        }
+    }
+
+    // vymaze celu entitu ako ju pozname z povrchu zemskeho a celkovej existencie
+    public void vymaz(Entita e) {
+        e.skry();
+
+        switch (e) {
+            case Zombie zombie -> this.zombies.remove(e);
+            case Strela strela -> this.strely.remove(e);
+            case Rastlina rastlina -> this.rastliny.remove(e);
+            case Kosacka kosacka -> this.kosacky.remove(e);
+            default -> {
+            }
+        }
+
+        this.hra.prestanSpravovat(e);
+    }
 }
-

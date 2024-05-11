@@ -19,7 +19,7 @@ public class Slnecnica extends NeutociacaRastlina {
      * @param y suradnica y
      */
     public Slnecnica(int x, int y, Hra hra) {
-        super(x, y, "slnecnica", 240, hra);
+        super(x, y, "slnecnica", 240, 6, hra);
         this.slnka = new ArrayList<>();
     }
 
@@ -28,6 +28,7 @@ public class Slnecnica extends NeutociacaRastlina {
      * Vytvara Slnko kazdych 24 sekund
      */
     public void tikSekunda() {
+        super.tikSekunda();
         this.casOdSpawnu += 1;
         if (this.casOdSpawnu % 24 == 0) {
             this.slnka.add(new Slnko(this.getX() + 25, this.getY() - 10, this.slnka));
