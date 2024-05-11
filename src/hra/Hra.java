@@ -16,7 +16,9 @@ import hra.hud.TypKarty;
 import java.util.ArrayList;
 import java.util.Random;
 
+// singleton hra
 public class Hra {
+    private static final Hra hra = new Hra();
     private HernaPlocha hernaPlocha;
     private Manazer manazer;
     private ArrayList<Zombie> zombies;
@@ -27,7 +29,11 @@ public class Hra {
     private ArrayList<TypKarty> odomknuteKarty;
     private Kolizie kolizie;
 
-    public Hra() {
+    public static Hra getHra() {
+        return hra;
+    }
+
+    private Hra() {
         this.manazer = new Manazer();
         this.manazer.spravujObjekt(this);
 
@@ -37,12 +43,13 @@ public class Hra {
 
         // docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
         this.zombies = new ArrayList<Zombie>();
-        for (int i = 0; i <= 4; i++) {
+        for (int i = 0; i <= 2; i++) {
             this.zombies.add(new Zombie(
-                    100 + random.nextInt(50, 250),
+                    100 + random.nextInt(200, 800),
                     100 * i
             ));
         }
+
 
         this.rastliny = new ArrayList<Rastlina>();
         this.strely = new ArrayList<Strela>();
@@ -62,7 +69,7 @@ public class Hra {
 
         this.spravujVsetkyZoznamy();
 
-        this.kolizie = new Kolizie(this.zombies, this.strely, this.rastliny, this.kosacky, this);
+        this.kolizie = new Kolizie(this.zombies, this.strely, this.rastliny, this.kosacky);
         this.manazer.spravujObjekt(this.kolizie);
     }
 
@@ -81,9 +88,9 @@ public class Hra {
                 int noveY = (y - 50) / 100;
 
                 switch (this.hud.getZvyraznenaKarta().getTyp()) {
-                    case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY, this));
-                    case HRACH -> this.rastliny.add(new Hrach(noveX, noveY, this));
-                    case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY, this));
+                    case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY));
+                    case HRACH -> this.rastliny.add(new Hrach(noveX, noveY));
+                    case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY));
 
                     default -> System.out.println("nemame taku kartu");
                 }

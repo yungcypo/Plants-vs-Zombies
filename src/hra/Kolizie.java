@@ -3,48 +3,51 @@ package hra;
 import entity.Entita;
 import entity.Kosacka;
 import entity.rastliny.Rastlina;
+import entity.rastliny.utociaceRastliny.strielajuceRastliny.StrielajucaRastlina;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Kolizie {
     private ArrayList<Zombie> zombies;
     private ArrayList<Strela> strely;
     private ArrayList<Rastlina> rastliny;
     private ArrayList<Kosacka> kosacky;
-    private Hra hra;
 
-    public Kolizie(ArrayList<Zombie> zombies, ArrayList<Strela> strely, ArrayList<Rastlina> rastliny, ArrayList<Kosacka> kosacky, Hra hra) {
+    public Kolizie(ArrayList<Zombie> zombies, ArrayList<Strela> strely, ArrayList<Rastlina> rastliny, ArrayList<Kosacka> kosacky) {
         this.zombies = zombies;
         this.strely = strely;
         this.rastliny = rastliny;
         this.kosacky = kosacky;
-        this.hra = hra;
     }
 
     // detekuje kolizie pri kazdom pohybe
     public void tikPohybu() {
         // ak sa ma nejaka entita vymazat, prida sa do tohto zoznamu a neskor bude vymazana
         ArrayList<Entita> naVymazanie = new ArrayList<>();
+
+        // zisti kolko zombie je v jednotlivych riadkoch pre potreby strielajucich rastlin
+        int[] pocetZombieVRiadkoch = new int[5];
         for (Zombie z : this.zombies) {
-            for (Strela s : this.strely) {
-                // ak su na rovnakom riadku
-                if (z.getCisloRiadku() == s.getCisloRiadku()) {
-                    // ak sa prekryvaju
-                    if (s.getX2() >= z.getX() && s.getX() <= z.getX2()) {
-                        // ak zombie zomrel, vymaz ho
-                        if (z.zasiahni()) {
-                            naVymazanie.add(z);
-                        }
-                        // TODO toto nejak nefunguje alebo co :/
-                        naVymazanie.add(s);
-                    }
-                }
-            }
+            pocetZombieVRiadkoch[z.getCisloRiadku()]++;
+        }
+
+        for (Zombie z : this.zombies) {
             for (Rastlina r : this.rastliny) {
                 // ak su na tom istom riadku
                 if (z.getCisloRiadku() == r.getCisloRiadku()) {
+                    // osetrenie strielania strielajucich rastlin
+                    if (r instanceof StrielajucaRastlina) {
+                        System.out.println(r.getCisloRiadku() + ":" + pocetZombieVRiadkoch[r.getCisloRiadku()]);
+                        if (pocetZombieVRiadkoch[r.getCisloRiadku()] > 0) {
+                            ((StrielajucaRastlina)r).setMaStrielat(true);
+                        } else {
+                            ((StrielajucaRastlina)r).setMaStrielat(false);
+                        }
+                    }
+
                     // zombie trochu posunuty blizsie ku rastline, nech to lepsie vyzera
                     if (z.getX() + 20 <= r.getX2() && z.getX2() + 20 >= r.getX()) {
                         r.setJeJedena(true);
@@ -54,6 +57,22 @@ public class Kolizie {
                             naVymazanie.add(r);
                             z.setJeRastlinu(false);
                         }
+                    }
+                }
+            }
+            for (Strela s : this.strely) {
+                // ak su na rovnakom riadku
+                if (z.getCisloRiadku() == s.getCisloRiadku()) {
+                    // ak sa prekryvaju
+                    if (s.getX2() >= z.getX() && s.getX() <= z.getX2()) {
+                        // ak zombie zomrel, vymaz ho
+                        if (z.zasiahni()) {
+                            naVymazanie.add(z);
+                            s.nechParentPrestaneStrielat();
+                        }
+
+                        // TODO toto nejak nefunguje alebo co :/
+                        naVymazanie.add(s);
                     }
                 }
             }
@@ -92,6 +111,6 @@ public class Kolizie {
             this.kosacky.remove(e);
         }
 
-        this.hra.prestanSpravovat(e);
+        Hra.getHra().prestanSpravovat(e);
     }
 }

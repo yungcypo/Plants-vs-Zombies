@@ -18,8 +18,8 @@ public class Slnecnica extends NeutociacaRastlina {
      * @param x suradnica x
      * @param y suradnica y
      */
-    public Slnecnica(int x, int y, Hra hra) {
-        super(x, y, "slnecnica", 240, 6, hra);
+    public Slnecnica(int x, int y) {
+        super(x, y, "slnecnica", 240, 6);
         this.slnka = new ArrayList<>();
     }
 
@@ -32,7 +32,7 @@ public class Slnecnica extends NeutociacaRastlina {
         this.casOdSpawnu += 1;
         if (this.casOdSpawnu % 24 == 0) {
             this.slnka.add(new Slnko(this.getX() + 25, this.getY() - 10, this.slnka));
-            this.getHra().spravujSlnko(this.slnka.getLast());
+            Hra.getHra().spravujSlnko(this.slnka.getLast());
         }
     }
 }
