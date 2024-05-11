@@ -43,13 +43,12 @@ public class Hra {
 
         // docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
         this.zombies = new ArrayList<Zombie>();
-        for (int i = 0; i <= 4; i++) {
+        for (int i = 0; i <= 2; i++) {
             this.zombies.add(new Zombie(
-                    100 + random.nextInt(100, 1000),
+                    100 + random.nextInt(200, 800),
                     100 * i
             ));
         }
-
 
         this.rastliny = new ArrayList<Rastlina>();
         this.strely = new ArrayList<Strela>();
@@ -98,6 +97,9 @@ public class Hra {
                 this.hud.odzvyrazniKarty();
                 this.spravujZoznamRastlin();
             }
+        } else {
+            // TODO toto asi nejak nefunguje
+            this.hud.odzvyrazniKarty();
         }
     }
 

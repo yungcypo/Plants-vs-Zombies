@@ -12,15 +12,15 @@ import java.util.ArrayList;
 public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
     // TODO potrebuje rastlina zoznam striel? mozno ich staci iba v hre
     private ArrayList<Strela> strely;
-    private boolean striela = false;  // ci ma rastlina strielat (true ak je zombie v riadku) TODO
+    private boolean maStrielat = false;  // ci ma rastlina strielat (true ak je zombie v riadku) TODO
 
     /**
      * Konstruktor pre potomkov triedy
      *
-     * @param x suranica x
-     * @param y suradnica y
+     * @param x                    suranica x
+     * @param y                    suradnica y
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
-     * @param pocetObrazokov pocet obrazkov v animacii
+     * @param pocetObrazokov       pocet obrazkov v animacii
      */
     public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov, int hp) {
         super(x, y, nazovAnimacieObrazku, pocetObrazokov, hp);
@@ -33,11 +33,17 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
      * @param cisloObrazku cislo obrazku, pri ktorom sa ma vytvorit nova strela
      */
     public void vystrel(int cisloObrazku) {
-        if (this.jeObrazokCislo(cisloObrazku)) {
-            this.strely.add(new Hrach(this.getX() + 100, this.getY() + 20, this.strely));
-            Hra.getHra().pridajStrelu(this.strely.getLast());  // strela sa automaticky aj spravuje
-            // TODO strely sa furt pridavaju a pridavaju, ale neodstranuju sa!!
+        if (this.maStrielat) {
+            if (this.jeObrazokCislo(cisloObrazku)) {
+                this.strely.add(new Hrach(this.getX() + 100, this.getY() + 20, this.strely, this));
+                Hra.getHra().pridajStrelu(this.strely.getLast());  // strela sa automaticky aj spravuje
+                // TODO strely sa furt pridavaju a pridavaju, ale neodstranuju sa!!
+            }
         }
+    }
+
+    public void setMaStrielat(boolean maStrielat) {
+        this.maStrielat = maStrielat;
     }
 
     /**

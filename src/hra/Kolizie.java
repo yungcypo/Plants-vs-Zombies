@@ -3,10 +3,12 @@ package hra;
 import entity.Entita;
 import entity.Kosacka;
 import entity.rastliny.Rastlina;
+import entity.rastliny.utociaceRastliny.strielajuceRastliny.StrielajucaRastlina;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Kolizie {
     private ArrayList<Zombie> zombies;
@@ -23,170 +25,90 @@ public class Kolizie {
 
     // detekuje kolizie pri kazdom pohybe
     public void tikPohybu() {
-        this.kolizieStrelyZombies();
-        this.kolizieZombieRastliny();
-        this.kolizieZombieKosacky();
-    }
+        // ak sa ma nejaka entita vymazat, prida sa do tohto zoznamu a neskor bude vymazana
+        ArrayList<Entita> naVymazanie = new ArrayList<>();
 
-    private void kolizieStrelyZombies() {
-        for (int i = 0; i <= 4; i++) {
-            Strela s = this.getStrelaNajviacVpravo(i);
-            Zombie z = this.getZombieNajviacVlavo(i);
-
-            if (s != null && z != null) {
-                if (s.getX2() >= z.getX() && s.getX() <= z.getX2()) {
-                    if (z.zasiahni()) {
-                        this.vymaz(z);
-                    }
-                    this.vymaz(s);
-                }
-            }
-        }
-
-
-    }
-
-    private void kolizieZombieRastliny() {
-        for (int i = 0; i < 5; i++) {
-            Zombie z = this.getZombieNajviacVlavo(i);
-            Rastlina r = this.getRastlinaNajviacVpravo(i);
-
-            if (z != null && r != null) {
-                // zombie trochu posunuty blizsie ku rastline, nech to lepsie vyzera
-                if (z.getX() + 20 <= r.getX2() && z.getX2() + 20 >= r.getX()) {
-                    r.setJeJedena(true);
-                    z.setJeRastlinu(true);
-
-                    if (r.getHp() <= 0) {
-                        this.vymaz(r);
-                        z.setJeRastlinu(false);
-                    }
-                }
-            }
-        }
-    }
-
-    private void kolizieZombieKosacky() {
-        for (int i = 0; i < 5; i++) {
-            Zombie z = this.getZombieNajviacVlavo(i);
-            Kosacka k = this.kosacky.get(i);
-
-            if (z != null) {
-                if (z.getX() <= k.getX2() && z.getX2() >= k.getX()) {
-                    if (!k.getZapnuta()) {
-                        k.zapni();
-                    }
-                    z.zraz();
-                    this.vymaz(z);
-                }
-            }
-        }
-    }
-
-    // vrati zombie, ktory je najviac vpravo pre konkretny riadok
-    private Zombie getZombieNajviacVlavo(int cisloRiadku) {
-        if (this.zombies.isEmpty()) {
-            return null;
-        }
-
-        ArrayList<Zombie> zombiesVRiadku = new ArrayList<>();  // zombies, ktory sa nachadzaju v danom riadku
+        // zisti kolko zombie je v jednotlivych riadkoch pre potreby strielajucich rastlin
+        int[] pocetZombieVRiadkoch = new int[5];
         for (Zombie z : this.zombies) {
-            // TODO upravit ked bude lepsie vymysleny padding na hraciu plochu
-            int zY = (z.getY()) / 100;  // riadok, v ktorom sa nachadza zombie
-            if (zY == cisloRiadku) {
-                zombiesVRiadku.add(z);
+            pocetZombieVRiadkoch[z.getCisloRiadku()]++;
+        }
+
+        for (Zombie z : this.zombies) {
+            for (Rastlina r : this.rastliny) {
+                // ak su na tom istom riadku
+                if (z.getCisloRiadku() == r.getCisloRiadku()) {
+                    // osetrenie strielania strielajucich rastlin
+                    if (r instanceof StrielajucaRastlina) {
+                        System.out.println(r.getCisloRiadku() + ":" + pocetZombieVRiadkoch[r.getCisloRiadku()]);
+                        if (pocetZombieVRiadkoch[r.getCisloRiadku()] > 0) {
+                            ((StrielajucaRastlina)r).setMaStrielat(true);
+                        } else {
+                            ((StrielajucaRastlina)r).setMaStrielat(false);
+                        }
+                    }
+
+                    // zombie trochu posunuty blizsie ku rastline, nech to lepsie vyzera
+                    if (z.getX() + 20 <= r.getX2() && z.getX2() + 20 >= r.getX()) {
+                        r.setJeJedena(true);
+                        z.setJeRastlinu(true);
+
+                        if (r.getHp() <= 0) {
+                            naVymazanie.add(r);
+                            z.setJeRastlinu(false);
+                        }
+                    }
+                }
+            }
+            for (Strela s : this.strely) {
+                // ak su na rovnakom riadku
+                if (z.getCisloRiadku() == s.getCisloRiadku()) {
+                    // ak sa prekryvaju
+                    if (s.getX2() >= z.getX() && s.getX() <= z.getX2()) {
+                        // ak zombie zomrel, vymaz ho
+                        if (z.zasiahni()) {
+                            naVymazanie.add(z);
+                            s.nechParentPrestaneStrielat();
+                        }
+
+                        // TODO toto nejak nefunguje alebo co :/
+                        naVymazanie.add(s);
+                    }
+                }
+            }
+            for (Kosacka k : this.kosacky) {
+                // ak su na tom istom riadku
+                if (z.getCisloRiadku() == k.getCisloRiadku()) {
+                    // ak sa prekryvaju
+                    if (z.getX() <= k.getX2() && z.getX2() >= k.getX()) {
+                        if (!k.getZapnuta()) {
+                            k.zapni();
+                        }
+                        z.zraz();
+                        naVymazanie.add(z);
+                    }
+                }
             }
         }
 
-        if (zombiesVRiadku.isEmpty()) {
-            return null;
-        } else if (zombiesVRiadku.size() == 1) {
-            return zombiesVRiadku.getFirst();
-        } else {
-            Zombie vyslednyZombie = zombiesVRiadku.getFirst();
-            for (Zombie z : zombiesVRiadku) {
-                if (z.getX() < vyslednyZombie.getX()) {
-                    vyslednyZombie = z;
-                }
-            }
-
-            return vyslednyZombie;
+        // vymaz vsetko zo zoznamu na vymazanie
+        for (Entita e : naVymazanie) {
+            this.vymaz(e);
         }
     }
 
-    // vrati strelu, ktora je najviac vpravo pre konkretny riadok
-    private Strela getStrelaNajviacVpravo(int cisloRiadku) {
-        if (this.strely.isEmpty()) {
-            return null;
-        }
-
-        ArrayList<Strela> strelyVRiadku = new ArrayList<>();  // strely, ktore sa nachadzaju v danom riadku
-        for (Strela s : this.strely) {
-            // TODO upravit ked bude lepsie vymysleny padding na hraciu plochu
-            int sY = (s.getY() - 50) / 100;  // riadok, ktorom sa nachadza strela
-            if (sY == cisloRiadku) {
-                strelyVRiadku.add(s);
-            }
-        }
-
-        if (strelyVRiadku.isEmpty()) {
-            return null;
-        } else if (strelyVRiadku.size() == 1) {
-            return strelyVRiadku.getFirst();
-        } else {
-            Strela vyslednaStrela = strelyVRiadku.getFirst();
-            for (Strela s : strelyVRiadku) {
-                if (s.getX() > vyslednaStrela.getX()) {
-                    vyslednaStrela = s;
-                }
-            }
-
-            return vyslednaStrela;
-        }
-    }
-
-    // vrati rasltinu, ktora je najviac vpravo pre kontkretny riadok
-    private Rastlina getRastlinaNajviacVpravo(int cisloRiadku) {
-        if (this.rastliny.isEmpty()) {
-            return null;
-        }
-
-        ArrayList<Rastlina> rastlinyVRiadku = new ArrayList<>();  // rastliny, ktore sa nachadzaju v danom riadku
-        for (Rastlina r : this.rastliny) {
-            // TODO upravit ked bude lepsie vymysleny padding na hraciu plochu
-            int rY = (r.getY() - 50) / 100;  // riadok, ktorom sa nachadza rastlina
-            if (rY == cisloRiadku) {
-                rastlinyVRiadku.add(r);
-            }
-        }
-
-        if (rastlinyVRiadku.isEmpty()) {
-            return null;
-        } else if (rastlinyVRiadku.size() == 1) {
-            return rastlinyVRiadku.getFirst();
-        } else {
-            Rastlina vyslednaRastlina = rastlinyVRiadku.getFirst();
-            for (Rastlina r : rastlinyVRiadku) {
-                if (r.getX() > vyslednaRastlina.getX()) {
-                    vyslednaRastlina = r;
-                }
-            }
-
-            return vyslednaRastlina;
-        }
-    }
-
-    // vymaze celu entitu ako ju pozname z povrchu zemskeho a celkovej existencie
+    // vymaze celu entitu ako ju pozname z povrchu zemskeho a celkovej existencie na veky vekov
     public void vymaz(Entita e) {
         e.skry();
 
-        switch (e) {
-            case Zombie zombie -> this.zombies.remove(e);
-            case Strela strela -> this.strely.remove(e);
-            case Rastlina rastlina -> this.rastliny.remove(e);
-            case Kosacka kosacka -> this.kosacky.remove(e);
-            default -> {
-            }
+        if (e instanceof Zombie) {
+            this.zombies.remove(e);
+        } else if (e instanceof Strela) {
+            this.strely.remove(e);
+        } else if (e instanceof Rastlina) {
+            this.rastliny.remove(e);
+        } else if (e instanceof Kosacka) {
+            this.kosacky.remove(e);
         }
 
         Hra.getHra().prestanSpravovat(e);

@@ -1,6 +1,8 @@
 package entity.strely;
 
 
+import entity.rastliny.utociaceRastliny.strielajuceRastliny.StrielajucaRastlina;
+
 import java.util.ArrayList;
 
 /**
@@ -8,6 +10,7 @@ import java.util.ArrayList;
  */
 public abstract class Strela extends entity.Entita {
     private ArrayList<Strela> strely;
+    private StrielajucaRastlina parent;
 
     /**
      * Konstruktor pre potomkov triedy
@@ -18,9 +21,10 @@ public abstract class Strela extends entity.Entita {
      * @param pocetObrazkov        pocet obrazkov v animacii
      * @param strely               zoznam vsetkych striel ktore vytvorila jedna strielajuca rastlina
      */
-    public Strela(int x, int y, String nazovAnimacieObrazku, int pocetObrazkov, ArrayList<Strela> strely) {
+    public Strela(int x, int y, String nazovAnimacieObrazku, int pocetObrazkov, ArrayList<Strela> strely, StrielajucaRastlina parent) {
         super(x, y, nazovAnimacieObrazku, pocetObrazkov);
         this.strely = strely;
+        this.parent = parent;
     }
 
     /**
@@ -39,4 +43,9 @@ public abstract class Strela extends entity.Entita {
     public abstract int getX2();
 
     public abstract int getY2();
+
+    public void nechParentPrestaneStrielat() {
+        System.out.println("sme tu");
+        this.parent.setMaStrielat(false);
+    }
 }

@@ -1,7 +1,6 @@
 package entity.rastliny;
 
 import entity.Entita;
-import hra.Hra;
 
 /**
  * Reprezentuje rastlinu
@@ -14,7 +13,6 @@ public abstract class Rastlina extends Entita {
 
     /**
      * Konstruktor pre potomkov triedy
-     * //TODO zmenit na suradnice (nie policko) (vyber suradnic bude lahsi)
      *
      * @param polickoX             suradnica x
      * @param polickoY             suradnica y
