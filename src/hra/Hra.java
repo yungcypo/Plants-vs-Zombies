@@ -91,6 +91,8 @@ public class Hra {
                 this.hud.odzvyrazniKarty();
                 this.spravujZoznamRastlin();
             }
+        } else {
+            this.hud.odzvyrazniKarty();
         }
     }
 

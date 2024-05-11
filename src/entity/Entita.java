@@ -143,4 +143,10 @@ public abstract class Entita {
         this.aktualnyObrazok = 0;
         this.pocetObrazkov = pocetObrazkov;
     }
+
+
+    // vrati cislo riadku, v ktorom sa nachadza (pre efektivnejsie kolizie)
+    public int getCisloRiadku() {
+        return this.y / 100;
+    }
 }
