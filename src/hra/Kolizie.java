@@ -28,12 +28,12 @@ public class Kolizie {
     }
 
     private void kolizieStrelyZombies() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i <= 4; i++) {
             Strela s = this.getStrelaNajviacVpravo(i);
             Zombie z = this.getZombieNajviacVlavo(i);
 
             if (s != null && z != null) {
-                if (s.getX2() >= z.getX() && s.getX() <= z.getX()) {
+                if (s.getX2() >= z.getX() && s.getX() <= z.getX2()) {
                     if (z.zasiahni()) {
                         z.skry();
                         this.zombies.remove(z);
@@ -58,7 +58,7 @@ public class Kolizie {
         ArrayList<Zombie> zombiesVRiadku = new ArrayList<>();  // zombies, ktory sa nachadzaju v danom riadku
         for (Zombie z : this.zombies) {
             // TODO upravit ked bude lepsie vymysleny padding na hraciu plochu
-            int zY = (z.getY() - 50) / 100;  // riadok, v ktorom sa nachadza zombie
+            int zY = (z.getY()) / 100;  // riadok, v ktorom sa nachadza zombie
             if (zY == cisloRiadku) {
                 zombiesVRiadku.add(z);
             }

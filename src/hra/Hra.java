@@ -13,6 +13,7 @@ import hra.hud.HUD;
 import hra.hud.TypKarty;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Hra {
     private HernaPlocha hernaPlocha;
@@ -31,10 +32,15 @@ public class Hra {
 
         this.hernaPlocha = new HernaPlocha();
 
+        Random random = new Random();
+
         // docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
         this.zombies = new ArrayList<Zombie>();
         for (int i = 0; i <= 4; i++) {
-            this.zombies.add(new Zombie(950, 100 * i));
+            this.zombies.add(new Zombie(
+                    950 + random.nextInt(10, 50),
+                    100 * i
+            ));
         }
 
         this.rastliny = new ArrayList<Rastlina>();
