@@ -8,7 +8,6 @@ import entity.strely.Strela;
 import entity.zombies.Zombie;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Kolizie {
     private ArrayList<Zombie> zombies;

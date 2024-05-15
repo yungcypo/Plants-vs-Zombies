@@ -18,7 +18,7 @@ import java.util.Random;
 
 // singleton hra
 public class Hra {
-    private static final Hra hra = new Hra();
+    private static final Hra HRA = new Hra();
     private HernaPlocha hernaPlocha;
     private Manazer manazer;
     private ArrayList<Zombie> zombies;
@@ -30,7 +30,7 @@ public class Hra {
     private Kolizie kolizie;
 
     public static Hra getHra() {
-        return hra;
+        return HRA;
     }
 
     private Hra() {
@@ -87,11 +87,17 @@ public class Hra {
                 int noveY = (y - 50) / 100;
 
                 switch (this.hud.getZvyraznenaKarta().getTyp()) {
-                    case SLNECNICA -> this.rastliny.add(new Slnecnica(noveX, noveY));
-                    case HRACH -> this.rastliny.add(new Hrach(noveX, noveY));
-                    case HRACH_DVOJITY -> this.rastliny.add(new HrachDvojity(noveX, noveY));
-                    default -> {
-                    }
+                    case SLNECNICA:
+                        this.rastliny.add(new Slnecnica(noveX, noveY));
+                        break;
+                    case HRACH:
+                        this.rastliny.add(new Hrach(noveX, noveY));
+                        break;
+                    case HRACH_DVOJITY:
+                        this.rastliny.add(new HrachDvojity(noveX, noveY));
+                        break;
+                    default:
+                        break;
                 }
 
                 this.hud.odzvyrazniKarty();
