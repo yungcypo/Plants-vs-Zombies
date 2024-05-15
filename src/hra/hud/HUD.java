@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Head-Up Display
- * Reprezentuje dolny riadok so slnieckami a kartami
+ * Reprezentuje dolny riadok s kartami a poctom slniecok
  */
 public class HUD implements IKlikatelne {
     private int x;

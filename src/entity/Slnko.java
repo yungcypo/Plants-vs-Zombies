@@ -1,13 +1,12 @@
 package entity;
 
-import java.util.ArrayList;
+import hra.Hra;
 
 /**
  * Reprezentuje Slnko, ktore vytvara Slnecnica
  */
 public class Slnko extends Entita {
     private int uhol = 0;
-    private ArrayList<Slnko> slnka;
     private int casOdSpawnu = 0;
 
     /**
@@ -15,11 +14,9 @@ public class Slnko extends Entita {
      *
      * @param x suradnica x
      * @param y suradnica y
-     * @param slnka zoznam instancii triedy Slnko, ktore vytvorila jedna Slnecnica
      */
-    public Slnko(int x, int y, ArrayList<Slnko> slnka) {
+    public Slnko(int x, int y) {
         super(x, y, "slnko", 1);
-        this.slnka = slnka;
     }
 
     /**
@@ -54,6 +51,6 @@ public class Slnko extends Entita {
      */
     public void despawn() {
         this.skry();
-        this.slnka.remove(this);
+        Hra.getHra().odstranObjekt(this);
     }
 }

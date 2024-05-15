@@ -16,14 +16,15 @@ public abstract class Entita {
     private int aktualnyObrazok = 0;
     private String nazovAnimacieObrazku;
     private ArrayList<DataObrazku> dataObrazku;
+    private boolean maBytZobrazena = true;
 
     /**
      * Konstruktor pre potomkov triedy
      *
-     * @param x suradnica x
-     * @param y sradnica y
+     * @param x                    suradnica x
+     * @param y                    sradnica y
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi entite
-     * @param pocetObrazkov pocet obrazkov v animacii
+     * @param pocetObrazkov        pocet obrazkov v animacii
      */
     public Entita(int x, int y, String nazovAnimacieObrazku, int pocetObrazkov) {
         this.x = x;
@@ -35,7 +36,7 @@ public abstract class Entita {
 
         this.obrazok = new Obrazok(this.dataObrazku.get(this.aktualnyObrazok), this.x, this.y);
         this.obrazok.zmenPolohu(this.x, this.y);
-        this.obrazok.zobraz();
+        this.zobraz();
     }
 
     /**
@@ -48,20 +49,7 @@ public abstract class Entita {
         this.x += x;
         this.y += y;
         this.obrazok.zmenPolohu(this.x, this.y);
-        this.obrazok.zobraz();
-    }
-
-    /**
-     * Posunie entitu na zadane suradnice
-     *
-     * @param x suradnica x, na ktoru sa ma entita posunut
-     * @param y suradnica y, na ktoru sa ma entita posunut
-     */
-    public void posunNa(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.obrazok.zmenPolohu(this.x, this.y);
-        this.obrazok.zobraz();
+        this.zobraz();
     }
 
     /**
@@ -78,7 +66,9 @@ public abstract class Entita {
      * Zobrazi obrazok entity
      */
     public void zobraz() {
-        this.obrazok.zobraz();
+        if (this.maBytZobrazena) {
+            this.obrazok.zobraz();
+        }
     }
 
     /**
@@ -86,6 +76,11 @@ public abstract class Entita {
      */
     public void skry() {
         this.obrazok.skry();
+        this.maBytZobrazena = false;
+    }
+
+    public void setMaBytZobrazena(boolean maBytZobrazena) {
+        this.maBytZobrazena = maBytZobrazena;
     }
 
     /**
@@ -142,12 +137,14 @@ public abstract class Entita {
     /**
      * Nastavi entite novy pocet obrazkov v animacii
      * Vyuziva sa napr. v triede Kosacka, kde sa po zapnuti kosacky meni animacia
-     * Taktiez sa resetuje aktualny obrazok na zaciatok animacie pre pripadne problemy
+     * Taktiez sa resetuje aktualny obrazok na zaciatok animacie (ak je to potrebne) pre pripadne problemy
      *
      * @param pocetObrazkov pocet obrazkov v animacii
      */
     private void setPocetObrazkov(int pocetObrazkov) {
-        this.aktualnyObrazok = 0;
+        if (this.aktualnyObrazok >= pocetObrazkov) {
+            this.aktualnyObrazok = 0;
+        }
         this.pocetObrazkov = pocetObrazkov;
     }
 
@@ -157,7 +154,7 @@ public abstract class Entita {
         this.nacitajDataObrazku();
     }
 
-    public void nacitajDataObrazku() {
+    private void nacitajDataObrazku() {
         this.dataObrazku.clear();
         for (int i = 0; i < this.pocetObrazkov; i++) {
             this.dataObrazku.add(new DataObrazku("obrazky/animacie/" + this.nazovAnimacieObrazku + "/" + i + ".png"));
@@ -167,4 +164,5 @@ public abstract class Entita {
     public int getCisloRiadku() {
         return this.y / 100;
     }
+
 }

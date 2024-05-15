@@ -6,7 +6,8 @@ package hra.hud;
 public enum TypKarty {
     SLNECNICA("slnecnica", 50),
     HRACH("hrach", 100),
-    HRACH_DVOJITY("hrachDvojity", 200);
+    HRACH_DVOJITY("hrachDvojity", 200),
+    ORECH("orech", 50);
 
     private String cesta;
     private int cena;

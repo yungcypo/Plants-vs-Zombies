@@ -3,12 +3,14 @@ package hra;
 import entity.Entita;
 import entity.Kosacka;
 import entity.Slnko;
+import entity.rastliny.Orech;
 import entity.rastliny.Rastlina;
-import entity.rastliny.neutociaceRastliny.Slnecnica;
-import entity.rastliny.utociaceRastliny.strielajuceRastliny.Hrach;
-import entity.rastliny.utociaceRastliny.strielajuceRastliny.HrachDvojity;
+import entity.rastliny.Slnecnica;
+import entity.rastliny.strielajuceRastliny.Hrach;
+import entity.rastliny.strielajuceRastliny.HrachDvojity;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
+import entity.zombies.ZombieKuzelka;
 import fri.shapesge.Manazer;
 import hra.hud.HUD;
 import hra.hud.TypKarty;
@@ -25,6 +27,7 @@ public class Hra {
     private ArrayList<Rastlina> rastliny;
     private ArrayList<Kosacka> kosacky;
     private ArrayList<Strela> strely;
+    private ArrayList<Slnko> slnka;
     private HUD hud;
     private ArrayList<TypKarty> odomknuteKarty;
     private Kolizie kolizie;
@@ -39,34 +42,42 @@ public class Hra {
 
         this.hernaPlocha = new HernaPlocha();
 
-        Random random = new Random();
-
-        // docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
         this.zombies = new ArrayList<Zombie>();
-        for (int i = 0; i <= 2; i++) {
+        this.rastliny = new ArrayList<Rastlina>();
+        this.strely = new ArrayList<Strela>();
+        this.slnka = new ArrayList<Slnko>();
+
+        // TODO docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
+        Random random = new Random();
+        for (int i = 0; i < 5; i++) {
             this.zombies.add(new Zombie(
-                    100 + random.nextInt(200, 800),
+                    100 + random.nextInt(200, 400),
+                    100 * i
+            ));
+            this.zombies.add(new ZombieKuzelka(
+                    100 + random.nextInt(400, 800),
                     100 * i
             ));
         }
 
-        this.rastliny = new ArrayList<Rastlina>();
-        this.strely = new ArrayList<Strela>();
 
         this.kosacky = new ArrayList<Kosacka>();
         for (int i = 0; i < 5; i++) {
             this.kosacky.add(new Kosacka(-25, i * 100 + 65));
         }
+        this.spravujZoznam(this.kosacky);
 
         // vytvorenie HUD
         this.odomknuteKarty = new ArrayList<>();
         this.odomknuteKarty.add(TypKarty.SLNECNICA);
         this.odomknuteKarty.add(TypKarty.HRACH);
         this.odomknuteKarty.add(TypKarty.HRACH_DVOJITY);
-
+        this.odomknuteKarty.add(TypKarty.ORECH);
         this.hud = new HUD(this.odomknuteKarty);
 
-        this.spravujVsetkyZoznamy();
+
+        // TODO ked sa budu normalne vytvarat zombie, toto tu nebude treba
+        this.spravujZoznam(this.zombies);
 
         this.kolizie = new Kolizie(this.zombies, this.strely, this.rastliny, this.kosacky);
         this.manazer.spravujObjekt(this.kolizie);
@@ -96,61 +107,53 @@ public class Hra {
                     case HRACH_DVOJITY:
                         this.rastliny.add(new HrachDvojity(noveX, noveY));
                         break;
+                    case ORECH:
+                        this.rastliny.add(new Orech(noveX, noveY));
+                        break;
                     default:
                         break;
                 }
-
-                this.hud.odzvyrazniKarty();
-                this.spravujZoznamRastlin();
+                this.spravujZoznam(this.rastliny);
             }
-        } else {
-            // TODO toto asi nejak nefunguje
-            this.hud.odzvyrazniKarty();
         }
+
+        this.hud.odzvyrazniKarty();
     }
 
-    public void spravujVsetkyZoznamy() {
-        this.spravujZoznamZombie();
-        this.spravujZoznamRastlin();
-
-        // zoznam kosaciek som zatial nepotreboval mat osamostatneny
-        for (Kosacka k : this.kosacky) {
-            this.manazer.prestanSpravovatObjekt(k);
-            this.manazer.spravujObjekt(k);
-        }
-    }
-
-    public void spravujZoznamZombie() {
-        for (Zombie z : this.zombies) {
-            this.manazer.prestanSpravovatObjekt(z);
-            this.manazer.spravujObjekt(z);
-        }
-    }
-
-    public void spravujZoznamRastlin() {
-        for (Rastlina r : this.rastliny) {
-            this.manazer.prestanSpravovatObjekt(r);
-            this.manazer.spravujObjekt(r);
-
-            // spravuj zoznam rastlin ?
-        }
-    }
-
-    public void spravujStrelu(Strela s) {
-        this.manazer.spravujObjekt(s);
-    }
-
-    public void spravujSlnko(Slnko s) {
-        this.manazer.spravujObjekt(s);
-    }
-
-
-    public void prestanSpravovat(Entita e) {
+    public void spravujEntitu(Entita e) {
         this.manazer.prestanSpravovatObjekt(e);
+        this.manazer.spravujObjekt(e);
+    }
+
+    public void spravujZoznam(ArrayList<? extends Entita> entity) {
+        for (Entita e : entity) {
+            this.spravujEntitu(e);
+        }
     }
 
     public void pridajStrelu(Strela s) {
         this.strely.add(s);
         this.manazer.spravujObjekt(s);
+    }
+
+    public void pridajSlnko(Slnko s) {
+        this.slnka.add(s);
+        this.manazer.spravujObjekt(s);
+    }
+
+    public void odstranObjekt(Entita e) {
+        this.manazer.prestanSpravovatObjekt(e);
+
+        if (e instanceof Zombie) {
+            this.zombies.remove(e);
+        } else if (e instanceof Strela) {
+            this.strely.remove(e);
+        } else if (e instanceof Rastlina) {
+            this.rastliny.remove(e);
+        } else if (e instanceof Kosacka) {
+            this.kosacky.remove(e);
+        }
+
+        e.skry();
     }
 }

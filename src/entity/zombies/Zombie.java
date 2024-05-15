@@ -1,16 +1,17 @@
 package entity.zombies;
 
+import entity.Entita;
 import entity.IHybajucaSaEntita;
 
 /**
  * Reprezentuje zakladneho Zombie
  */
-public class Zombie extends entity.Entita implements IHybajucaSaEntita {
+public class Zombie extends Entita implements IHybajucaSaEntita {
     private int hp = 10;  // zivoty
     private boolean jeRastlinu = false; // ci zombie akutalne zerie rastlinu
 
     /**
-     * Vytvori Zombia
+     * Vytvori Zombie
      *
      * @param x suradnica x
      * @param y suradnica y
@@ -56,5 +57,13 @@ public class Zombie extends entity.Entita implements IHybajucaSaEntita {
         // TODO mozno nejaka animacia na zrazenie?
         this.hp = 0;
         this.skry();
+    }
+
+    public int getHp() {
+        return this.hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 }

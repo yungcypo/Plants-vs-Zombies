@@ -3,7 +3,7 @@ package hra;
 import entity.Entita;
 import entity.Kosacka;
 import entity.rastliny.Rastlina;
-import entity.rastliny.utociaceRastliny.strielajuceRastliny.StrielajucaRastlina;
+import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 
@@ -33,11 +33,13 @@ public class Kolizie {
             pocetZombieVRiadkoch[z.getCisloRiadku()]++;
         }
 
+
         for (Zombie z : this.zombies) {
+            // jedenie rastlin
             for (Rastlina r : this.rastliny) {
                 // ak su na tom istom riadku
                 if (z.getCisloRiadku() == r.getCisloRiadku()) {
-                    // osetrenie strielania strielajucich rastlin
+                    // strielajuce rastliny strielaju iba vtedy, ked maju
                     if (r instanceof StrielajucaRastlina) {
                         if (pocetZombieVRiadkoch[r.getCisloRiadku()] > 0) {
                             ((StrielajucaRastlina)r).setMaStrielat(true);
@@ -46,7 +48,6 @@ public class Kolizie {
                         }
                     }
 
-                    // zombie trochu posunuty blizsie ku rastline, nech to lepsie vyzera
                     if (z.getX() + 20 <= r.getX2() && z.getX2() + 20 >= r.getX()) {
                         r.setJeJedena(true);
                         z.setJeRastlinu(true);
@@ -58,22 +59,22 @@ public class Kolizie {
                     }
                 }
             }
+            // zasah strely
             for (Strela s : this.strely) {
                 // ak su na rovnakom riadku
                 if (z.getCisloRiadku() == s.getCisloRiadku()) {
                     // ak sa prekryvaju
-                    if (s.getX2() >= z.getX() && s.getX() <= z.getX2()) {
+                    if (s.getX2() >= z.getX() + 10 && s.getX() <= z.getX2() + 10) {
+                        naVymazanie.add(s);
                         // ak zombie zomrel, vymaz ho
                         if (z.zasiahni()) {
                             naVymazanie.add(z);
                             s.nechParentPrestaneStrielat();
                         }
-
-                        // TODO toto nejak nefunguje alebo co :/
-                        naVymazanie.add(s);
                     }
                 }
             }
+            // ak zombie prisiel az ku kosacke
             for (Kosacka k : this.kosacky) {
                 // ak su na tom istom riadku
                 if (z.getCisloRiadku() == k.getCisloRiadku()) {
@@ -91,24 +92,7 @@ public class Kolizie {
 
         // vymaz vsetko zo zoznamu na vymazanie
         for (Entita e : naVymazanie) {
-            this.vymaz(e);
+            Hra.getHra().odstranObjekt(e);
         }
-    }
-
-    // vymaze celu entitu ako ju pozname z povrchu zemskeho a celkovej existencie na veky vekov
-    public void vymaz(Entita e) {
-        e.skry();
-
-        if (e instanceof Zombie) {
-            this.zombies.remove(e);
-        } else if (e instanceof Strela) {
-            this.strely.remove(e);
-        } else if (e instanceof Rastlina) {
-            this.rastliny.remove(e);
-        } else if (e instanceof Kosacka) {
-            this.kosacky.remove(e);
-        }
-
-        Hra.getHra().prestanSpravovat(e);
     }
 }

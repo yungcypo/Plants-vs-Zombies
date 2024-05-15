@@ -1,12 +1,10 @@
 package entity.strely;
 
-import entity.rastliny.utociaceRastliny.strielajuceRastliny.StrielajucaRastlina;
-
-import java.util.ArrayList;
+import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
 
 public class Bubliny extends Strela {
-    public Bubliny(int x, int y, ArrayList<Strela> strely, StrielajucaRastlina parent) {
-        super(x, y, "strely/bubliny", 4, strely, parent);
+    public Bubliny(int x, int y, StrielajucaRastlina parent) {
+        super(x, y, "strely/bubliny", 4, parent);
     }
 
     @Override

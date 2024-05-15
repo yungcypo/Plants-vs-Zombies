@@ -1,6 +1,6 @@
 package entity.strely;
 
-import entity.rastliny.utociaceRastliny.strielajuceRastliny.StrielajucaRastlina;
+import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
 
 import java.util.ArrayList;
 
@@ -16,10 +16,10 @@ public class Hrach extends Strela {
      *
      * @param x suradnica x
      * @param y suradnica y
-     * @param strely zoznam vsetkych striel ktore vytvorila jedna strielajuca rastlina
+     * @param parent rastlina, ktora vytvorila strelu
      */
-    public Hrach(int x, int y, ArrayList<Strela> strely, StrielajucaRastlina parent) {
-        super(x, y, "strelaHrach", 1, strely, parent);
+    public Hrach(int x, int y, StrielajucaRastlina parent) {
+        super(x, y, "strelaHrach", 1, parent);
     }
 
 
