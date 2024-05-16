@@ -102,10 +102,12 @@ public class Karta implements IKlikatelne {
             int novaVyska = 150 - ((int)(this.percentoNacitania * 1.5));
             this.nacitavatko.zmenStrany(100 + this.sirkaZvyraznenia * 2, novaVyska);
             this.nacitavatko.zobraz();
-        } else {
+        }
+        if (this.percentoNacitania >= 100) {
             this.percentoNacitania = 100;
             this.nacitavatko.zmenStrany(100 + this.sirkaZvyraznenia * 2, 150 + this.sirkaZvyraznenia * 2);
             this.nacitavatko.skry();
+            this.moznoSaBudeDatKliknut();
         }
     }
 
@@ -158,10 +160,6 @@ public class Karta implements IKlikatelne {
         return this.y + 100;
     }
 
-    public void moznoSaBudeDatKliknut() {
-        this.moznoSaBudeDatKliknut(Hra.getHra().getHracoveSlniecka());
-    }
-
     public void moznoSaBudeDatKliknut(int hracoveSlniecka) {
         if (hracoveSlniecka >= this.cena) {
             if (this.percentoNacitania >= 100) {
@@ -172,6 +170,10 @@ public class Karta implements IKlikatelne {
             this.tmavyObrazok.zobraz();
             this.mozeBytKliknuta = false;
         }
+    }
+
+    public void moznoSaBudeDatKliknut() {
+        this.moznoSaBudeDatKliknut(Hra.getHra().getHracoveSlniecka());
     }
 
     public boolean getMozeBytKliknuta() {

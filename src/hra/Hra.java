@@ -127,12 +127,18 @@ public class Hra {
             }
 
             if (!this.slnka.isEmpty()) {
+                Slnko kliknuteSlnko = null;
                 for (Slnko s : this.slnka) {
                     if (s.boloNaMnaKliknute(x, y)) {
                         this.hracoveSlniecka += 25;
                         this.hud.moznoSaBudeDatKliknut();
-                        this.odstranObjekt(s);
+                        kliknuteSlnko = s;
                     }
+                }
+                if (kliknuteSlnko != null) {
+                    kliknuteSlnko.skry();
+                    this.slnka.remove(kliknuteSlnko);
+                    this.manazer.prestanSpravovatObjekt(kliknuteSlnko);
                 }
             }
         }
@@ -172,6 +178,8 @@ public class Hra {
             this.rastliny.remove(e);
         } else if (e instanceof Kosacka) {
             this.kosacky.remove(e);
+        } else if (e instanceof Slnko) {
+            this.slnka.remove(e);
         }
 
         e.skry();

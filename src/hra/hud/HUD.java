@@ -1,7 +1,7 @@
 package hra.hud;
 
-import fri.shapesge.Manazer;
-import fri.shapesge.Obdlznik;
+import fri.shapesge.*;
+import hra.Hra;
 import hra.IKlikatelne;
 
 import java.util.ArrayList;
@@ -18,6 +18,9 @@ public class HUD implements IKlikatelne {
     private int sirkaZvyraznenia = 10;
     private int padding = this.sirkaZvyraznenia * 2;
     private Karta zvyraznenaKarta = null;
+    private Obrazok obrazokSlnka;
+    private int pocetSlniek = 500;
+    private BlokTextu text;
 
     /**
      * Vytvori HUD
@@ -31,7 +34,7 @@ public class HUD implements IKlikatelne {
 
         this.pozadie = new Obdlznik(this.x, this.y);
         this.pozadie.zmenStrany(
-                karty.size() * (100 + this.padding) + this.padding,
+                karty.size() * (100 + this.padding) + this.padding + 150,
                 150 + this.padding * 2
         );
         this.pozadie.zmenFarbu("hud");
@@ -39,12 +42,19 @@ public class HUD implements IKlikatelne {
 
         for (int i = 0; i < karty.size(); i++) {
             this.karty.add(new Karta(
-                    this.x + this.sirkaZvyraznenia + i * (100 + this.padding),
+                    this.x + this.sirkaZvyraznenia + i * (100 + this.padding) + 150,
                     this.y + this.sirkaZvyraznenia,
                     karty.get(i),
                     this.sirkaZvyraznenia
             ));
         }
+
+        this.obrazokSlnka = new Obrazok("obrazky/slnko.png", this.x + 30, this.y + 25);
+        this.obrazokSlnka.zobraz();
+        this.text = new BlokTextu(String.valueOf(this.pocetSlniek), this.x + 40, this.y + 165);
+        this.text.zmenFont("Arial", StylFontu.BOLD, 45);
+        this.text.zmenFarbu("#ffffff");
+        this.text.zobraz();
     }
 
     public void spravujKarty(Manazer manazer) {
@@ -53,16 +63,15 @@ public class HUD implements IKlikatelne {
         }
     }
 
-    public void moznoSaBudeDatKliknut() {
-        for (Karta k : this.karty) {
-            k.moznoSaBudeDatKliknut();
-        }
-    }
-
     public void moznoSaBudeDatKliknut(int hracoveSlniecka) {
         for (Karta k : this.karty) {
             k.moznoSaBudeDatKliknut(hracoveSlniecka);
         }
+        this.zmenPocetSlniek(hracoveSlniecka);
+    }
+
+    public void moznoSaBudeDatKliknut() {
+        this.moznoSaBudeDatKliknut(Hra.getHra().getHracoveSlniecka());
     }
 
     /**
@@ -161,5 +170,10 @@ public class HUD implements IKlikatelne {
     @Override
     public boolean boloNaMnaKliknute(int x, int y) {
         return x > this.x && x < this.getX2() && y > this.y && y < this.getY2();
+    }
+
+    public void zmenPocetSlniek(int pocet) {
+        this.pocetSlniek = pocet;
+        this.text.zmenText(String.valueOf(this.pocetSlniek));
     }
 }
