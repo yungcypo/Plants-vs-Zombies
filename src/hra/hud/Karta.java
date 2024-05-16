@@ -2,6 +2,7 @@ package hra.hud;
 
 import fri.shapesge.Obdlznik;
 import fri.shapesge.Obrazok;
+import hra.Hra;
 import hra.IKlikatelne;
 
 /**
@@ -18,12 +19,10 @@ public class Karta implements IKlikatelne {
     private Obdlznik zvyraznenieObdlznik;
     private boolean zvyraznena = false;
     private int dlzkaNacitavania;
-    private int percentoNacitania = 0;
+    private int percentoNacitania = 100;
     private Obdlznik nacitavatko;
     private Obrazok tmavyObrazok;
     private boolean mozeBytKliknuta = false;
-
-    //TODO dlzka nacitavania karty
 
     /**
      * Konstruktor pre vytvorenie karty
@@ -52,9 +51,9 @@ public class Karta implements IKlikatelne {
         this.tmavyObrazok = new Obrazok("obrazky/karty/tmavyObrazok.png", this.x + this.sirkaZvyraznenia, this.y + this.sirkaZvyraznenia);
         this.tmavyObrazok.zobraz();
 
-        this.nacitavatko = new Obdlznik(this.x + this.sirkaZvyraznenia, this.y + this.sirkaZvyraznenia);
-        this.nacitavatko.zmenFarbu("#ff0000");
-        this.nacitavatko.zmenStrany(100, 150);
+        this.nacitavatko = new Obdlznik(this.x, this.y);
+        this.nacitavatko.zmenFarbu("hud");
+        this.nacitavatko.zmenStrany(100 + this.sirkaZvyraznenia * 2, 150 + this.sirkaZvyraznenia * 2);
         this.nacitavatko.zobraz();
     }
 
@@ -96,20 +95,18 @@ public class Karta implements IKlikatelne {
         return x >= this.x && x <= this.getX2() && y >= this.y && y <= this.getY2();
     }
 
-    public void tikSekunda() {
+    public void tikPolsekunda() {
         if (this.percentoNacitania < 100) {
-            this.percentoNacitania += 100 / this.dlzkaNacitavania;
-        }
-        // hodnota presiahla 100 kvoli zaokruhlovaniu
-        if (this.percentoNacitania >= 100) {
+            this.percentoNacitania += 100 / (this.dlzkaNacitavania * 2);
+
+            int novaVyska = 150 - ((int)(this.percentoNacitania * 1.5));
+            this.nacitavatko.zmenStrany(100 + this.sirkaZvyraznenia * 2, novaVyska);
+            this.nacitavatko.zobraz();
+        } else {
             this.percentoNacitania = 100;
-
-            // TODO toto odstranit, je to tu len kvoli testovaniu
-            this.mozeBytKliknuta = true;
+            this.nacitavatko.zmenStrany(100 + this.sirkaZvyraznenia * 2, 150 + this.sirkaZvyraznenia * 2);
+            this.nacitavatko.skry();
         }
-
-        int novaVyska = 150 - (int)(this.percentoNacitania * 1.5);
-        this.nacitavatko.zmenStrany(100, novaVyska);
     }
 
     /**
@@ -161,10 +158,16 @@ public class Karta implements IKlikatelne {
         return this.y + 100;
     }
 
-    public void zmenaPoctuSlniecokHraca(int hracoveSlniecka) {
-        if (hracoveSlniecka >= this.cena && this.percentoNacitania == 100) {
-            this.tmavyObrazok.skry();
-            this.mozeBytKliknuta = true;
+    public void moznoSaBudeDatKliknut() {
+        this.moznoSaBudeDatKliknut(Hra.getHra().getHracoveSlniecka());
+    }
+
+    public void moznoSaBudeDatKliknut(int hracoveSlniecka) {
+        if (hracoveSlniecka >= this.cena) {
+            if (this.percentoNacitania >= 100) {
+                this.tmavyObrazok.skry();
+                this.mozeBytKliknuta = true;
+            }
         } else {
             this.tmavyObrazok.zobraz();
             this.mozeBytKliknuta = false;
@@ -173,5 +176,14 @@ public class Karta implements IKlikatelne {
 
     public boolean getMozeBytKliknuta() {
         return this.mozeBytKliknuta;
+    }
+
+    public int getCena() {
+        return this.cena;
+    }
+
+    public void resetNacitavania() {
+        this.percentoNacitania = 0;
+        this.nacitavatko.zmenStrany(100 + this.sirkaZvyraznenia * 2, 150 + this.sirkaZvyraznenia * 2);
     }
 }

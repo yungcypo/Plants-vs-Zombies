@@ -1,11 +1,12 @@
 package entity;
 
 import hra.Hra;
+import hra.IKlikatelne;
 
 /**
  * Reprezentuje Slnko, ktore vytvara Slnecnica
  */
-public class Slnko extends Entita {
+public class Slnko extends Entita implements IKlikatelne {
     private int uhol = 0;
     private int casOdSpawnu = 0;
 
@@ -34,23 +35,29 @@ public class Slnko extends Entita {
     public void tikSekunda() {
         this.casOdSpawnu += 1;
         if (this.casOdSpawnu % 15 == 0) {
-            this.despawn();
+            this.vymaz();
         }
-    }
-
-    /**
-     * Zoberie slnko a zaroven ho vymaze
-     */
-    public void zober() {
-        // TODO pridaj hracovi slniecko
-        this.despawn();
     }
 
     /**
      * Vymaze slnko
      */
-    public void despawn() {
-        this.skry();
+    public void vymaz() {
         Hra.getHra().odstranObjekt(this);
+    }
+
+    @Override
+    public int getX2() {
+        return this.getX() + 50;
+    }
+
+    @Override
+    public int getY2() {
+        return this.getY() + 50;
+    }
+
+    @Override
+    public boolean boloNaMnaKliknute(int x, int y) {
+        return x >= this.getX() && x <= this.getX2() && y >= this.getY() && y <= this.getY2();
     }
 }

@@ -60,4 +60,9 @@ public class HernaPlocha implements IKlikatelne {
     public int getY2() {
         return 50 + 100 * 5;
     }
+
+    @Override
+    public boolean boloNaMnaKliknute(int x, int y) {
+        return x > this.getX() && x < this.getX2() && y > this.getY() && y < this.getY2();
+    }
 }

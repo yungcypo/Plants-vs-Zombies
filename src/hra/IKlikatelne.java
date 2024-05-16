@@ -8,4 +8,5 @@ public interface IKlikatelne {
     int getY();
     int getX2();
     int getY2();
+    boolean boloNaMnaKliknute(int x, int y);
 }

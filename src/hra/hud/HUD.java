@@ -53,6 +53,18 @@ public class HUD implements IKlikatelne {
         }
     }
 
+    public void moznoSaBudeDatKliknut() {
+        for (Karta k : this.karty) {
+            k.moznoSaBudeDatKliknut();
+        }
+    }
+
+    public void moznoSaBudeDatKliknut(int hracoveSlniecka) {
+        for (Karta k : this.karty) {
+            k.moznoSaBudeDatKliknut(hracoveSlniecka);
+        }
+    }
+
     /**
      * Metoda, ktoru zavola trieda Hra, ked sa kliklo na HUD
      *
@@ -103,7 +115,9 @@ public class HUD implements IKlikatelne {
      */
     public void odzvyrazniKarty() {
         for (Karta k : this.karty) {
-            k.setZvyraznena(false);
+            if (k.getZvyraznena()) {
+                k.setZvyraznena(false);
+            }
         }
         this.zvyraznenaKarta = null;
     }
@@ -142,5 +156,10 @@ public class HUD implements IKlikatelne {
      */
     public int getY2() {
         return this.y + this.padding * 2 + 150;
+    }
+
+    @Override
+    public boolean boloNaMnaKliknute(int x, int y) {
+        return x > this.x && x < this.getX2() && y > this.y && y < this.getY2();
     }
 }

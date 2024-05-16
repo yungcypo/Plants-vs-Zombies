@@ -21,16 +21,17 @@ import java.util.Random;
 // singleton hra
 public class Hra {
     private static final Hra HRA = new Hra();
-    private HernaPlocha hernaPlocha;
     private Manazer manazer;
+    private HernaPlocha hernaPlocha;
+    private HUD hud;
+    private Kolizie kolizie;
     private ArrayList<Zombie> zombies;
     private ArrayList<Rastlina> rastliny;
     private ArrayList<Kosacka> kosacky;
     private ArrayList<Strela> strely;
     private ArrayList<Slnko> slnka;
-    private HUD hud;
     private ArrayList<TypKarty> odomknuteKarty;
-    private Kolizie kolizie;
+    private int hracoveSlniecka = 50;
 
     public static Hra getHra() {
         return HRA;
@@ -49,13 +50,13 @@ public class Hra {
 
         // TODO docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
         Random random = new Random();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             this.zombies.add(new Zombie(
-                    100 + random.nextInt(200, 400),
+                    100 + random.nextInt(400, 600),
                     100 * i
             ));
             this.zombies.add(new ZombieKuzelka(
-                    100 + random.nextInt(400, 800),
+                    100 + random.nextInt(600, 800),
                     100 * i
             ));
         }
@@ -75,7 +76,7 @@ public class Hra {
         this.odomknuteKarty.add(TypKarty.ORECH);
         this.hud = new HUD(this.odomknuteKarty);
         this.hud.spravujKarty(this.manazer);
-
+        this.hud.moznoSaBudeDatKliknut(this.hracoveSlniecka);
 
         // TODO ked sa budu normalne vytvarat zombie, toto tu nebude treba
         this.spravujZoznam(this.zombies);
@@ -86,13 +87,13 @@ public class Hra {
 
     public void vyberSuradnice(int x, int y) {
         // ak sa kliklo na HUD
-        if (x > this.hud.getX() && x < this.hud.getX2() && y > this.hud.getY() && y < this.hud.getY2()) {
+        if (this.hud.boloNaMnaKliknute(x, y)) {
             this.hud.klikloSaNaHUD(x, y);
             return;
         }
 
         // ak sa kliklo na hernu plochu
-        if (x > this.hernaPlocha.getX() && x < this.hernaPlocha.getX2() && y > this.hernaPlocha.getY() && y < this.hernaPlocha.getY2()) {
+        if (this.hernaPlocha.boloNaMnaKliknute(x, y)) {
             // ak je nejaka zvyraznena karta, spawni ju
             if (this.hud.getZvyraznenaKarta() != null) {
                 int noveX = (x - 50) / 100;
@@ -114,7 +115,25 @@ public class Hra {
                     default:
                         break;
                 }
+                // odcita hracovi prislusny pocet slniecok
+                this.hracoveSlniecka -= this.hud.getZvyraznenaKarta().getCena();
+
+                this.hud.getZvyraznenaKarta().resetNacitavania();
+                this.hud.odzvyrazniKarty();
+                this.hud.moznoSaBudeDatKliknut();
+
                 this.spravujZoznam(this.rastliny);
+                return;
+            }
+
+            if (!this.slnka.isEmpty()) {
+                for (Slnko s : this.slnka) {
+                    if (s.boloNaMnaKliknute(x, y)) {
+                        this.hracoveSlniecka += 25;
+                        this.hud.moznoSaBudeDatKliknut();
+                        this.odstranObjekt(s);
+                    }
+                }
             }
         }
 
@@ -158,7 +177,7 @@ public class Hra {
         e.skry();
     }
 
-    public Manazer getManazer() {
-        return this.manazer;
+    public int getHracoveSlniecka() {
+        return this.hracoveSlniecka;
     }
 }

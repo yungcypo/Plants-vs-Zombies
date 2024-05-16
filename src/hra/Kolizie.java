@@ -33,7 +33,6 @@ public class Kolizie {
             pocetZombieVRiadkoch[z.getCisloRiadku()]++;
         }
 
-
         for (Zombie z : this.zombies) {
             // jedenie rastlin
             for (Rastlina r : this.rastliny) {
