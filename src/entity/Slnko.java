@@ -43,7 +43,7 @@ public class Slnko extends Entita implements IKlikatelne {
      * Vymaze slnko
      */
     public void vymaz() {
-        Hra.getHra().odstranObjekt(this);
+        Hra.getHra().odstranEntitu(this);
     }
 
     @Override

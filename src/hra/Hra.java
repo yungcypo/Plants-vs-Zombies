@@ -16,6 +16,7 @@ import fri.shapesge.Manazer;
 import fri.shapesge.StylFontu;
 import hra.hud.HUD;
 import hra.hud.TypKarty;
+import hra.plocha.HernaPlocha;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,13 +37,13 @@ public class Hra {
     private ArrayList<Strela> strely;
     private ArrayList<Slnko> slnka;
     private ArrayList<TypKarty> odomknuteKarty;
-    private int hracoveSlniecka;
-    private int cas;
+    private int hracoveSlniecka = 50;
+    private int cas = 0;
     private String nazovSuboru;
     private ArrayList<ZombieData> zombiesNaPridanie;
     private BlokTextu text;
     private int zombiesCelkovo;
-    private int zombiesZniceni;
+    private int zombiesZniceni = 0;
 
     public static Hra getHra() {
         if (hra == null) {
@@ -78,19 +79,9 @@ public class Hra {
         this.spravujZoznam(this.kosacky);
 
         // vytvorenie HUD
-        this.odomknuteKarty = new ArrayList<>();
-        this.odomknuteKarty.add(TypKarty.SLNECNICA);
-        this.odomknuteKarty.add(TypKarty.HRACH);
-        this.odomknuteKarty.add(TypKarty.HRACH_DVOJITY);
-        this.odomknuteKarty.add(TypKarty.ORECH);
-        this.hud = new HUD(this.odomknuteKarty);
-
+        this.hud = new HUD();
         this.hud.spravujKarty(this.manazer);
-        this.hracoveSlniecka = 100;
         this.hud.moznoSaBudeDatKliknut(this.hracoveSlniecka);
-
-        // TODO ked sa budu normalne vytvarat zombie, toto tu nebude treba
-        this.spravujZoznam(this.zombies);
 
         // TODO unmodifiable list
         this.kolizie = new Kolizie(this.zombies, this.strely, this.rastliny, this.kosacky);
@@ -100,7 +91,6 @@ public class Hra {
         this.nazovSuboru = nazovSuboru;
         this.nacitajZombies();
         this.zombiesCelkovo = this.zombiesNaPridanie.size();
-        this.zombiesZniceni = 0;
         this.text = new BlokTextu("", 50, 40);
         this.text.zmenFont("Arial", StylFontu.BOLD, 20);
         this.text.zobraz();
@@ -179,7 +169,7 @@ public class Hra {
         }
     }
 
-    public void odstranObjekt(Entita e) {
+    public void odstranEntitu(Entita e) {
         this.manazer.prestanSpravovatObjekt(e);
 
         if (e instanceof Zombie) {

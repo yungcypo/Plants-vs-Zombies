@@ -28,7 +28,7 @@ public class Kosacka extends Entita implements IHybajucaSaEntita {
             if (this.getX() < 1100) {
                 this.posunO(16, 0);
             } else {
-                Hra.getHra().odstranObjekt(this);
+                Hra.getHra().odstranEntitu(this);
             }
         }
     }

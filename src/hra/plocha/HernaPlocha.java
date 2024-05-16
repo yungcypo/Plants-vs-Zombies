@@ -1,25 +1,40 @@
-package hra;
+package hra.plocha;
+
+import hra.IKlikatelne;
 
 /**
  * Reprezentuje hernu plochu
  */
-
 public class HernaPlocha implements IKlikatelne {
-    private Riadok[] riadky;
+    private Policko[][] hernaPlocha;
+    private int pocetRiadkov = 5;
+    private int pocetStlpcov = 10;
+    private int rozmerPolicka = 100;
 
     /**
      * Vytvori hernu plochu z 5 riadkov
      */
-
     public HernaPlocha() {
-        this.riadky = new Riadok[5];
+        this.hernaPlocha = new Policko[this.pocetRiadkov][this.pocetStlpcov];
 
-        for (int i = 0; i < 5; i++) {
-            this.riadky[i] = new Riadok(i * 100 + 50);
+        for (int x = 0; x < this.pocetStlpcov; x++) {
+            for (int y = 0; y < this.pocetRiadkov; y++) {
+                FarbaPolicka farba;
+
+                if (x % 2 == 0) {
+                    farba = y % 2 == 0 ? FarbaPolicka.ZELENA1 : FarbaPolicka.ZELENA2;
+                } else {
+                    farba = y % 2 == 0 ? FarbaPolicka.ZELENA2 : FarbaPolicka.ZELENA3;
+                }
+
+                this.hernaPlocha[y][x] = new Policko(
+                        x * this.rozmerPolicka + 50,
+                        y * this.rozmerPolicka + 50,
+                        farba
+                );
+            }
         }
     }
-
-    // TODO toto nejak lepsie vymysliet, pomocou poctu policok a riadkov
 
     /**
      * Vrati suradnicu x laveho okraja hernej plochy
@@ -48,7 +63,7 @@ public class HernaPlocha implements IKlikatelne {
      */
     @Override
     public int getX2() {
-        return 50 + 100 * 10;
+        return 50 + this.pocetStlpcov * this.rozmerPolicka;
     }
 
     /**
@@ -58,7 +73,7 @@ public class HernaPlocha implements IKlikatelne {
      */
     @Override
     public int getY2() {
-        return 50 + 100 * 5;
+        return 50 + this.pocetRiadkov * this.rozmerPolicka;
     }
 
     @Override

@@ -91,7 +91,7 @@ public class Kolizie {
 
         // vymaz vsetko zo zoznamu na vymazanie
         for (Entita e : naVymazanie) {
-            Hra.getHra().odstranObjekt(e);
+            Hra.getHra().odstranEntitu(e);
         }
     }
 }

@@ -7,8 +7,11 @@ public enum TypKarty {
     SLNECNICA("slnecnica", 50, 5),
     HRACH("hrach", 100, 5),
     HRACH_DVOJITY("hrachDvojity", 200, 5),
+    HRACH_LADOVY("hrachLadovy", 300, 5),
     ORECH("orech", 50, 25),
-    VELKYORECH("velkyorech", 125, 35);
+    VELKYORECH("velkyorech", 125, 35),
+    POZIERAC_HROBOV("pozieracHrobov", 75, 20);
+
 
     private String cesta;
     private int cena;

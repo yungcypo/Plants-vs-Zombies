@@ -1,6 +1,4 @@
-package main;
-
-import hra.Hra;
+package hra;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

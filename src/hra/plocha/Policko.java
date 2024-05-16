@@ -1,4 +1,4 @@
-package hra;
+package hra.plocha;
 
 import fri.shapesge.Stvorec;
 
@@ -16,27 +16,16 @@ public class Policko {
      *
      * @param x suradnica x
      * @param y suradnica y
-     * @param farba farba policka z enum-u FarbyPolicka
+     * @param farbaPolicka farba policka z enum-u FarbyPolicka
      */
-    public Policko(int x, int y, FarbyPolicka farba) {
+    public Policko(int x, int y, FarbaPolicka farbaPolicka) {
         this.x = x;
         this.y = y;
         this.stvorec = new Stvorec(this.x, this.y);
 
         this.stvorec.zmenStranu(100);
 
-        switch (farba) {
-            case FarbyPolicka.ZELENA1:
-                this.farba = "#6ebe45";
-                break;
-            case FarbyPolicka.ZELENA2:
-                this.farba = "#60BC45";
-                break;
-            case FarbyPolicka.ZELENA3:
-                this.farba = "#53ba47";
-                break;
-
-        }
+        this.farba = farbaPolicka.getFarba();
         this.stvorec.zmenFarbu(this.farba);
 
         this.stvorec.zobraz();

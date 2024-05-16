@@ -1,10 +1,15 @@
 package hra.hud;
 
-import fri.shapesge.*;
+import fri.shapesge.BlokTextu;
+import fri.shapesge.Obdlznik;
+import fri.shapesge.Obrazok;
+import fri.shapesge.StylFontu;
+import fri.shapesge.Manazer;
 import hra.Hra;
 import hra.IKlikatelne;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Head-Up Display
@@ -15,6 +20,7 @@ public class HUD implements IKlikatelne {
     private int y;
     private Obdlznik pozadie;
     private ArrayList<Karta> karty;
+    private ArrayList<TypKarty> typyKariet;
     private int sirkaZvyraznenia = 10;
     private int padding = this.sirkaZvyraznenia * 2;
     private Karta zvyraznenaKarta = null;
@@ -24,27 +30,28 @@ public class HUD implements IKlikatelne {
 
     /**
      * Vytvori HUD
-     *
-     * @param karty zoznam kariet, ktore sa maju zobrazit v HUD
      */
-    public HUD(ArrayList<TypKarty> karty) {
+    public HUD() {
         this.karty = new ArrayList<>();
+        this.typyKariet = new ArrayList<>();
+        this.typyKariet.addAll(List.of((TypKarty.values())));
+
         this.x = 50;
         this.y = 550;
 
         this.pozadie = new Obdlznik(this.x, this.y);
         this.pozadie.zmenStrany(
-                karty.size() * (100 + this.padding) + this.padding + 150,
+                this.typyKariet.size() * (100 + this.padding) + this.padding + 150,
                 150 + this.padding * 2
         );
         this.pozadie.zmenFarbu("hud");
         this.pozadie.zobraz();
 
-        for (int i = 0; i < karty.size(); i++) {
+        for (int i = 0; i < this.typyKariet.size(); i++) {
             this.karty.add(new Karta(
                     this.x + this.sirkaZvyraznenia + i * (100 + this.padding) + 150,
                     this.y + this.sirkaZvyraznenia,
-                    karty.get(i),
+                    this.typyKariet.get(i),
                     this.sirkaZvyraznenia
             ));
         }
