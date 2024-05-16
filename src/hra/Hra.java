@@ -11,14 +11,15 @@ import entity.rastliny.strielajuceRastliny.HrachDvojity;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 import entity.zombies.ZombieKuzelka;
+import fri.shapesge.BlokTextu;
 import fri.shapesge.Manazer;
+import fri.shapesge.StylFontu;
 import hra.hud.HUD;
 import hra.hud.TypKarty;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -39,6 +40,9 @@ public class Hra {
     private int cas;
     private String nazovSuboru;
     private ArrayList<ZombieData> zombiesNaPridanie;
+    private BlokTextu text;
+    private int zombiesCelkovo;
+    private int zombiesZniceni;
 
     public static Hra getHra() {
         if (hra == null) {
@@ -66,26 +70,11 @@ public class Hra {
         this.strely = new ArrayList<>();
         this.slnka = new ArrayList<>();
 
-        // TODO docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
-        /*
-        Random random = new Random();
-        for (int i = 0; i < 4; i++) {
-            this.zombies.add(new Zombie(
-                    100 + random.nextInt(400, 600),
-                    100 * i
-            ));
-            this.zombies.add(new ZombieKuzelka(
-                    100 + random.nextInt(600, 800),
-                    100 * i
-            ));
-        }
-
-         */
-
         this.kosacky = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             this.kosacky.add(new Kosacka(-25, i * 100 + 65));
         }
+
         this.spravujZoznam(this.kosacky);
 
         // vytvorenie HUD
@@ -97,7 +86,7 @@ public class Hra {
         this.hud = new HUD(this.odomknuteKarty);
 
         this.hud.spravujKarty(this.manazer);
-        this.hracoveSlniecka = 50;
+        this.hracoveSlniecka = 100;
         this.hud.moznoSaBudeDatKliknut(this.hracoveSlniecka);
 
         // TODO ked sa budu normalne vytvarat zombie, toto tu nebude treba
@@ -110,6 +99,12 @@ public class Hra {
 
         this.nazovSuboru = nazovSuboru;
         this.nacitajZombies();
+        this.zombiesCelkovo = this.zombiesNaPridanie.size();
+        this.zombiesZniceni = 0;
+        this.text = new BlokTextu("", 50, 40);
+        this.text.zmenFont("Arial", StylFontu.BOLD, 20);
+        this.text.zobraz();
+        this.zmenaTextu();
     }
 
     public void vyberSuradnice(int x, int y) {
@@ -189,6 +184,8 @@ public class Hra {
 
         if (e instanceof Zombie) {
             this.zombies.remove(e);
+            this.zombiesZniceni++;
+            this.zmenaTextu();
         } else if (e instanceof Strela) {
             this.strely.remove(e);
         } else if (e instanceof Rastlina) {
@@ -222,10 +219,10 @@ public class Hra {
     }
 
     private void nacitajZombies() {
-        File subor = new File("levely/" + this.nazovSuboru + ".zombiedata.csv");
+        File subor = new File("levely/" + this.nazovSuboru + ".zombiedata");
         Random random = new Random();
         int poslednyCas = 0;
-        int x = 500 + random.nextInt(-20, 20);
+        int x = 1100 + random.nextInt(50);
 
         try {
             Scanner scanner = new Scanner(subor);
@@ -247,6 +244,7 @@ public class Hra {
 
     public void tikSekunda() {
         this.cas++;
+        this.zmenaTextu();
 
         if (!this.zombiesNaPridanie.isEmpty()) {
             ArrayList<ZombieData> naOdstranenie = new ArrayList<>();
@@ -272,9 +270,24 @@ public class Hra {
             }
         } else {
             if (this.zombies.isEmpty()) {
-                System.out.println("Vyhral si!");
-                // TODO winning screen
+                this.koniecHry(true);
             }
         }
+    }
+
+    public void koniecHry(boolean vyhra) {
+        this.manazer.prestanSpravovatObjekt(this);
+
+        // TODO dorobit
+        if (vyhra) {
+            System.out.println("vyhra!");
+        } else {
+            System.out.println("prehra!");
+        }
+
+    }
+
+    private void zmenaTextu() {
+        this.text.zmenText("Level: " + this.nazovSuboru + "     Zničení zombies: " + this.zombiesZniceni + "/" + this.zombiesCelkovo);
     }
 }

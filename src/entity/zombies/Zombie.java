@@ -2,6 +2,7 @@ package entity.zombies;
 
 import entity.Entita;
 import entity.IHybajucaSaEntita;
+import hra.Hra;
 
 /**
  * Reprezentuje zakladneho Zombie
@@ -27,6 +28,9 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
     public void tikPohybu() {
         if (!this.jeRastlinu) {
             this.posunO(-1, 0);
+        }
+        if (this.getX() <= 0) {
+            Hra.getHra().koniecHry(false);
         }
     }
 

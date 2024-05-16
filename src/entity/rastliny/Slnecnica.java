@@ -21,12 +21,12 @@ public class Slnecnica extends Rastlina {
 
     /**
      * Stara sa o vytvaranie instancii triedy Slnko
-     * Vytvara Slnko kazdych 24 sekund
+     * Vytvara Slnko kazdych 20 sekund
      */
     public void tikSekunda() {
         super.tikSekunda();
         this.casOdSpawnu += 1;
-        if (this.casOdSpawnu % 24 == 0) {
+        if (this.casOdSpawnu % 20 == 0) {
             Hra.getHra().pridajSlnko(new Slnko(this.getX() + 25, this.getY() - 10));
         }
     }
