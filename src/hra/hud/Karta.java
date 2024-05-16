@@ -10,21 +10,27 @@ import hra.IKlikatelne;
 public class Karta implements IKlikatelne {
     private int x;
     private int y;
+    private int sirkaZvyraznenia;
     private TypKarty typ;
     private String cesta;
     private int cena;
     private Obrazok obrazok;
     private Obdlznik zvyraznenieObdlznik;
     private boolean zvyraznena = false;
+    private int dlzkaNacitavania;
+    private int percentoNacitania = 0;
+    private Obdlznik nacitavatko;
+    private Obrazok tmavyObrazok;
+    private boolean mozeBytKliknuta = false;
 
     //TODO dlzka nacitavania karty
 
     /**
      * Konstruktor pre vytvorenie karty
      *
-     * @param x suradnica x
-     * @param y suradnica y
-     * @param typKarty aku rastlinu predstavuje karta (pre potreby obrazku a ceny (a neskor aj dlzky nacitavania))
+     * @param x                suradnica x
+     * @param y                suradnica y
+     * @param typKarty         aku rastlinu predstavuje karta (pre potreby obrazku a ceny (a neskor aj dlzky nacitavania))
      * @param sirkaZvyraznenia aky siroky ma byt obdlznik okolo karty, ked je zvyraznena
      */
     public Karta(int x, int y, TypKarty typKarty, int sirkaZvyraznenia) {
@@ -33,13 +39,23 @@ public class Karta implements IKlikatelne {
         this.typ = typKarty;
         this.cesta = typKarty.getCesta();
         this.cena = typKarty.getCena();
+        this.dlzkaNacitavania = typKarty.getDlzkaNacitavania();
+        this.sirkaZvyraznenia = sirkaZvyraznenia;
 
         this.zvyraznenieObdlznik = new Obdlznik(this.x, this.y);
-        this.zvyraznenieObdlznik.zmenStrany(100 + sirkaZvyraznenia * 2, 150 + sirkaZvyraznenia * 2);
+        this.zvyraznenieObdlznik.zmenStrany(100 + this.sirkaZvyraznenia * 2, 150 + this.sirkaZvyraznenia * 2);
         this.zvyraznenieObdlznik.zmenFarbu("zvyraznenie");
 
-        this.obrazok = new Obrazok(this.cesta, this.x + sirkaZvyraznenia, this.y + sirkaZvyraznenia);
+        this.obrazok = new Obrazok(this.cesta, this.x + this.sirkaZvyraznenia, this.y + this.sirkaZvyraznenia);
         this.obrazok.zobraz();
+
+        this.tmavyObrazok = new Obrazok("obrazky/karty/tmavyObrazok.png", this.x + this.sirkaZvyraznenia, this.y + this.sirkaZvyraznenia);
+        this.tmavyObrazok.zobraz();
+
+        this.nacitavatko = new Obdlznik(this.x + this.sirkaZvyraznenia, this.y + this.sirkaZvyraznenia);
+        this.nacitavatko.zmenFarbu("#ff0000");
+        this.nacitavatko.zmenStrany(100, 150);
+        this.nacitavatko.zobraz();
     }
 
     /**
@@ -78,6 +94,22 @@ public class Karta implements IKlikatelne {
      */
     public boolean boloNaMnaKliknute(int x, int y) {
         return x >= this.x && x <= this.getX2() && y >= this.y && y <= this.getY2();
+    }
+
+    public void tikSekunda() {
+        if (this.percentoNacitania < 100) {
+            this.percentoNacitania += 100 / this.dlzkaNacitavania;
+        }
+        // hodnota presiahla 100 kvoli zaokruhlovaniu
+        if (this.percentoNacitania >= 100) {
+            this.percentoNacitania = 100;
+
+            // TODO toto odstranit, je to tu len kvoli testovaniu
+            this.mozeBytKliknuta = true;
+        }
+
+        int novaVyska = 150 - (int)(this.percentoNacitania * 1.5);
+        this.nacitavatko.zmenStrany(100, novaVyska);
     }
 
     /**
@@ -127,5 +159,19 @@ public class Karta implements IKlikatelne {
     @Override
     public int getY2() {
         return this.y + 100;
+    }
+
+    public void zmenaPoctuSlniecokHraca(int hracoveSlniecka) {
+        if (hracoveSlniecka >= this.cena && this.percentoNacitania == 100) {
+            this.tmavyObrazok.skry();
+            this.mozeBytKliknuta = true;
+        } else {
+            this.tmavyObrazok.zobraz();
+            this.mozeBytKliknuta = false;
+        }
+    }
+
+    public boolean getMozeBytKliknuta() {
+        return this.mozeBytKliknuta;
     }
 }

@@ -4,13 +4,15 @@ package hra.hud;
  * Enum pre typy kariet
  */
 public enum TypKarty {
-    SLNECNICA("slnecnica", 50),
-    HRACH("hrach", 100),
-    HRACH_DVOJITY("hrachDvojity", 200),
-    ORECH("orech", 50);
+    SLNECNICA("slnecnica", 50, 5),
+    HRACH("hrach", 100, 5),
+    HRACH_DVOJITY("hrachDvojity", 200, 5),
+    ORECH("orech", 50, 25),
+    VELKYORECH("velkyorech", 125, 35);
 
     private String cesta;
     private int cena;
+    private int dlzkaNacitavania;
 
     /**
      * Konstruktor pre typ karty
@@ -18,9 +20,10 @@ public enum TypKarty {
      * @param cesta cesta k obrazku karty
      * @param cena cena karty
      */
-    TypKarty(String cesta, int cena) {
+    TypKarty(String cesta, int cena, int dlzkaNacitavania) {
         this.cesta = cesta;
         this.cena = cena;
+        this.dlzkaNacitavania = dlzkaNacitavania;
     }
 
     /**
@@ -39,5 +42,14 @@ public enum TypKarty {
      */
     public int getCena() {
         return this.cena;
+    }
+
+    /**
+     * Vrati dlzku nacitavania karty
+     *
+     * @return dlzka nacitavania karty
+     */
+    public int getDlzkaNacitavania() {
+        return this.dlzkaNacitavania;
     }
 }

@@ -74,6 +74,7 @@ public class Hra {
         this.odomknuteKarty.add(TypKarty.HRACH_DVOJITY);
         this.odomknuteKarty.add(TypKarty.ORECH);
         this.hud = new HUD(this.odomknuteKarty);
+        this.hud.spravujKarty(this.manazer);
 
 
         // TODO ked sa budu normalne vytvarat zombie, toto tu nebude treba
@@ -155,5 +156,9 @@ public class Hra {
         }
 
         e.skry();
+    }
+
+    public Manazer getManazer() {
+        return this.manazer;
     }
 }

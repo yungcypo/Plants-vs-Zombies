@@ -1,5 +1,6 @@
 package hra.hud;
 
+import fri.shapesge.Manazer;
 import fri.shapesge.Obdlznik;
 import hra.IKlikatelne;
 
@@ -33,7 +34,7 @@ public class HUD implements IKlikatelne {
                 karty.size() * (100 + this.padding) + this.padding,
                 150 + this.padding * 2
         );
-        this.pozadie.zmenFarbu("#987554");
+        this.pozadie.zmenFarbu("hud");
         this.pozadie.zobraz();
 
         for (int i = 0; i < karty.size(); i++) {
@@ -46,6 +47,12 @@ public class HUD implements IKlikatelne {
         }
     }
 
+    public void spravujKarty(Manazer manazer) {
+        for (Karta k : this.karty) {
+            manazer.spravujObjekt(k);
+        }
+    }
+
     /**
      * Metoda, ktoru zavola trieda Hra, ked sa kliklo na HUD
      *
@@ -53,34 +60,38 @@ public class HUD implements IKlikatelne {
      * @param y suradnica y, na ktoru sa kliklo
      */
     public void klikloSaNaHUD(int x, int y) {
-        // prechadza vsetkymi kartami a zistuje, ci na ne bolo kliknute
         for (Karta k : this.karty) {
-            if (k.boloNaMnaKliknute(x, y)) {
-                this.odzvyrazniKarty();
+            // ak je karta nacitana a hrac ma dostatok slniecok
+            if (k.getMozeBytKliknuta()) {
+                // prechadza vsetkymi kartami a zistuje, ci na ne bolo kliknute
+                if (k.boloNaMnaKliknute(x, y)) {
+                    this.odzvyrazniKarty();
 
-                if (this.zvyraznenaKarta == null) {
-                    // ak nie je ziadna karta zvyraznena
-                    this.zvyraznenaKarta = k;
-                    this.zvyraznenaKarta.setZvyraznena(true);
-                } else {
-                    // ak uz je najaka karta zvyraznena
-                    if (this.zvyraznenaKarta == k) {
-                        // ak sa znova kliklo na kartu, ktora uz je zvyraznena, zrusi sa zvyraznenie
-                        this.zvyraznenaKarta.setZvyraznena(false);
-                        this.zvyraznenaKarta = null;
-                    } else {
-                        // ak sa kliklo na inu kartu, zvyrazni novu
+                    if (this.zvyraznenaKarta == null) {
+                        // ak nie je ziadna karta zvyraznena
                         this.zvyraznenaKarta = k;
                         this.zvyraznenaKarta.setZvyraznena(true);
+                    } else {
+                        // ak uz je najaka karta zvyraznena
+                        if (this.zvyraznenaKarta == k) {
+                            // ak sa znova kliklo na kartu, ktora uz je zvyraznena, zrusi sa zvyraznenie
+                            this.zvyraznenaKarta.setZvyraznena(false);
+                            this.zvyraznenaKarta = null;
+                        } else {
+                            // ak sa kliklo na inu kartu, zvyrazni novu
+                            this.zvyraznenaKarta = k;
+                            this.zvyraznenaKarta.setZvyraznena(true);
+                        }
                     }
+                    break;
                 }
-                break;
             }
         }
     }
 
     /**
      * Vrati zvyraznenu kartu
+     *
      * @return zvyraznena karta
      */
     public Karta getZvyraznenaKarta() {
