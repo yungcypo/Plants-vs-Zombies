@@ -15,11 +15,16 @@ import fri.shapesge.Manazer;
 import hra.hud.HUD;
 import hra.hud.TypKarty;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 // singleton hra
 public class Hra {
+    private static Hra hra;
     private Manazer manazer;
     private HernaPlocha hernaPlocha;
     private HUD hud;
@@ -30,25 +35,39 @@ public class Hra {
     private ArrayList<Strela> strely;
     private ArrayList<Slnko> slnka;
     private ArrayList<TypKarty> odomknuteKarty;
-    private int hracoveSlniecka = 50;
-    private static Hra hra = new Hra();
+    private int hracoveSlniecka;
+    private int cas;
+    private String nazovSuboru;
+    private ArrayList<ZombieData> zombiesNaPridanie;
 
     public static Hra getHra() {
+        if (hra == null) {
+            hra = new Hra(null);
+        }
         return hra;
     }
 
-    private Hra() {
+    public static Hra getHra(String nazovSuboru) {
+        if (hra == null) {
+            hra = new Hra(nazovSuboru);
+        }
+        return hra;
+    }
+
+    @SuppressWarnings("checkstyle:RequireThis")
+    private Hra(String nazovSuboru) {
         this.manazer = new Manazer();
-        this.manazer.spravujObjekt(this);
 
         this.hernaPlocha = new HernaPlocha();
 
-        this.zombies = new ArrayList<Zombie>();
-        this.rastliny = new ArrayList<Rastlina>();
-        this.strely = new ArrayList<Strela>();
-        this.slnka = new ArrayList<Slnko>();
+        this.zombies = new ArrayList<>();
+        this.zombiesNaPridanie = new ArrayList<>();
+        this.rastliny = new ArrayList<>();
+        this.strely = new ArrayList<>();
+        this.slnka = new ArrayList<>();
 
         // TODO docasne vytvorenie Zombies, neskor sa budu pridavat cez subor
+        /*
         Random random = new Random();
         for (int i = 0; i < 4; i++) {
             this.zombies.add(new Zombie(
@@ -61,7 +80,9 @@ public class Hra {
             ));
         }
 
-        this.kosacky = new ArrayList<Kosacka>();
+         */
+
+        this.kosacky = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             this.kosacky.add(new Kosacka(-25, i * 100 + 65));
         }
@@ -76,7 +97,7 @@ public class Hra {
         this.hud = new HUD(this.odomknuteKarty);
 
         this.hud.spravujKarty(this.manazer);
-        this.hracoveSlniecka = 100;
+        this.hracoveSlniecka = 50;
         this.hud.moznoSaBudeDatKliknut(this.hracoveSlniecka);
 
         // TODO ked sa budu normalne vytvarat zombie, toto tu nebude treba
@@ -87,7 +108,8 @@ public class Hra {
         this.manazer.spravujObjekt(this.kolizie);
         this.manazer.spravujObjekt(this);
 
-        this.cas = 0;
+        this.nazovSuboru = nazovSuboru;
+        this.nacitajZombies();
     }
 
     public void vyberSuradnice(int x, int y) {
@@ -162,21 +184,6 @@ public class Hra {
         }
     }
 
-    public void pridajStrelu(Strela s) {
-        this.strely.add(s);
-        this.manazer.spravujObjekt(s);
-    }
-
-    public void pridajSlnko(Slnko s) {
-        this.slnka.add(s);
-        this.manazer.spravujObjekt(s);
-    }
-
-    public void pridajZombie(Zombie z) {
-        this.zombies.add(z);
-        this.manazer.spravujObjekt(z);
-    }
-
     public void odstranObjekt(Entita e) {
         this.manazer.prestanSpravovatObjekt(e);
 
@@ -195,19 +202,79 @@ public class Hra {
         e.skry();
     }
 
+    public void pridajStrelu(Strela s) {
+        this.strely.add(s);
+        this.manazer.spravujObjekt(s);
+    }
+
+    public void pridajSlnko(Slnko s) {
+        this.slnka.add(s);
+        this.manazer.spravujObjekt(s);
+    }
+
+    public void pridajZombie(Zombie z) {
+        this.zombies.add(z);
+        this.manazer.spravujObjekt(z);
+    }
+
     public int getHracoveSlniecka() {
         return this.hracoveSlniecka;
     }
 
-    public void tikSekunda() {
-        this.cas++;
-        if (this.cas == 15) {
-            this.reset();
+    private void nacitajZombies() {
+        File subor = new File("levely/" + this.nazovSuboru + ".zombiedata.csv");
+        Random random = new Random();
+        int poslednyCas = 0;
+        int x = 500 + random.nextInt(-20, 20);
+
+        try {
+            Scanner scanner = new Scanner(subor);
+            while (scanner.hasNextLine()) {
+                String riadok = scanner.nextLine();
+                int delay = Integer.parseInt(riadok.split(", ")[0]);
+                int zombieID = Integer.parseInt(riadok.split(", ")[1]);
+
+                int y = random.nextInt(0, 5) * 100;
+                poslednyCas += delay;
+
+                this.zombiesNaPridanie.add(new ZombieData(x, y, poslednyCas, zombieID));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
     }
 
-    public void reset() {
-        hra = new Hra();
-    }
+    public void tikSekunda() {
+        this.cas++;
 
+        if (!this.zombiesNaPridanie.isEmpty()) {
+            ArrayList<ZombieData> naOdstranenie = new ArrayList<>();
+
+            for (ZombieData z : this.zombiesNaPridanie) {
+                if (z.getDelay() == this.cas) {
+                    switch (z.getId()) {
+                        case 0:
+                            this.pridajZombie(new Zombie(z.getX(), z.getY()));
+                            break;
+                        case 1:
+                            this.pridajZombie(new ZombieKuzelka(z.getX(), z.getY()));
+                            break;
+                        default:
+                            break;
+                    }
+                    naOdstranenie.add(z);
+                }
+            }
+
+            for (ZombieData z : naOdstranenie) {
+                this.zombiesNaPridanie.remove(z);
+            }
+        } else {
+            if (this.zombies.isEmpty()) {
+                System.out.println("Vyhral si!");
+                // TODO winning screen
+            }
+        }
+    }
 }
