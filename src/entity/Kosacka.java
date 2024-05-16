@@ -1,5 +1,7 @@
 package entity;
 
+import hra.Hra;
+
 /**
  * Reprezentuje kosacku
  */
@@ -26,8 +28,7 @@ public class Kosacka extends Entita implements IHybajucaSaEntita {
             if (this.getX() < 1100) {
                 this.posunO(16, 0);
             } else {
-                // TODO manazer - prestan spravovat?
-                this.skry();
+                Hra.getHra().odstranObjekt(this);
             }
         }
     }

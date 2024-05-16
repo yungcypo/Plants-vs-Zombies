@@ -20,7 +20,6 @@ import java.util.Random;
 
 // singleton hra
 public class Hra {
-    private static final Hra HRA = new Hra();
     private Manazer manazer;
     private HernaPlocha hernaPlocha;
     private HUD hud;
@@ -32,9 +31,10 @@ public class Hra {
     private ArrayList<Slnko> slnka;
     private ArrayList<TypKarty> odomknuteKarty;
     private int hracoveSlniecka = 50;
+    private static Hra hra = new Hra();
 
     public static Hra getHra() {
-        return HRA;
+        return hra;
     }
 
     private Hra() {
@@ -61,7 +61,6 @@ public class Hra {
             ));
         }
 
-
         this.kosacky = new ArrayList<Kosacka>();
         for (int i = 0; i < 5; i++) {
             this.kosacky.add(new Kosacka(-25, i * 100 + 65));
@@ -75,14 +74,20 @@ public class Hra {
         this.odomknuteKarty.add(TypKarty.HRACH_DVOJITY);
         this.odomknuteKarty.add(TypKarty.ORECH);
         this.hud = new HUD(this.odomknuteKarty);
+
         this.hud.spravujKarty(this.manazer);
+        this.hracoveSlniecka = 100;
         this.hud.moznoSaBudeDatKliknut(this.hracoveSlniecka);
 
         // TODO ked sa budu normalne vytvarat zombie, toto tu nebude treba
         this.spravujZoznam(this.zombies);
 
+        // TODO unmodifiable list
         this.kolizie = new Kolizie(this.zombies, this.strely, this.rastliny, this.kosacky);
         this.manazer.spravujObjekt(this.kolizie);
+        this.manazer.spravujObjekt(this);
+
+        this.cas = 0;
     }
 
     public void vyberSuradnice(int x, int y) {
@@ -167,6 +172,11 @@ public class Hra {
         this.manazer.spravujObjekt(s);
     }
 
+    public void pridajZombie(Zombie z) {
+        this.zombies.add(z);
+        this.manazer.spravujObjekt(z);
+    }
+
     public void odstranObjekt(Entita e) {
         this.manazer.prestanSpravovatObjekt(e);
 
@@ -188,4 +198,16 @@ public class Hra {
     public int getHracoveSlniecka() {
         return this.hracoveSlniecka;
     }
+
+    public void tikSekunda() {
+        this.cas++;
+        if (this.cas == 15) {
+            this.reset();
+        }
+    }
+
+    public void reset() {
+        hra = new Hra();
+    }
+
 }

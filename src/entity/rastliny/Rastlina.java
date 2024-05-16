@@ -20,7 +20,6 @@ public abstract class Rastlina extends Entita {
      * @param pocetObrazokov       pocet obrazkov v animacii
      */
     public Rastlina(int polickoX, int polickoY, String nazovAnimacieObrazku, int pocetObrazokov, int hp) {
-        // TODO: zmenit na (podla rozmerov obrazka)
         super(
                 polickoX * 100 + 50,
                 polickoY * 100 + 50,

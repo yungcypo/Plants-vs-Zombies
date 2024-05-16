@@ -7,7 +7,7 @@ import hra.Hra;
  * Reprezentuje strielajucu rastlinu
  */
 public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
-    private boolean maStrielat = false;  // ci ma rastlina strielat (true ak je zombie v riadku) TODO
+    private boolean maStrielat = false;  // ci ma rastlina strielat (true ak je zombie v riadku)
 
     /**
      * Konstruktor pre potomkov triedy
