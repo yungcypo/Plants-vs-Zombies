@@ -4,7 +4,8 @@ import hra.Hra;
 import hra.IKlikatelne;
 
 /**
- * Reprezentuje Slnko, ktore vytvara Slnecnica
+ * Reprezentuje Slnko, ktore vytvara Slnecnica.
+ * Slnko predstavuje penaznu menu v hre, za ktoru sa kupuju rastliny
  */
 public class Slnko extends Entita implements IKlikatelne {
     private int uhol = 0;
@@ -30,7 +31,7 @@ public class Slnko extends Entita implements IKlikatelne {
     }
 
     /**
-     * Zavola sa metoda despawn() po 15 sekundach od vytvorenia Slnka
+     * Stara sa o odstranenie slnka po 15 sekundach od spawnutia
      */
     public void tikSekunda() {
         this.casOdSpawnu += 1;
@@ -46,16 +47,34 @@ public class Slnko extends Entita implements IKlikatelne {
         Hra.getHra().odstranEntitu(this);
     }
 
+    /**
+     * Vrati x-ovu suradnicu praveho okraja slnka
+     *
+     * @return x-ova suradnica praveho okraja slnka
+     */
     @Override
     public int getX2() {
         return this.getX() + 50;
     }
 
+    /**
+     * Vrati x-ovu suradnicu dolneho okraja slnka
+     *
+     * @return x-ova suradnica dolneho okraja slnka
+     */
     @Override
     public int getY2() {
         return this.getY() + 50;
     }
 
+    /**
+     * Vrati hodnotu, ci sa kliklo na slnko.
+     * Porovnava suradnice mysky s okrajmi slnka
+     *
+     * @param x x-ova suradnica mysky pri kliknuti
+     * @param y y-ova suradnica mysky pri kliknuti
+     * @return true, ak bolo kliknute na slnko, inak false
+     */
     @Override
     public boolean boloNaMnaKliknute(int x, int y) {
         return x >= this.getX() && x <= this.getX2() && y >= this.getY() && y <= this.getY2();

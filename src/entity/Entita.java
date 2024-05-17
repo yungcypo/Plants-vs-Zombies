@@ -62,7 +62,7 @@ public abstract class Entita {
     }
 
     /**
-     * Zobrazi obrazok entity
+     * Zobrazi obrazok entity, ak ma byt zobrazeny
      */
     public void zobraz() {
         if (this.maBytZobrazena) {
@@ -76,10 +76,6 @@ public abstract class Entita {
     public void skry() {
         this.obrazok.skry();
         this.maBytZobrazena = false;
-    }
-
-    public void setMaBytZobrazena(boolean maBytZobrazena) {
-        this.maBytZobrazena = maBytZobrazena;
     }
 
     /**
@@ -97,10 +93,10 @@ public abstract class Entita {
     }
 
     /**
-     * Urcuje, ci sa aktualny obrazok animacie zhoduje s parametrom
+     * Urcuje, ci sa aktualny obrazok animacie zhoduje s parametrom.
      * Vyuziva sa napr. v triede StrielajucaRastlina, kde sa urcuje, pri ktorom obrazku sa ma vytvorit strela
      *
-     * @param cisloObrazku cislo obrazku, s ktorym sa ma porovnat aktualny obrazok
+     * @param cisloObrazku cislo obrazku, s ktorym sa ma porovnat aktualne cislo obrazku
      * @return true, ak sa aktualny obrazok zhoduje s parametrom, inak false
      */
     public boolean jeObrazokCislo(int cisloObrazku) {
@@ -108,7 +104,10 @@ public abstract class Entita {
     }
 
     /**
-     * Stara sa o animaciu entity
+     * Stara sa o animaciu entity.
+     * Zakazdym sa zvysi cislo aktualneho obrazku o 1.
+     * Ak hodnota aktualneho obrazku presiahne maximum, nastavi sa na 0.
+     * Nakoniec sa zmeni sa obrazok entity.
      */
     public void tikAnimacie() {
         // ak ma entita iba jeden obrazok (napr. strela Hrach), ignoruje sa
@@ -123,23 +122,11 @@ public abstract class Entita {
         this.obrazok.zmenObrazok(this.dataObrazku.get(this.aktualnyObrazok));
     }
 
-    /**
-     * Nastavi entite novu cestu ku priecinku s obrazkami pre animaciu
-     * Vyuziva sa napr. v triede Kosacka, kde sa po zapnuti kosacky meni animacia
-     *
-     * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami animacie
-     */
+
     private void setNazovAnimacieObrazku(String nazovAnimacieObrazku) {
         this.nazovAnimacieObrazku = nazovAnimacieObrazku;
     }
 
-    /**
-     * Nastavi entite novy pocet obrazkov v animacii
-     * Vyuziva sa napr. v triede Kosacka, kde sa po zapnuti kosacky meni animacia
-     * Taktiez sa resetuje aktualny obrazok na zaciatok animacie (ak je to potrebne) pre pripadne problemy
-     *
-     * @param pocetObrazkov pocet obrazkov v animacii
-     */
     private void setPocetObrazkov(int pocetObrazkov) {
         if (this.aktualnyObrazok >= pocetObrazkov) {
             this.aktualnyObrazok = 0;
@@ -147,6 +134,13 @@ public abstract class Entita {
         this.pocetObrazkov = pocetObrazkov;
     }
 
+    /**
+     * Zmeni animaciu entity na novu na zaklade parametrov
+     * Vyuziva sa pri entitach, kde sa v 'zivotnom cykle' meni animacia (napr. Zombie pri jedeni, Kosacka pri zapnuti).
+     *
+     * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi entite
+     * @param pocetObrazkov        pocet obrazkov v animacii
+     */
     public void zmenAnimaciu(String nazovAnimacieObrazku, int pocetObrazkov) {
         this.setNazovAnimacieObrazku(nazovAnimacieObrazku);
         this.setPocetObrazkov(pocetObrazkov);
@@ -157,10 +151,20 @@ public abstract class Entita {
         }
     }
 
+    /**
+     * Vrati cislo riadku, v ktorom sa entita nachadza na zaklade suradnice y.
+     *
+     * @return cislo riadku, v ktorom sa entita nachadza
+     */
     public int getCisloRiadku() {
         return this.y / 100;
     }
 
+    /**
+     * Vrati cislo aktualneho obrazku animacie
+     *
+     * @return cislo aktualneho obrazku animacie
+     */
     public int getAktualnyObrazok() {
         return this.aktualnyObrazok;
     }

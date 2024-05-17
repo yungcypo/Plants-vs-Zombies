@@ -6,7 +6,7 @@ import hra.Hra;
 import hra.IKlikatelne;
 
 /**
- * Predstavuje jednotlive karty na HUD, ktorymi sa pridavaju rastliny
+ * Predstavuje jednotlive karty na HUD, pomocou ktorych sa pridavaju rastliny
  */
 public class Karta implements IKlikatelne {
     private int x;
@@ -29,8 +29,8 @@ public class Karta implements IKlikatelne {
      *
      * @param x                suradnica x
      * @param y                suradnica y
-     * @param typKarty         aku rastlinu predstavuje karta (pre potreby obrazku a ceny (a neskor aj dlzky nacitavania))
-     * @param sirkaZvyraznenia aky siroky ma byt obdlznik okolo karty, ked je zvyraznena
+     * @param typKarty         aku rastlinu predstavuje karta (pre potreby obrazku, ceny a dlzky nacitavania)
+     * @param sirkaZvyraznenia aky siroky ma byt zlty obdlznik okolo karty, ked je zvyraznena
      */
     public Karta(int x, int y, TypKarty typKarty, int sirkaZvyraznenia) {
         this.x = x;
@@ -60,7 +60,7 @@ public class Karta implements IKlikatelne {
     /**
      * Zapne alebo vypne zvyraznenie karty
      *
-     * @param novaHodnota urcuje, ci ma byt karta zvyraznena alebo nie
+     * @param novaHodnota true, ak ma byt karta zvyraznena, inak false
      */
     public void setZvyraznena(boolean novaHodnota) {
         this.zvyraznena = novaHodnota;
@@ -76,7 +76,7 @@ public class Karta implements IKlikatelne {
     }
 
     /**
-     * Vrati boolean, ci je karta zvyraznena alebo nie
+     * Vrati hodnotu, ci je karta zvyraznena alebo nie
      *
      * @return true, ak je karta zvyraznena, inak false
      */
@@ -85,16 +85,21 @@ public class Karta implements IKlikatelne {
     }
 
     /**
-     * Vrati boolean, ci bolo na kartu kliknute podla suradnic v parametri
+     * Vrati hodnotu, ci sa kliklo na kartu.
+     * Porovnava suradnice mysky s okrajmi karty
      *
-     * @param x suradnica x
-     * @param y suradnica y
-     * @return true, ak bolo na kartu kliknute, inak false
+     * @param x x-ova suradnica mysky pri kliknuti
+     * @param y y-ova suradnica mysky pri kliknuti
+     * @return true, ak bolo kliknute na kartu, inak false
      */
     public boolean boloNaMnaKliknute(int x, int y) {
         return x >= this.x && x <= this.getX2() && y >= this.y && y <= this.getY2();
     }
 
+    /**
+     * Metoda sa vola kazdu pol sekundu a zvysuje percento nacitavania karty.
+     * Cast, o ktoru sa zvysi zavisi od atributu dlzkaNacitavania.
+     */
     public void tikPolsekunda() {
         if (this.percentoNacitania < 100) {
             this.percentoNacitania += 100 / (this.dlzkaNacitavania * 2);
@@ -160,6 +165,12 @@ public class Karta implements IKlikatelne {
         return this.y + 100;
     }
 
+    /**
+     * Metoda sa zavola, ked hrac zobral slniecko, alebo ked sa nacitala karta.
+     * Ak ma hrac dostatok slniecok, a karta je nacitana, tak sa karta moze kliknut
+     *
+     * @param hracoveSlniecka pocet slniecok hraca
+     */
     public void moznoSaBudeDatKliknut(int hracoveSlniecka) {
         if (hracoveSlniecka >= this.cena) {
             if (this.percentoNacitania >= 100) {
@@ -172,18 +183,34 @@ public class Karta implements IKlikatelne {
         }
     }
 
+    /**
+     * Volanie metody moznoSaBudeDatKliknut() s parametrom hracoveSlniecka triedy Hra
+     */
     public void moznoSaBudeDatKliknut() {
         this.moznoSaBudeDatKliknut(Hra.getHra().getHracoveSlniecka());
     }
 
+    /**
+     * Vrati hodnotu, ci sa na kartu moze kliknut
+     *
+     * @return true, ak sa na kartu moze kliknut, inak false
+     */
     public boolean getMozeBytKliknuta() {
         return this.mozeBytKliknuta;
     }
 
+    /**
+     * Vrati cenu karty
+     *
+     * @return cena karty
+     */
     public int getCena() {
         return this.cena;
     }
 
+    /**
+     * Resetuje percento nacitania karty
+     */
     public void resetNacitavania() {
         this.percentoNacitania = 0;
         this.nacitavatko.zmenStrany(100 + this.sirkaZvyraznenia * 2, 150 + this.sirkaZvyraznenia * 2);

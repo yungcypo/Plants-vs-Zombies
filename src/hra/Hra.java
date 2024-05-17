@@ -60,7 +60,6 @@ public class Hra {
         return hra;
     }
 
-    @SuppressWarnings("checkstyle:RequireThis")
     private Hra(String nazovSuboru) {
         this.manazer = new Manazer();
 

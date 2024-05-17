@@ -1,8 +1,11 @@
 package entity.zombies;
 
+/**
+ * Reprezentuje Zombie s Vedrom na hlave
+ */
 public class ZombieVedro extends ZombieSCiapkou {
     /**
-     * Vytvori Zombie
+     * Vytvori Zombie s Vedrom na hlave
      *
      * @param x suradnica x
      * @param y suradnica y
@@ -12,6 +15,14 @@ public class ZombieVedro extends ZombieSCiapkou {
         this.setHp(30);
     }
 
+    /**
+     * Stara sa o uberanie hp zombie.
+     * Vola sa metoda predka, kde sa urcute, ci zombie zomrel.
+     * Ak zombie zomrel, vrati true.
+     * Ak ma zombie 10 hp, zoberie sa mu vedro.
+     *
+     * @return true, ak zombie zomrel, inak false
+     */
     @Override
     public boolean zasiahni() {
         boolean vysledok = super.zasiahni();
@@ -23,6 +34,12 @@ public class ZombieVedro extends ZombieSCiapkou {
         return vysledok;
     }
 
+    /**
+     * Nastavi, ci zombie aktualne zerie rastlinu alebo nie.
+     * Taktiez sa zmeni animacia zombie pomocou metody predka, a animacia Kuzelky
+     *
+     * @param jeRastlinu true ak zombie zerie rastlinu, inak false
+     */
     @Override
     public void setJeRastlinu(boolean jeRastlinu) {
         // ak sa zmenil stav jedenia rastliny

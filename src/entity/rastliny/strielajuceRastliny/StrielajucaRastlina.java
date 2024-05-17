@@ -34,12 +34,17 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
         }
     }
 
+    /**
+     * Nastavi, ci ma rastlina strielat
+     *
+     * @param maStrielat ak ma strielat true, inak false
+     */
     public void setMaStrielat(boolean maStrielat) {
         this.maStrielat = maStrielat;
     }
 
     /**
-     * Stara sa o animaciu
+     * Stara sa o animaciu.
      * Pouziva sa pri rastlinach, ktore vytvaraju jednu strelu v jednom animacnom cykle (napr. Hrach)
      *
      * @param cisloObrazku cislo obrazku, pri ktorom sa ma vytvorit nova strela
@@ -50,7 +55,7 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
     }
 
     /**
-     * Stara sa o animaciu
+     * Stara sa o animaciu.
      * Pouziva sa pri rastlinach, ktore vytvaraju viacero striel v jednom animacnom cykle (napr. HrachDvojity)
      *
      * @param cisloObrazku cisla obrazkov, pri ktorych sa ma vytvorit nova strela

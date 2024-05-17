@@ -21,7 +21,7 @@ public enum TypKarty {
      * Konstruktor pre typ karty
      *
      * @param cesta cesta k obrazku karty
-     * @param cena cena karty
+     * @param cena  cena karty
      */
     TypKarty(String cesta, int cena, int dlzkaNacitavania) {
         this.cesta = cesta;

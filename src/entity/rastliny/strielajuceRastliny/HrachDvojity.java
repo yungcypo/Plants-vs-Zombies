@@ -1,7 +1,7 @@
 package entity.rastliny.strielajuceRastliny;
 
 /**
- * Reprezentuje strielaciu utociacu rastlinu HrachDvojity
+ * Reprezentuje strielaciu rastlinu HrachDvojity
  */
 public class HrachDvojity extends StrielajucaRastlina {
 

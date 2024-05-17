@@ -1,7 +1,7 @@
 package entity.rastliny.strielajuceRastliny;
 
 /**
- * Reprezentuje strielaciu utociacu rastlinu Hrach
+ * Reprezentuje strielaciu rastlinu Hrach
  */
 public class Hrach extends StrielajucaRastlina {
 
@@ -16,7 +16,7 @@ public class Hrach extends StrielajucaRastlina {
     }
 
     /**
-     * Stara sa o animaciu triedy HrachDvojity
+     * Stara sa o animaciu triedy Hrach
      */
     public void tikAnimacie() {
         super.tikAnimacie(40);

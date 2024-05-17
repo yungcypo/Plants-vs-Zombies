@@ -5,6 +5,9 @@ import fri.shapesge.Obrazok;
 
 import java.util.ArrayList;
 
+/**
+ * Reprezentuje Zombie s Ciapkou - ZombieKuzelka alebo ZombieVedro
+ */
 public abstract class ZombieSCiapkou extends Zombie {
     private ArrayList<DataObrazku> dataObrazkuCiapky = new ArrayList<>();
     private Obrazok ciapka;
@@ -13,11 +16,12 @@ public abstract class ZombieSCiapkou extends Zombie {
     private boolean maCiapku = true;
 
     /**
-     * Vytvori Zombie
+     * Konstruktor pre potomkov triedy
      *
-     * @param x                    suradnica x
-     * @param y                    suradnica y
-     * @param nazovAnimacieCiapky nazov animacie obrazku
+     * @param x                   suradnica x
+     * @param y                   suradnica y
+     * @param nazovAnimacieCiapky nazov animacie obrazku ciapky
+     * @param pocetObrazkovCiapky pocet obrazkov animacie ciapky
      */
     public ZombieSCiapkou(int x, int y, String nazovAnimacieCiapky, int pocetObrazkovCiapky) {
         super(x, y);
@@ -28,6 +32,9 @@ public abstract class ZombieSCiapkou extends Zombie {
         this.ciapka.zobraz();
     }
 
+    /**
+     * Stara sa o animaciu ZombieSCiapkou.
+     */
     public void tikAnimacie() {
         super.tikAnimacie();
         if (this.maCiapku) {
@@ -38,6 +45,9 @@ public abstract class ZombieSCiapkou extends Zombie {
         }
     }
 
+    /**
+     * Stara sa o pohyb ZombieSCiapkou
+     */
     public void tikPohybu() {
         super.tikPohybu();
         if (this.maCiapku) {
@@ -47,14 +57,23 @@ public abstract class ZombieSCiapkou extends Zombie {
         }
     }
 
-    public boolean getMaCiapku() {
-        return this.maCiapku;
-    }
-
+    /**
+     * Vrati, ci zombie ma mat ciapku
+     *
+     * @return true ak ma mat ciapku, inak false
+     */
     public void setMaCiapku(boolean maCiapku) {
         this.maCiapku = maCiapku;
     }
 
+    /**
+     * Zmeni animaciu ZombieSCiapkou.
+     * Vymaze sa zoznam s datami obrazku a nahradi sa novymi datami obrazku.
+     *
+     * @param nazovAnimacie       cesta ku priecinku s obrazkami prisluchajucimi zombie
+     * @param nazovAnimacieCiapky cesta ku priecinku s obrazkami prisluchajucimi ciapke
+     * @param pocetObrazkov       pocet obrazkov animacie
+     */
     public void zmenAnimaciuCiapky(String nazovAnimacie, String nazovAnimacieCiapky, int pocetObrazkov) {
         super.zmenAnimaciu(nazovAnimacie, pocetObrazkov);
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Head-Up Display
+ * Head-Up Display.
  * Reprezentuje dolny riadok s kartami a poctom slniecok
  */
 public class HUD implements IKlikatelne {
@@ -64,25 +64,41 @@ public class HUD implements IKlikatelne {
         this.text.zobraz();
     }
 
+    /**
+     * Prechadza zoznam kariet a prikaze manazerovi z parametra, aby ich spravoval
+     *
+     * @param manazer manazer, ktory ma spravovat karty
+     */
     public void spravujKarty(Manazer manazer) {
         for (Karta k : this.karty) {
             manazer.spravujObjekt(k);
         }
     }
 
+    /**
+     * Zmeni pocet slniecok na HUD.
+     * Prechadza vsetkymi kartami a vola metodu zmenPocetSlniecok()
+     *
+     * @param hracoveSlniecka pocet slniecok hraca
+     */
     public void moznoSaBudeDatKliknut(int hracoveSlniecka) {
         for (Karta k : this.karty) {
             k.moznoSaBudeDatKliknut(hracoveSlniecka);
         }
-        this.zmenPocetSlniek(hracoveSlniecka);
+        this.zmenPocetSlniecok(hracoveSlniecka);
     }
 
+    /**
+     * Vola metodu metodu moznoSaBudeDatKliknut() s parametrom hracoveSlniecka z triedy Hra
+     */
     public void moznoSaBudeDatKliknut() {
         this.moznoSaBudeDatKliknut(Hra.getHra().getHracoveSlniecka());
     }
 
     /**
-     * Metoda, ktoru zavola trieda Hra, ked sa kliklo na HUD
+     * Metoda, ktoru zavola trieda Hra, ked sa kliklo na HUD.
+     * Prechadza vsetkymi kartami a zistuje, ci na ne bolo kliknute.
+     * Ak sa kliklo na kartu a dana karta moze byt zvyraznena, zvyrazni ju
      *
      * @param x suradnica x, na ktoru sa kliklo
      * @param y suradnica y, na ktoru sa kliklo
@@ -91,12 +107,11 @@ public class HUD implements IKlikatelne {
         for (Karta k : this.karty) {
             // ak je karta nacitana a hrac ma dostatok slniecok
             if (k.getMozeBytKliknuta()) {
-                // prechadza vsetkymi kartami a zistuje, ci na ne bolo kliknute
                 if (k.boloNaMnaKliknute(x, y)) {
                     this.odzvyrazniKarty();
 
+                    // ak nie je ziadna karta zvyraznena
                     if (this.zvyraznenaKarta == null) {
-                        // ak nie je ziadna karta zvyraznena
                         this.zvyraznenaKarta = k;
                         this.zvyraznenaKarta.setZvyraznena(true);
                     } else {
@@ -127,7 +142,7 @@ public class HUD implements IKlikatelne {
     }
 
     /**
-     * Zrusi zvyraznenie vsetkych kariet a nastavi zvyraznenu kartu na null
+     * Zrusi zvyraznenie kariet a nastavi zvyraznenu kartu na null
      */
     public void odzvyrazniKarty() {
         for (Karta k : this.karty) {
@@ -174,12 +189,25 @@ public class HUD implements IKlikatelne {
         return this.y + this.padding * 2 + 150;
     }
 
+    /**
+     * Vrati hodnotu, ci sa kliklo na hud.
+     * Porovnava suradnice mysky s okrajmi HUD.
+     *
+     * @param x x-ova suradnica mysky pri kliknuti
+     * @param y y-ova suradnica mysky pri kliknuti
+     * @return true, ak bolo kliknute na HUD, inak false
+     */
     @Override
     public boolean boloNaMnaKliknute(int x, int y) {
         return x > this.x && x < this.getX2() && y > this.y && y < this.getY2();
     }
 
-    public void zmenPocetSlniek(int pocet) {
+    /**
+     * Zmeni pocet slniecok na HUD
+     *
+     * @param pocet novy pocet slniecok
+     */
+    public void zmenPocetSlniecok(int pocet) {
         this.pocetSlniek = pocet;
         this.text.zmenText(String.valueOf(this.pocetSlniek));
     }
