@@ -15,10 +15,10 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
      * @param x                    suranica x
      * @param y                    suradnica y
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi rastline
-     * @param pocetObrazokov       pocet obrazkov v animacii
+     * @param pocetObrazkov        pocet obrazkov v animacii
      */
-    public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazokov, int hp) {
-        super(x, y, nazovAnimacieObrazku, pocetObrazokov, hp);
+    public StrielajucaRastlina(int x, int y, String nazovAnimacieObrazku, int pocetObrazkov, int hp) {
+        super(x, y, nazovAnimacieObrazku, pocetObrazkov, hp);
     }
 
     /**

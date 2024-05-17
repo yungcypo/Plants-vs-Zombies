@@ -34,7 +34,7 @@ public class HUD implements IKlikatelne {
     public HUD() {
         this.karty = new ArrayList<>();
         this.typyKariet = new ArrayList<>();
-        this.typyKariet.addAll(List.of((TypKarty.values())));
+        this.typyKariet.addAll(List.of(TypKarty.values()));
 
         this.x = 50;
         this.y = 550;
@@ -177,7 +177,7 @@ public class HUD implements IKlikatelne {
      * @return x suradnica praveho okraja pozadia
      */
     public int getX2() {
-        return this.x + this.karty.size() * (100 + this.padding) + this.padding;
+        return this.x + this.karty.size() * (100 + this.padding) + this.padding + 150;
     }
 
     /**

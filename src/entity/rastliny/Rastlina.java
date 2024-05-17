@@ -47,7 +47,7 @@ public abstract class Rastlina extends Entita {
     /**
      * Nastavi, ci ma byt rastlina jedena
      *
-     * @param jeJedena
+     * @param jeJedena true, ak ma byt jedena, inak false
      */
     public void setJeJedena(boolean jeJedena) {
         this.jeJedena = jeJedena;

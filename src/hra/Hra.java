@@ -16,7 +16,6 @@ import fri.shapesge.BlokTextu;
 import fri.shapesge.Manazer;
 import fri.shapesge.StylFontu;
 import hra.hud.HUD;
-import hra.hud.TypKarty;
 import hra.plocha.HernaPlocha;
 
 import java.io.File;
@@ -37,7 +36,6 @@ public class Hra {
     private ArrayList<Kosacka> kosacky;
     private ArrayList<Strela> strely;
     private ArrayList<Slnko> slnka;
-    private ArrayList<TypKarty> odomknuteKarty;
     private int hracoveSlniecka = 50;
     private int cas = 0;
     private String nazovSuboru;
