@@ -1,6 +1,6 @@
 package entity.zombies;
 
-public class ZombieKuzelka extends Zombie {
+public class ZombieKuzelka extends ZombieSCiapkou {
     /**
      * Vytvori Zombie
      *
@@ -8,8 +8,7 @@ public class ZombieKuzelka extends Zombie {
      * @param y suradnica y
      */
     public ZombieKuzelka(int x, int y) {
-        super(x, y);
-        this.zmenAnimaciu("zombieKuzelka", 240);
+        super(x, y, "kuzelka");
         this.setHp(20);
     }
 
@@ -18,7 +17,7 @@ public class ZombieKuzelka extends Zombie {
         boolean vysledok = super.zasiahni();
 
         if (this.getHp() == 10) {
-            this.zmenAnimaciu("zombie", 240);
+            this.setMaCiapku(false);
         }
 
         return vysledok;

@@ -157,7 +157,7 @@ public abstract class Entita {
     private void nacitajDataObrazku() {
         this.dataObrazku.clear();
         for (int i = 0; i < this.pocetObrazkov; i++) {
-            this.dataObrazku.add(new DataObrazku("obrazky/animacie/" + this.nazovAnimacieObrazku + "/" + i + ".png"));
+            this.dataObrazku.add(new DataObrazku("resources/obrazky/animacie/" + this.nazovAnimacieObrazku + "/" + i + ".png"));
         }
     }
 
@@ -165,4 +165,7 @@ public abstract class Entita {
         return this.y / 100;
     }
 
+    public int getAktualnyObrazok() {
+        return this.aktualnyObrazok;
+    }
 }

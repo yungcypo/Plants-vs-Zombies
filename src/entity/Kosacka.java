@@ -10,7 +10,7 @@ public class Kosacka extends Entita implements IHybajucaSaEntita {
 
     /**
      * Vytvori kosacku
-     * //TODO toto by sa dalo zmenit ze Y bude furt rovnaky, x bude (policko + offset hore)
+     *
      * @param x suradnica x
      * @param y suradnica y
      */

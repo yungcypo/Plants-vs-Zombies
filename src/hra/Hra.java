@@ -11,6 +11,7 @@ import entity.rastliny.strielajuceRastliny.HrachDvojity;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 import entity.zombies.ZombieKuzelka;
+import entity.zombies.ZombieVedro;
 import fri.shapesge.BlokTextu;
 import fri.shapesge.Manazer;
 import fri.shapesge.StylFontu;
@@ -37,7 +38,7 @@ public class Hra {
     private ArrayList<Strela> strely;
     private ArrayList<Slnko> slnka;
     private ArrayList<TypKarty> odomknuteKarty;
-    private int hracoveSlniecka = 50;
+    private int hracoveSlniecka = 100;
     private int cas = 0;
     private String nazovSuboru;
     private ArrayList<ZombieData> zombiesNaPridanie;
@@ -209,7 +210,7 @@ public class Hra {
     }
 
     private void nacitajZombies() {
-        File subor = new File("levely/" + this.nazovSuboru + ".zombiedata");
+        File subor = new File("resources/levely/" + this.nazovSuboru + ".zombiedata");
         Random random = new Random();
         int poslednyCas = 0;
         int x = 1100 + random.nextInt(50);
@@ -247,6 +248,9 @@ public class Hra {
                             break;
                         case 1:
                             this.pridajZombie(new ZombieKuzelka(z.getX(), z.getY()));
+                            break;
+                        case 2:
+                            this.pridajZombie(new ZombieVedro(z.getX(), z.getY()));
                             break;
                         default:
                             break;

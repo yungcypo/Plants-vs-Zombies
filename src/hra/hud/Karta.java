@@ -48,7 +48,7 @@ public class Karta implements IKlikatelne {
         this.obrazok = new Obrazok(this.cesta, this.x + this.sirkaZvyraznenia, this.y + this.sirkaZvyraznenia);
         this.obrazok.zobraz();
 
-        this.tmavyObrazok = new Obrazok("obrazky/karty/tmavyObrazok.png", this.x + this.sirkaZvyraznenia, this.y + this.sirkaZvyraznenia);
+        this.tmavyObrazok = new Obrazok("resources/obrazky/karty/tmavyObrazok.png", this.x + this.sirkaZvyraznenia, this.y + this.sirkaZvyraznenia);
         this.tmavyObrazok.zobraz();
 
         this.nacitavatko = new Obdlznik(this.x, this.y);

@@ -2,6 +2,7 @@ package entity.strely;
 
 import entity.Entita;
 import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
+import hra.Hra;
 
 /**
  * Reprezentuje strelu
@@ -27,10 +28,10 @@ public abstract class Strela extends Entita {
      * Ak strela prejde za hranicu obrazovky vymazu sa vsetky referencie na nu, cim sa uvolni pamat
      */
     public void tikPohybu() {
-        if (this.getX() <= 900) {
+        if (this.getX() <= 1100) {
             this.posunO(10, 0);
         } else {
-            this.skry();
+            Hra.getHra().odstranEntitu(this);
         }
     }
 

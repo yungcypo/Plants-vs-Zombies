@@ -35,7 +35,7 @@ public enum TypKarty {
      * @return cesta k obrazku karty
      */
     public String getCesta() {
-        return "obrazky/karty/" + this.cesta + ".png";
+        return "resources/obrazky/karty/" + this.cesta + ".png";
     }
 
     /**

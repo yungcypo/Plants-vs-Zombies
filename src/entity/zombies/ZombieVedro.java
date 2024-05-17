@@ -1,6 +1,6 @@
 package entity.zombies;
 
-public class ZombieVedro extends Zombie {
+public class ZombieVedro extends ZombieSCiapkou {
     /**
      * Vytvori Zombie
      *
@@ -8,8 +8,7 @@ public class ZombieVedro extends Zombie {
      * @param y suradnica y
      */
     public ZombieVedro(int x, int y) {
-        super(x, y);
-        this.zmenAnimaciu("zombieVedro", 240);
+        super(x, y, "vedro");
         this.setHp(30);
     }
 
@@ -17,8 +16,8 @@ public class ZombieVedro extends Zombie {
     public boolean zasiahni() {
         boolean vysledok = super.zasiahni();
 
-        if (this.getHp() == 12) {
-            this.zmenAnimaciu("zombie", 240);
+        if (this.getHp() == 10) {
+            this.setMaCiapku(false);
         }
 
         return vysledok;

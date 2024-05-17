@@ -56,7 +56,7 @@ public class HUD implements IKlikatelne {
             ));
         }
 
-        this.obrazokSlnka = new Obrazok("obrazky/slnko.png", this.x + 30, this.y + 25);
+        this.obrazokSlnka = new Obrazok("resources/obrazky/slnko.png", this.x + 30, this.y + 25);
         this.obrazokSlnka.zobraz();
         this.text = new BlokTextu(String.valueOf(this.pocetSlniek), this.x + 40, this.y + 165);
         this.text.zmenFont("Arial", StylFontu.BOLD, 45);
