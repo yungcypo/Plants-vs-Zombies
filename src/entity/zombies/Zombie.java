@@ -53,8 +53,18 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
         return false;
     }
 
+    public boolean getJeRastlinu() {
+        return this.jeRastlinu;
+    }
+
     public void setJeRastlinu(boolean jeRastlinu) {
-        this.jeRastlinu = jeRastlinu;
+        if (jeRastlinu) {
+            this.jeRastlinu = true;
+            this.zmenAnimaciu("zombieJedenie", 120);
+        } else {
+            this.jeRastlinu = false;
+            this.zmenAnimaciu("zombie", 240);
+        }
     }
 
     public void zraz() {

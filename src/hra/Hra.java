@@ -38,7 +38,7 @@ public class Hra {
     private ArrayList<Strela> strely;
     private ArrayList<Slnko> slnka;
     private ArrayList<TypKarty> odomknuteKarty;
-    private int hracoveSlniecka = 100;
+    private int hracoveSlniecka = 50;
     private int cas = 0;
     private String nazovSuboru;
     private ArrayList<ZombieData> zombiesNaPridanie;
@@ -271,6 +271,13 @@ public class Hra {
 
     public void koniecHry(boolean vyhra) {
         this.manazer.prestanSpravovatObjekt(this);
+
+        // po skonceni hry sa prestanu spawnovat slnka, ako v original hre
+        for (Rastlina r : this.rastliny) {
+            if (r instanceof Slnecnica) {
+                ((Slnecnica)r).prestanSpawnovatSlnka();
+            }
+        }
 
         // TODO dorobit
         if (vyhra) {

@@ -8,6 +8,7 @@ import hra.Hra;
  */
 public class Slnecnica extends Rastlina {
     private int casOdSpawnu = 0;
+    private boolean maSpawnowatSlnka = true;
 
     /**
      * Vytvori Slnecnicu
@@ -26,8 +27,12 @@ public class Slnecnica extends Rastlina {
     public void tikSekunda() {
         super.tikSekunda();
         this.casOdSpawnu += 1;
-        if (this.casOdSpawnu % 20 == 0) {
+        if (this.casOdSpawnu % 16 == 0 && this.maSpawnowatSlnka) {
             Hra.getHra().pridajSlnko(new Slnko(this.getX() + 25, this.getY() - 10));
         }
+    }
+
+    public void prestanSpawnovatSlnka() {
+        this.maSpawnowatSlnka = false;
     }
 }

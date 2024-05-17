@@ -29,10 +29,9 @@ public abstract class Entita {
     public Entita(int x, int y, String nazovAnimacieObrazku, int pocetObrazkov) {
         this.x = x;
         this.y = y;
-        this.nazovAnimacieObrazku = nazovAnimacieObrazku;
-        this.pocetObrazkov = pocetObrazkov;
         this.dataObrazku = new ArrayList<>();
-        this.nacitajDataObrazku();
+
+        this.zmenAnimaciu(nazovAnimacieObrazku, pocetObrazkov);
 
         this.obrazok = new Obrazok(this.dataObrazku.get(this.aktualnyObrazok), this.x, this.y);
         this.obrazok.zmenPolohu(this.x, this.y);
@@ -151,10 +150,7 @@ public abstract class Entita {
     public void zmenAnimaciu(String nazovAnimacieObrazku, int pocetObrazkov) {
         this.setNazovAnimacieObrazku(nazovAnimacieObrazku);
         this.setPocetObrazkov(pocetObrazkov);
-        this.nacitajDataObrazku();
-    }
 
-    private void nacitajDataObrazku() {
         this.dataObrazku.clear();
         for (int i = 0; i < this.pocetObrazkov; i++) {
             this.dataObrazku.add(new DataObrazku("resources/obrazky/animacie/" + this.nazovAnimacieObrazku + "/" + i + ".png"));
