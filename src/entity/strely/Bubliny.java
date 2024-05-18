@@ -9,13 +9,11 @@ public class Bubliny extends Strela {
 
     @Override
     public int getX2() {
-        // TODO zmenit toto ked bude hotovy obrazok
         return this.getX() + 50;
     }
 
     @Override
     public int getY2() {
-        // TODO zmenit toto ked bude hotovy obrazok
         return this.getY() + 50;
     }
 }

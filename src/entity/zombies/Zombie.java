@@ -85,7 +85,6 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
      * Metoda sa zavola, ked kosacka zrazi zombie. Zombie-mu sa nastavi hp na 0 a skryje sa
      */
     public void zraz() {
-        // TODO mozno nejaka animacia na zrazenie?
         this.hp = 0;
         this.skry();
     }
