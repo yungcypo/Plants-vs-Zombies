@@ -6,10 +6,12 @@ import entity.Slnko;
 import entity.rastliny.Orech;
 import entity.rastliny.Rastlina;
 import entity.rastliny.Slnecnica;
+import entity.rastliny.Zemiak;
 import entity.rastliny.strielajuceRastliny.Hrach;
 import entity.rastliny.strielajuceRastliny.HrachDvojity;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
+import entity.zombies.ZombieHlavnyTanecnik;
 import entity.zombies.ZombieKuzelka;
 import entity.zombies.ZombieVedro;
 import fri.shapesge.BlokTextu;
@@ -121,6 +123,9 @@ public class Hra {
                         break;
                     case ORECH:
                         this.rastliny.add(new Orech(noveX, noveY));
+                        break;
+                    case ZEMIAK:
+                        this.rastliny.add(new Zemiak(noveX, noveY));
                         break;
                     default:
                         break;
@@ -249,6 +254,9 @@ public class Hra {
                         case 2:
                             this.pridajZombie(new ZombieVedro(z.getX(), z.getY()));
                             break;
+                        case 3:
+                            this.pridajZombie(new ZombieHlavnyTanecnik(z.getX(), z.getY()));
+                            break;
                         default:
                             break;
                     }
@@ -287,5 +295,10 @@ public class Hra {
 
     private void zmenaTextu() {
         this.text.zmenText("Level: " + this.nazovSuboru + "     Zničení zombies: " + this.zombiesZniceni + "/" + this.zombiesCelkovo);
+    }
+
+    public void pridajZombiesCelkovo(int pocet) {
+        this.zombiesCelkovo += pocet;
+        this.zmenaTextu();
     }
 }

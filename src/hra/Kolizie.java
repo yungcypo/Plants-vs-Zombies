@@ -3,6 +3,7 @@ package hra;
 import entity.Entita;
 import entity.Kosacka;
 import entity.rastliny.Rastlina;
+import entity.rastliny.Zemiak;
 import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
@@ -64,13 +65,18 @@ public class Kolizie {
                     }
 
                     // ak sa prekryvaju, zombie zacne jest rastlinu
-                    if (z.getX() + 20 <= r.getX2() && z.getX2() + 20 >= r.getX()) {
+                    if (z.getX() + 20 <= r.getX2() && z.getX2() + 20 >= r.getX() + 50) {
+                        z.animaciaJedenia(true);
                         r.setJeJedena(true);
-                        z.setJeRastlinu(true);
 
                         if (r.getHp() <= 0) {
                             naVymazanie.add(r);
-                            z.setJeRastlinu(false);
+                            z.animaciaJedenia(false);
+                        }
+
+                        // ak zombie jedol zemiak, vymaz ho
+                        if (r instanceof Zemiak) {
+                            naVymazanie.add(z);
                         }
                     }
                 }

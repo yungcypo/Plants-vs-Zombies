@@ -58,13 +58,7 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
         return this.jeRastlinu;
     }
 
-    /**
-     * Nastavi, ci zombie aktualne zerie rastlinu alebo nie.
-     * Taktiez sa zmeni animacia
-     *
-     * @param jeRastlinu true ak zombie zerie rastlinu, inak false
-     */
-    public void setJeRastlinu(boolean jeRastlinu) {
+    public void animaciaJedenia(boolean jeRastlinu) {
         // ak sa zmenil stav jedenia
         if (this.jeRastlinu != jeRastlinu) {
             if (jeRastlinu) {
@@ -75,6 +69,16 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
                 this.zmenAnimaciu("zombie", 240);
             }
         }
+    }
+
+    /**
+     * Nastavi, ci zombie aktualne zerie rastlinu alebo nie.
+     * Taktiez sa zmeni animacia
+     *
+     * @param jeRastlinu true ak zombie zerie rastlinu, inak false
+     */
+    public void setJeRastlinu(boolean jeRastlinu) {
+        this.jeRastlinu = jeRastlinu;
     }
 
     /**
