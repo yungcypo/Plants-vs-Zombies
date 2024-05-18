@@ -84,7 +84,12 @@ public class Hra {
         this.hud.moznoSaBudeDatKliknut(this.hracoveSlniecka);
 
         // TODO unmodifiable list
-        this.kolizie = new Kolizie(this.zombies, this.strely, this.rastliny, this.kosacky);
+        this.kolizie = new Kolizie(
+                Collections.unmodifiableList(this.zombies),
+                Collections.unmodifiableList(this.strely),
+                Collections.unmodifiableList(this.rastliny),
+                Collections.unmodifiableList(this.kosacky)
+        );
         this.manazer.spravujObjekt(this.kolizie);
         this.manazer.spravujObjekt(this);
 

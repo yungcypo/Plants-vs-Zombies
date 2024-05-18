@@ -9,17 +9,16 @@ import entity.strely.Strela;
 import entity.zombies.Zombie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Trieda, ktora sa stara o kolizie medzi entitami
  */
 public class Kolizie {
-    private ArrayList<Zombie> zombies;
-    private ArrayList<Strela> strely;
-    private ArrayList<Rastlina> rastliny;
-    private ArrayList<Kosacka> kosacky;
-
-    // TODO nemodifikovatelne arraylisty
+    private List<Zombie> zombies;
+    private List<Strela> strely;
+    private List<Rastlina> rastliny;
+    private List<Kosacka> kosacky;
 
     /**
      * Konstruktor pre kolizie.
@@ -29,7 +28,7 @@ public class Kolizie {
      * @param rastliny zoznam rastlin
      * @param kosacky  zoznam kosaciek
      */
-    public Kolizie(ArrayList<Zombie> zombies, ArrayList<Strela> strely, ArrayList<Rastlina> rastliny, ArrayList<Kosacka> kosacky) {
+    public Kolizie(List<Zombie> zombies, List<Strela> strely, List<Rastlina> rastliny, List<Kosacka> kosacky) {
         this.zombies = zombies;
         this.strely = strely;
         this.rastliny = rastliny;
@@ -114,7 +113,6 @@ public class Kolizie {
             }
         }
 
-        // TODO toto bude tiez ine pri nemodifikovatelnych arraylistoch
         // vymaz vsetko zo zoznamu na vymazanie
         for (Entita e : naVymazanie) {
             Hra.getHra().odstranEntitu(e);
