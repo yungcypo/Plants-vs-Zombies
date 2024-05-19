@@ -7,6 +7,7 @@ public enum TypKarty {
     SLNECNICA("slnecnica", 50, 5),
     HRACH("hrach", 100, 5),
     HRACH_DVOJITY("hrachDvojity", 200, 5),
+    HRACH_LADOVY("hrachLadovy", 175, 5),
     ORECH("orech", 50, 25),
     ZEMIAK("zemiak", 25, 10);
     //HRACH_LADOVY("hrachLadovy", 300, 5),

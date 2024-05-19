@@ -1,6 +1,6 @@
 package entity.rastliny.strielajuceRastliny;
 
-import entity.strely.Hrach;
+import entity.strely.Strela;
 import hra.Hra;
 
 /**
@@ -29,10 +29,13 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
     public void vystrel(int cisloObrazku) {
         if (this.maStrielat) {
             if (this.jeObrazokCislo(cisloObrazku)) {
-                Hra.getHra().pridajStrelu(new Hrach(this.getX() + 100, this.getY() + 20, this));  // strela sa automaticky aj spravuje
+                //Hra.getHra().pridajStrelu(new Hrach(this.getX() + 100, this.getY() + 20, this));  // strela sa automaticky aj spravuje
+                Hra.getHra().pridajStrelu(this.getNovaStrela());
             }
         }
     }
+
+    public abstract Strela getNovaStrela();
 
     /**
      * Nastavi, ci ma rastlina strielat

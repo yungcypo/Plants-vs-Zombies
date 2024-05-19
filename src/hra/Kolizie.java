@@ -5,6 +5,7 @@ import entity.Kosacka;
 import entity.rastliny.Rastlina;
 import entity.rastliny.Zemiak;
 import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
+import entity.strely.HrachLadovy;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 import hra.plocha.HernaPlocha;
@@ -101,6 +102,9 @@ public class Kolizie {
                         if (z.zasiahni()) {
                             naVymazanie.add(z);
                             s.nechParentPrestaneStrielat();
+                        }
+                        if (s instanceof HrachLadovy) {
+                            z.setZostavajuciCasZamrazenia(5);
                         }
                     }
                 }

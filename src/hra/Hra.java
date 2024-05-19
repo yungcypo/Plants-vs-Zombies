@@ -9,6 +9,7 @@ import entity.rastliny.Slnecnica;
 import entity.rastliny.Zemiak;
 import entity.rastliny.strielajuceRastliny.Hrach;
 import entity.rastliny.strielajuceRastliny.HrachDvojity;
+import entity.rastliny.strielajuceRastliny.HrachLadovy;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 import entity.zombies.ZombieHlavnyTanecnik;
@@ -16,6 +17,7 @@ import entity.zombies.ZombieKuzelka;
 import entity.zombies.ZombieVedro;
 import fri.shapesge.BlokTextu;
 import fri.shapesge.Manazer;
+import fri.shapesge.Obrazok;
 import fri.shapesge.StylFontu;
 import hra.hud.HUD;
 import hra.plocha.HernaPlocha;
@@ -132,6 +134,9 @@ public class Hra {
                             break;
                         case HRACH_DVOJITY:
                             this.rastliny.add(new HrachDvojity(noveX, noveY));
+                            break;
+                        case HRACH_LADOVY:
+                            this.rastliny.add(new HrachLadovy(noveX, noveY));
                             break;
                         case ORECH:
                             this.rastliny.add(new Orech(noveX, noveY));
@@ -300,17 +305,18 @@ public class Hra {
         // po skonceni hry sa prestanu spawnovat slnka, ako v original hre
         for (Rastlina r : this.rastliny) {
             if (r instanceof Slnecnica) {
-                ((Slnecnica) r).prestanSpawnovatSlnka();
+                ((Slnecnica)r).prestanSpawnovatSlnka();
             }
         }
 
-        // TODO dorobit
-        if (vyhra) {
-            System.out.println("vyhra!");
-        } else {
-            System.out.println("prehra!");
+
+        Obrazok ukoncenie = new Obrazok("resources/obrazky/vyhra.png", 0, 0);
+
+        if (!vyhra) {
+            ukoncenie.zmenObrazok("resources/obrazky/prehra.png");
         }
 
+        ukoncenie.zobraz();
     }
 
     private void zmenaTextu() {

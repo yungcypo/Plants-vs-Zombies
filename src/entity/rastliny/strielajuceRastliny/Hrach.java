@@ -1,5 +1,7 @@
 package entity.rastliny.strielajuceRastliny;
 
+import entity.strely.Strela;
+
 /**
  * Reprezentuje strielaciu rastlinu Hrach
  */
@@ -20,5 +22,11 @@ public class Hrach extends StrielajucaRastlina {
      */
     public void tikAnimacie() {
         super.tikAnimacie(40);
+    }
+
+
+    @Override
+    public Strela getNovaStrela() {
+        return new entity.strely.Hrach(this.getX() + 100, this.getY() + 20, this);
     }
 }

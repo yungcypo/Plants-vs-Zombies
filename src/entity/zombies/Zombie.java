@@ -2,6 +2,7 @@ package entity.zombies;
 
 import entity.Entita;
 import entity.IHybajucaSaEntita;
+import fri.shapesge.Obrazok;
 import hra.Hra;
 
 /**
@@ -10,6 +11,10 @@ import hra.Hra;
 public class Zombie extends Entita implements IHybajucaSaEntita {
     private int hp = 10;  // zivoty
     private boolean jeRastlinu = false; // ci zombie akutalne zerie rastlinu
+    private boolean jeZamrazeny = false;
+    private int zostavajuciCasZamrazenia = 0;
+    private boolean toggleZamrazenia = false;
+    private Obrazok ladovec;
 
     /**
      * Vytvori Zombie
@@ -19,6 +24,7 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
      */
     public Zombie(int x, int y) {
         super(x, y, "zombie", 240);
+        this.ladovec = new Obrazok("resources/obrazky/ladovec.png");
     }
 
     /**
@@ -26,12 +32,30 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
      */
     @Override
     public void tikPohybu() {
+        // ak je rastlinu, nic sa nestane
         if (!this.jeRastlinu) {
+            if (this.jeZamrazeny) {
+                this.toggleZamrazenia = !this.toggleZamrazenia;
+                if (this.toggleZamrazenia) {
+                    return;
+                }
+            }
             this.posunO(-1, 0);
+            this.ladovec.zmenPolohu(this.getX() - 10, this.getY() + 100);
         }
+
+        // ak je zombie uplne vlavo, skonci hru
         if (this.getX() <= 0) {
             Hra.getHra().koniecHry(false);
         }
+    }
+
+    @Override
+    public void tikAnimacie() {
+        if (this.jeZamrazeny && this.toggleZamrazenia) {
+            return;
+        }
+        super.tikAnimacie();
     }
 
     /**
@@ -123,5 +147,26 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
      */
     public int getY2() {
         return this.getY() + 150;
+    }
+
+    public void setZostavajuciCasZamrazenia(int cas) {
+        this.zostavajuciCasZamrazenia = cas;
+        this.jeZamrazeny = true;
+        this.ladovec.zobraz();
+    }
+
+    public void tikSekunda() {
+        if (this.jeZamrazeny) {
+            this.zostavajuciCasZamrazenia--;
+            if (this.zostavajuciCasZamrazenia == 0) {
+                this.jeZamrazeny = false;
+                this.ladovec.skry();
+            }
+        }
+    }
+
+    public void skry() {
+        super.skry();
+        this.ladovec.skry();
     }
 }
