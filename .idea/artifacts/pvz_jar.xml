@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="pvz:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/pvz_jar</output-path>
+    <root id="archive" name="pvz.jar">
+      <element id="module-output" name="pvz" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/shapesGE-SK-2.0.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -26,9 +26,9 @@ import hra.plocha.HernaPlocha;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Collections;
 
 /**
  * Trieda Hra.
