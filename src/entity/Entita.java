@@ -6,7 +6,7 @@ import fri.shapesge.Obrazok;
 import java.util.ArrayList;
 
 /**
- * Reprezentuje vsetky entity v hre, ako napr. rastliny, zombie alebo strely
+ * Reprezentuje vsetky entity v hre, ako napr. zombie alebo strely
  */
 public abstract class Entita {
     private int x;
@@ -105,9 +105,7 @@ public abstract class Entita {
 
     /**
      * Stara sa o animaciu entity.
-     * Zakazdym sa zvysi cislo aktualneho obrazku o 1.
-     * Ak hodnota aktualneho obrazku presiahne maximum, nastavi sa na 0.
-     * Nakoniec sa zmeni sa obrazok entity.
+     * Metoda je spravovana Manazerom
      */
     public void tikAnimacie() {
         // ak ma entita iba jeden obrazok (napr. strela Hrach), ignoruje sa
@@ -122,7 +120,11 @@ public abstract class Entita {
         this.obrazok.zmenObrazok(this.dataObrazku.get(this.aktualnyObrazok));
     }
 
-
+    /**
+     * Zmeni nazov animacie obrazku
+     *
+     * @param nazovAnimacieObrazku novy nazov animacie obrazku
+     */
     private void setNazovAnimacieObrazku(String nazovAnimacieObrazku) {
         this.nazovAnimacieObrazku = nazovAnimacieObrazku;
     }
@@ -136,7 +138,7 @@ public abstract class Entita {
 
     /**
      * Zmeni animaciu entity na novu na zaklade parametrov
-     * Vyuziva sa pri entitach, kde sa v 'zivotnom cykle' meni animacia (napr. Zombie pri jedeni, Kosacka pri zapnuti).
+     * Vyuziva sa pri entitach, kde sa v 'zivotnom cykle' meni animacia (napr. Zombie pri jedeni alebo Kosacka pri zapnuti)
      *
      * @param nazovAnimacieObrazku cesta ku priecinku s obrazkami prisluchajucimi entite
      * @param pocetObrazkov        pocet obrazkov v animacii
@@ -152,7 +154,7 @@ public abstract class Entita {
     }
 
     /**
-     * Vrati cislo riadku, v ktorom sa entita nachadza na zaklade suradnice y.
+     * Vrati cislo riadku, v ktorom sa entita nachadza na zaklade suradnice y
      *
      * @return cislo riadku, v ktorom sa entita nachadza
      */

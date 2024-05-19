@@ -47,8 +47,10 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
     }
 
     /**
-     * Stara sa o animaciu.
-     * Pouziva sa pri rastlinach, ktore vytvaraju jednu strelu v jednom animacnom cykle (napr. Hrach)
+     * Stara sa o animaciu a strielanie.
+     * Ked sa parameter zhoduje s cislom aktualneho obrazku, vystreli.
+     * Pouziva sa pri rastlinach, ktore vytvaraju jednu strelu v jednom animacnom cykle (napr. Hrach).
+     * Metoda je spravovana Manazerom
      *
      * @param cisloObrazku cislo obrazku, pri ktorom sa ma vytvorit nova strela
      */
@@ -59,7 +61,9 @@ public abstract class StrielajucaRastlina extends entity.rastliny.Rastlina {
 
     /**
      * Stara sa o animaciu.
-     * Pouziva sa pri rastlinach, ktore vytvaraju viacero striel v jednom animacnom cykle (napr. HrachDvojity)
+     * Ked sa niektory s parametrov zhoduje s cislom aktualneho obrazku, vystreli.
+     * Pouziva sa pri rastlinach, ktore vytvaraju viacero striel v jednom animacnom cykle (napr. HrachDvojity).
+     * Metoda je spravovana Manazerom
      *
      * @param cisloObrazku cisla obrazkov, pri ktorych sa ma vytvorit nova strela
      */

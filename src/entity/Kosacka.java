@@ -20,7 +20,8 @@ public class Kosacka extends Entita implements IHybajucaSaEntita {
 
     /**
      * Stara sa o pohyb kosacky, ak je zapnuta
-     * Ak kosacka prejde za okraj obrazovky, odstrani sa
+     * Ak kosacka prejde za okraj obrazovky, odstrani sa.
+     * Metoda je spravovana Manazerom
      */
     @Override
     public void tikPohybu() {

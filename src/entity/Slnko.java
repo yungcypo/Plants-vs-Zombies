@@ -31,7 +31,8 @@ public class Slnko extends Entita implements IKlikatelne {
     }
 
     /**
-     * Stara sa o odstranenie slnka po 15 sekundach od spawnutia
+     * Stara sa o odstranenie slnka po 15 sekundach od spawnutia.
+     * Metoda je spravovana Manazerom
      */
     public void tikSekunda() {
         this.casOdSpawnu += 1;

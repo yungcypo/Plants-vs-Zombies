@@ -34,6 +34,7 @@ public abstract class ZombieSCiapkou extends Zombie {
 
     /**
      * Stara sa o animaciu ZombieSCiapkou.
+     * Metoda je spravovana Manazerom
      */
     public void tikAnimacie() {
         super.tikAnimacie();
@@ -46,7 +47,8 @@ public abstract class ZombieSCiapkou extends Zombie {
     }
 
     /**
-     * Stara sa o pohyb ZombieSCiapkou
+     * Stara sa o pohyb ZombieSCiapkou.
+     * Metoda je spravovana Manazerom
      */
     public void tikPohybu() {
         super.tikPohybu();
@@ -58,9 +60,7 @@ public abstract class ZombieSCiapkou extends Zombie {
     }
 
     /**
-     * Vrati, ci zombie ma mat ciapku
-     *
-     * @return true ak ma mat ciapku, inak false
+     * Nastavi, ci ma mat zombie ciapku
      */
     public void setMaCiapku(boolean maCiapku) {
         this.maCiapku = maCiapku;

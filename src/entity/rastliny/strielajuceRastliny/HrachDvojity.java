@@ -24,6 +24,11 @@ public class HrachDvojity extends StrielajucaRastlina {
         super.tikAnimacie(new int[]{40, 65});
     }
 
+    /**
+     * Vrati novu strelu triedy Hrach
+     *
+     * @return nova strela
+     */
     @Override
     public Strela getNovaStrela() {
         return new entity.strely.Hrach(this.getX() + 100, this.getY() + 20, this);

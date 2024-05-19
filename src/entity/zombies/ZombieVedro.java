@@ -17,7 +17,6 @@ public class ZombieVedro extends ZombieSCiapkou {
 
     /**
      * Stara sa o uberanie hp zombie.
-     * Vola sa metoda predka, kde sa urcute, ci zombie zomrel.
      * Ak zombie zomrel, vrati true.
      * Ak ma zombie 10 hp, zoberie sa mu vedro.
      *

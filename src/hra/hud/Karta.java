@@ -25,7 +25,8 @@ public class Karta implements IKlikatelne {
     private boolean mozeBytKliknuta = false;
 
     /**
-     * Konstruktor pre vytvorenie karty
+     *
+     * Vytvori kartu
      *
      * @param x                suradnica x
      * @param y                suradnica y

@@ -32,10 +32,20 @@ public class Policko {
         this.stvorec.zobraz();
     }
 
+    /**
+     * Vrati, ci je policko obsadene
+     *
+     * @return true, ak je policko obsadene, inak false
+     */
     public boolean getObsadene() {
         return this.obsadene;
     }
 
+    /**
+     * Nastavi, ci je policko obsadene
+     *
+     * @param obsadene true, ma byt policko obsadene, inak false
+     */
     public void setObsadene(boolean obsadene) {
         this.obsadene = obsadene;
     }

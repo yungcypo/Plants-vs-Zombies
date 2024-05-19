@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
  * Po kliknutí na tlačítko sa spustí hra s daným levelom.
  */
 public class Main {
+    /**
+     * Vytvara okno s vyberom levelu
+     */
     public static void main(String[] args) {
         // vytvori okno
         JFrame okno = new JFrame("Plants vs. Zombies - výber levelu");

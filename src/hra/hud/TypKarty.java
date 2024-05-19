@@ -10,9 +10,6 @@ public enum TypKarty {
     HRACH_LADOVY("hrachLadovy", 175, 5),
     ORECH("orech", 50, 25),
     ZEMIAK("zemiak", 25, 10);
-    //HRACH_LADOVY("hrachLadovy", 300, 5),
-    //VELKYORECH("velkyorech", 125, 35),
-    //POZIERAC_HROBOV("pozieracHrobov", 75, 20),
 
     private String cesta;
     private int cena;

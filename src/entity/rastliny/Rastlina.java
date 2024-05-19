@@ -36,7 +36,9 @@ public abstract class Rastlina extends Entita {
     }
 
     /**
-     * Metoda sa vola kazdu sekundu a zistuje, ci sa ma rastline uberat hp (ci je jedena). Ak ano, tak ho uberie
+     * Metoda sa vola kazdu sekundu a zistuje, ci sa ma rastline uberat hp (ci je jedena).
+     * Ak ano, tak ho uberie.
+     * Metoda je spravovana Manazerom
      */
     public void tikSekunda() {
         if (this.jeJedena) {

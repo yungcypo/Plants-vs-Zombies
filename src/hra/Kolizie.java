@@ -40,10 +40,15 @@ public class Kolizie {
     }
 
     /**
-     * Metoda, ktora sa stara o kolizie medzi entitami.
-     * Metoda sa vola pri kazdom pohybe entit.
+     * Stara sa o kolizie medzi entitami.
+     * Metoda je spravovana Manazerom
      */
     public void tikPohybu() {
+        // ak nie su ziadni zombies, nic sa nevykona
+        if (this.zombies.isEmpty()) {
+            return;
+        }
+
         // ak sa ma nejaka entita vymazat, prida sa do tohto zoznamu a neskor bude vymazana
         ArrayList<Entita> naVymazanie = new ArrayList<>();
 

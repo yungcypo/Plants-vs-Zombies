@@ -19,7 +19,7 @@ public class ZombieHlavnyTanecnik extends Zombie {
 
     /**
      * Nastavi, ci zombie aktualne zerie rastlinu alebo nie.
-     * Taktiez sa zmeni animacia
+     * Taktiez sa zmeni animacia jedenia
      *
      * @param jeRastlinu true ak zombie zerie rastlinu, inak false
      */
@@ -37,6 +37,11 @@ public class ZombieHlavnyTanecnik extends Zombie {
         }
     }
 
+    /**
+     * Stara sa o pohyb.
+     * Ked sa X-ova suradnica zombie rovna 800 alebo 500, zavola metodu zjavVedlajsichTanecnikov().
+     * Metoda je spravovana Manazerom
+     */
     @Override
     public void tikPohybu() {
         super.tikPohybu();
@@ -45,17 +50,22 @@ public class ZombieHlavnyTanecnik extends Zombie {
         }
     }
 
+    /**
+     * Zjavi Vedlajsich Tanecnikov
+     */
     private void zjavVedlajsichTanecnikov() {
         int pridaniZombies = 2;
 
         Hra.getHra().pridajZombie(new ZombieVedlajsiTanecnik(this.getX() - 100, this.getY()));
         Hra.getHra().pridajZombie(new ZombieVedlajsiTanecnik(this.getX() + 100, this.getY()));
 
+        // zjavi Vedlajsieho Tanecnika hore, iba ak sa nenachadza na prvom riadku (aby nebol mimo hernej plochy)
         if (this.getCisloRiadku() != 0) {
             Hra.getHra().pridajZombie(new ZombieVedlajsiTanecnik(this.getX(), this.getY() - 100));
             pridaniZombies++;
         }
 
+        // zjavi Vedlajsieho Tanecnika dole, iba ak sa nenachadza na poslednom riadku (aby nebol mimo hernej plochy)
         if (this.getCisloRiadku() != 4) {
             Hra.getHra().pridajZombie(new ZombieVedlajsiTanecnik(this.getX(), this.getY() + 100));
             pridaniZombies++;

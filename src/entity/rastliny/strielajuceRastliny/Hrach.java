@@ -24,7 +24,11 @@ public class Hrach extends StrielajucaRastlina {
         super.tikAnimacie(40);
     }
 
-
+    /**
+     * Vrati novu strelu triedy Hrach
+     *
+     * @return nova strela
+     */
     @Override
     public Strela getNovaStrela() {
         return new entity.strely.Hrach(this.getX() + 100, this.getY() + 20, this);

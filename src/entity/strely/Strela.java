@@ -26,7 +26,8 @@ public abstract class Strela extends Entita {
 
     /**
      * Stara sa o pohyb strely.
-     * Ak strela prejde za hranicu obrazovky, odstrani sa
+     * Ak strela prejde za hranicu obrazovky, odstrani sa.
+     * Metoda je spravovana Manazerom
      */
     public void tikPohybu() {
         if (this.getX() <= 1100) {

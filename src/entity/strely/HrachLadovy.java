@@ -16,11 +16,21 @@ public class HrachLadovy extends Strela {
         super(x, y, "strelaHrachLadovy", 1, parent);
     }
 
+    /**
+     * Vrati x-ovu suradnicu praveho okraja strely
+     *
+     * @return x-ova suradnica praveho okraja strely
+     */
     @Override
     public int getX2() {
         return this.getX() + 20;
     }
 
+    /**
+     * Vrati y-ovu suradnicu spodneho okraja strely
+     *
+     * @return y-ova suradnica spodneho okraja strely
+     */
     @Override
     public int getY2() {
         return this.getY() + 20;

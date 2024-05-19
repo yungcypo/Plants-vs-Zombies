@@ -22,7 +22,8 @@ public class Slnecnica extends Rastlina {
 
     /**
      * Stara sa o vytvaranie instancii triedy Slnko.
-     * Vytvara Slnko kazdych 16 sekund
+     * Vytvara Slnko kazdych 16 sekund.
+     * Metoda je spravovana Manazerom
      */
     public void tikSekunda() {
         super.tikSekunda();
@@ -33,7 +34,8 @@ public class Slnecnica extends Rastlina {
     }
 
     /**
-     * Prestane spawnovat slnka. Pouziva sa vtedy, ked skonci hra
+     * Prestane spawnovat slnka.
+     * Pouziva sa vtedy, ked skonci hra
      */
     public void prestanSpawnovatSlnka() {
         this.maSpawnowatSlnka = false;

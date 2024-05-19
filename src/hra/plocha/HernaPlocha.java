@@ -76,15 +76,36 @@ public class HernaPlocha implements IKlikatelne {
         return 50 + this.pocetRiadkov * this.rozmerPolicka;
     }
 
+    /**
+     * Urcuje, ci bolo kliknute na hraciu plochu
+     *
+     * @param x suradnica x kliknutia
+     * @param y suradnica y kliknutia
+     * @return true, ak bolo kliknute na hraciu plochu, inak false
+     */
     @Override
     public boolean boloNaMnaKliknute(int x, int y) {
         return x > this.getX() && x < this.getX2() && y > this.getY() && y < this.getY2();
     }
 
+    /**
+     * Urcuje, ci bolo kliknute na policko s indexom x, y
+     *
+     * @param x index x policka, ktore sa ma overovat
+     * @param y index y policka, ktore sa ma overovat
+     * @return true, ak bolo kliknute na dane policko, inak false
+     */
     public boolean jePolickoObsadene(int x, int y) {
         return this.hernaPlocha[y][x].getObsadene();
     }
 
+    /**
+     * Nastavi stav policka zadaneho indexom x, y na true alebo false
+     *
+     * @param x    index x policka
+     * @param y    index y policka
+     * @param stav true, ak ma byt policko obsadene, inak false
+     */
     public void nastavObsadeniePolicka(int x, int y, boolean stav) {
         this.hernaPlocha[y][x].setObsadene(stav);
     }

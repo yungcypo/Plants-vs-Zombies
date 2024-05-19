@@ -34,10 +34,9 @@ public class ZombieKuzelka extends ZombieSCiapkou {
         return vysledok;
     }
 
-    // TODO tato duplicita by sa dala nahradit v predkovi
     /**
      * Nastavi, ci zombie aktualne zerie rastlinu alebo nie.
-     * Taktiez sa zmeni animacia zombie pomocou metody predka, a animacia Kuzelky
+     * Taktiez sa zmeni animacia zombie a animacia Kuzelky
      *
      * @param jeRastlinu true ak zombie zerie rastlinu, inak false
      */

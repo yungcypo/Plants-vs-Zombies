@@ -29,7 +29,11 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Collections;
 
-// singleton hra
+/**
+ * Trieda Hra.
+ * Hlavna trieda, kde sa vykonava vacsina hry.
+ * Trieda je singleton, t. j. moze byt vytvorena iba jedna instancia
+ */
 public class Hra {
     private static Hra hra;
     private Manazer manazer;
@@ -49,20 +53,11 @@ public class Hra {
     private int zombiesCelkovo;
     private int zombiesZniceni = 0;
 
-    public static Hra getHra() {
-        if (hra == null) {
-            hra = new Hra(null);
-        }
-        return hra;
-    }
-
-    public static Hra getHra(String nazovSuboru) {
-        if (hra == null) {
-            hra = new Hra(nazovSuboru);
-        }
-        return hra;
-    }
-
+    /**
+     * Privatny konstruktor triedy hra
+     *
+     * @param nazovSuboru nazov suboru s levelom
+     */
     private Hra(String nazovSuboru) {
         this.manazer = new Manazer();
 
@@ -106,6 +101,36 @@ public class Hra {
         this.zmenaTextu();
     }
 
+    /**
+     * Vrati instanciu triedy Hra s levelom podla nazvu suboru.
+     * Touto metodou sa vytvara prva instancia triedy
+     *
+     * @param nazovSuboru nazov suboru s levelom
+     * @return instancia triedy Hra
+     */
+    public static Hra getHra(String nazovSuboru) {
+        if (hra == null) {
+            hra = new Hra(nazovSuboru);
+        }
+        return hra;
+    }
+
+    /**
+     * Vrati instanciu triedy Hra
+     *
+     * @return instancia triedy Hra
+     */
+    public static Hra getHra() {
+        return hra;
+    }
+
+    /**
+     * Stara sa o klikanie myskou v hre.
+     * Metoda je spravovana Manazerom
+     *
+     * @param x suradnica x, na ktoru s kliklo
+     * @param y suradnica y, na ktoru s kliklo
+     */
     public void vyberSuradnice(int x, int y) {
         // ak sa kliklo na HUD
         if (this.hud.boloNaMnaKliknute(x, y)) {
@@ -186,17 +211,32 @@ public class Hra {
         this.hud.odzvyrazniKarty();
     }
 
+    /**
+     * Prikaze Manazerovi spravovat entitu
+     *
+     * @param e entita, ktora sa ma spravovat
+     */
     public void spravujEntitu(Entita e) {
         this.manazer.prestanSpravovatObjekt(e);
         this.manazer.spravujObjekt(e);
     }
 
+    /**
+     * Prikaze Manazerovi spravovat zoznam entit
+     *
+     * @param entity entity, ktore sa maju spravovat
+     */
     public void spravujZoznam(ArrayList<? extends Entita> entity) {
         for (Entita e : entity) {
             this.spravujEntitu(e);
         }
     }
 
+    /**
+     * Odstrani entitu z hry (prestane sa spravovat, ostrani sa z prislusneho zoznamu a skryje sa)
+     *
+     * @param e entita, ktora sa ma odstranit
+     */
     public void odstranEntitu(Entita e) {
         this.manazer.prestanSpravovatObjekt(e);
 
@@ -217,25 +257,48 @@ public class Hra {
         e.skry();
     }
 
+    /**
+     * Prida strelu do hry
+     *
+     * @param s strela, ktora sa ma pridat
+     */
     public void pridajStrelu(Strela s) {
         this.strely.add(s);
         this.manazer.spravujObjekt(s);
     }
 
+    /**
+     * Prida slnko do hry
+     *
+     * @param s slnko, ktore sa ma pridat
+     */
     public void pridajSlnko(Slnko s) {
         this.slnka.add(s);
         this.manazer.spravujObjekt(s);
     }
 
+    /**
+     * Prida zombie do hry
+     *
+     * @param z zombie, ktory sa ma pridat
+     */
     public void pridajZombie(Zombie z) {
         this.zombies.add(z);
         this.manazer.spravujObjekt(z);
     }
 
+    /**
+     * Vrati pocet slniecok, ktore ma hrac
+     *
+     * @return pocet slniecok, ktore ma hrac
+     */
     public int getHracoveSlniecka() {
         return this.hracoveSlniecka;
     }
 
+    /**
+     * Nacita zombies zo suboru a ulozi ich do zoznamu na pridanie
+     */
     private void nacitajZombies() {
         File subor = new File("resources/levely/" + this.nazovSuboru + ".zombiedata");
         Random random = new Random();
@@ -260,13 +323,21 @@ public class Hra {
         }
     }
 
+    /**
+     * Pridava zombies do hry zo zoznamu na pridanie.
+     * Metoda je spravovana Manazerom
+     */
     public void tikSekunda() {
+        // navysi sa cas a zmeni sa text
         this.cas++;
         this.zmenaTextu();
 
+        // ak existuju nejaki zombies na pridanie
         if (!this.zombiesNaPridanie.isEmpty()) {
+            // pomocny zoznam na odstranenie z ArrayList-u this.zombiesNaPridanie
             ArrayList<ZombieData> naOdstranenie = new ArrayList<>();
 
+            // ak sa momentalny cas zhoduje s casom, kedy sa ma zombie pridat, prida sa
             for (ZombieData z : this.zombiesNaPridanie) {
                 if (z.getDelay() == this.cas) {
                     switch (z.getId()) {
@@ -289,16 +360,23 @@ public class Hra {
                 }
             }
 
+            // odstranuje sa z ArrayList-u
             for (ZombieData z : naOdstranenie) {
                 this.zombiesNaPridanie.remove(z);
             }
         } else {
+            // ak nie su ziadni zombies na pridanie a tiez nie su ziadni zombies v hre, hra konci, hrac vyhral
             if (this.zombies.isEmpty()) {
                 this.koniecHry(true);
             }
         }
     }
 
+    /**
+     * Koniec hry
+     *
+     * @param vyhra true, ak hrac vyhral, false, ak prehral
+     */
     public void koniecHry(boolean vyhra) {
         this.manazer.prestanSpravovatObjekt(this);
 
@@ -309,7 +387,7 @@ public class Hra {
             }
         }
 
-
+        // zobrazi sa obrazok vyhra, resp. prehra
         Obrazok ukoncenie = new Obrazok("resources/obrazky/vyhra.png", 0, 0);
 
         if (!vyhra) {
@@ -319,10 +397,18 @@ public class Hra {
         ukoncenie.zobraz();
     }
 
+    /**
+     * Zmeni cas a pocet zombies v hornom riadku hry
+     */
     private void zmenaTextu() {
         this.text.zmenText("Level: " + this.nazovSuboru + "     Zničení zombies: " + this.zombiesZniceni + "/" + this.zombiesCelkovo);
     }
 
+    /**
+     * Prida pocet zombies, ktorych treba znicit
+     *
+     * @param pocet pocet zombies, ktorych treba znicit
+     */
     public void pridajZombiesCelkovo(int pocet) {
         this.zombiesCelkovo += pocet;
         this.zmenaTextu();
