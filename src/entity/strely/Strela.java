@@ -1,13 +1,14 @@
 package entity.strely;
 
 import entity.Entita;
+import entity.IHybajucaSaEntita;
 import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
 import hra.Hra;
 
 /**
  * Reprezentuje strelu
  */
-public abstract class Strela extends Entita {
+public abstract class Strela extends Entita implements IHybajucaSaEntita {
     private StrielajucaRastlina parent;
 
     /**
