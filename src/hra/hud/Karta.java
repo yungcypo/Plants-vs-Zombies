@@ -25,7 +25,6 @@ public class Karta implements IKlikatelne {
     private boolean mozeBytKliknuta = false;
 
     /**
-     *
      * Vytvori kartu
      *
      * @param x                suradnica x
@@ -100,6 +99,7 @@ public class Karta implements IKlikatelne {
     /**
      * Metoda sa vola kazdu pol sekundu a zvysuje percento nacitavania karty.
      * Cast, o ktoru sa zvysi zavisi od atributu dlzkaNacitavania.
+     * Metodu spravuje Manazer
      */
     public void tikPolsekunda() {
         if (this.percentoNacitania < 100) {
@@ -173,11 +173,9 @@ public class Karta implements IKlikatelne {
      * @param hracoveSlniecka pocet slniecok hraca
      */
     public void moznoSaBudeDatKliknut(int hracoveSlniecka) {
-        if (hracoveSlniecka >= this.cena) {
-            if (this.percentoNacitania >= 100) {
-                this.tmavyObrazok.skry();
-                this.mozeBytKliknuta = true;
-            }
+        if (hracoveSlniecka >= this.cena && this.percentoNacitania >= 100) {
+            this.tmavyObrazok.skry();
+            this.mozeBytKliknuta = true;
         } else {
             this.tmavyObrazok.zobraz();
             this.mozeBytKliknuta = false;

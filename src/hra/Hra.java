@@ -10,6 +10,7 @@ import entity.rastliny.Zemiak;
 import entity.rastliny.strielajuceRastliny.Hrach;
 import entity.rastliny.strielajuceRastliny.HrachDvojity;
 import entity.rastliny.strielajuceRastliny.HrachLadovy;
+import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
 import entity.zombies.ZombieHlavnyTanecnik;
@@ -81,7 +82,6 @@ public class Hra {
         this.hud.spravujKarty(this.manazer);
         this.hud.moznoSaBudeDatKliknut(this.hracoveSlniecka);
 
-        // TODO unmodifiable list
         this.kolizie = new Kolizie(
                 Collections.unmodifiableList(this.zombies),
                 Collections.unmodifiableList(this.strely),
@@ -300,7 +300,7 @@ public class Hra {
      * Nacita zombies zo suboru a ulozi ich do zoznamu na pridanie
      */
     private void nacitajZombies() {
-        File subor = new File("resources/levely/" + this.nazovSuboru + ".zombiedata");
+        File subor = new File("resources/levely/" + this.nazovSuboru + ".pvzlevel");
         Random random = new Random();
         int poslednyCas = 0;
         int x = 1100 + random.nextInt(50);
@@ -380,11 +380,18 @@ public class Hra {
     public void koniecHry(boolean vyhra) {
         this.manazer.prestanSpravovatObjekt(this);
 
-        // po skonceni hry sa prestanu spawnovat slnka, ako v original hre
+        // po skonceni hry sa prestanu spawnovat slnka a strielat rastliny
         for (Rastlina r : this.rastliny) {
             if (r instanceof Slnecnica) {
                 ((Slnecnica)r).prestanSpawnovatSlnka();
+            } else if (r instanceof StrielajucaRastlina) {
+                ((StrielajucaRastlina)r).setMaStrielat(false);
             }
+        }
+
+        // v pripade prehry schova zombies, aby sa predislo nekonecnemu loopu
+        for (Zombie z : this.zombies) {
+            this.odstranEntitu(z);
         }
 
         // zobrazi sa obrazok vyhra, resp. prehra

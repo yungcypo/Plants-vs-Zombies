@@ -85,4 +85,11 @@ public abstract class ZombieSCiapkou extends Zombie {
             this.dataObrazkuCiapky.add(new DataObrazku("resources/obrazky/animacie/" + this.nazovAnimacieCiapky + "/" + i + ".png"));
         }
     }
+
+    /**
+     * Skryje ciapku
+     */
+    public void skryCiapku() {
+        this.ciapka.skry();
+    }
 }

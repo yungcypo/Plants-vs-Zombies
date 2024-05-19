@@ -8,6 +8,7 @@ import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
 import entity.strely.HrachLadovy;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
+import entity.zombies.ZombieSCiapkou;
 import hra.plocha.HernaPlocha;
 
 import java.util.ArrayList;
@@ -52,22 +53,11 @@ public class Kolizie {
         // ak sa ma nejaka entita vymazat, prida sa do tohto zoznamu a neskor bude vymazana
         ArrayList<Entita> naVymazanie = new ArrayList<>();
 
-        // zisti kolko zombie je v jednotlivych riadkoch pre potreby strielajucich rastlin
-        int[] pocetZombieVRiadkoch = new int[5];
-        for (Zombie z : this.zombies) {
-            pocetZombieVRiadkoch[z.getCisloRiadku()]++;
-        }
-
         for (Zombie z : this.zombies) {
             // jedenie rastlin
             for (Rastlina r : this.rastliny) {
-                // ak su na tom istom riadku
+                // ak su na tom istom riadku a zombie uz je viditelny
                 if (z.getCisloRiadku() == r.getCisloRiadku()) {
-                    // strielajuce rastliny strielaju iba vtedy, ked su na tom istom riadku ako nejaky zombie
-                    if (r instanceof StrielajucaRastlina) {
-                        ((StrielajucaRastlina)r).setMaStrielat(pocetZombieVRiadkoch[r.getCisloRiadku()] > 0);
-                    }
-
                     // ak sa prekryvaju, zombie zacne jest rastlinu
                     if (z.getX() + 20 <= r.getX2() && z.getX2() + 20 >= r.getX() + 50) {
                         z.animaciaJedenia(true);
@@ -84,9 +74,12 @@ public class Kolizie {
                             this.hernaPlocha.nastavObsadeniePolicka(x, y, false);
                         }
 
-                        // ak zombie jedol zemiak, vymaz ho
+                        // ak zombie jedol zemiak a zemiak nie je vybuchnuty
                         if (r instanceof Zemiak) {
+                            // vymaz zombie, uvolni policko kde bol zemiak
                             naVymazanie.add(z);
+                            z.animaciaJedenia(false);
+                            this.hernaPlocha.nastavObsadeniePolicka(r.getX() / 100, r.getY() / 100, false);
                         }
                     }
                 }
@@ -127,9 +120,28 @@ public class Kolizie {
             }
         }
 
+
+        // zisti kolko zombie je v jednotlivych riadkoch
+        int[] pocetZombieVRiadkoch = new int[5];
+        for (Zombie z : this.zombies) {
+            pocetZombieVRiadkoch[z.getCisloRiadku()]++;
+        }
+
+        // ak je v riadku strielajuca rastlina bez zombie, prestane strielat
+        for (Rastlina r : this.rastliny) {
+            if (r instanceof StrielajucaRastlina) {
+                ((StrielajucaRastlina)r).setMaStrielat(pocetZombieVRiadkoch[r.getCisloRiadku()] > 0);
+            }
+        }
+
         // vymaz vsetko zo zoznamu na vymazanie
         for (Entita e : naVymazanie) {
             Hra.getHra().odstranEntitu(e);
+
+            // ak to bol zombie s ciapkou, skry mu ciapku
+            if (e instanceof ZombieSCiapkou) {
+                ((ZombieSCiapkou)e).skryCiapku();
+            }
         }
     }
 }

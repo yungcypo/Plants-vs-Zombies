@@ -6,6 +6,7 @@ import hra.Hra;
  * Reprezentuje zemiak
  */
 public class Zemiak extends Rastlina {
+    private boolean jeVybuchnuty = false;
     /**
      * Vytvori zemiak
      *
@@ -13,7 +14,7 @@ public class Zemiak extends Rastlina {
      * @param polickoY             suradnica y
      */
     public Zemiak(int polickoX, int polickoY) {
-        super(polickoX, polickoY, "zemiak", 120, 5);
+        super(polickoX, polickoY, "zemiak", 120, 1);
     }
 
     /**
@@ -25,6 +26,7 @@ public class Zemiak extends Rastlina {
 
         // vybuchne
         this.zmenAnimaciu("bum", 240);
+        this.jeVybuchnuty = true;
     }
 
     /**

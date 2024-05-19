@@ -39,13 +39,13 @@ public class ZombieHlavnyTanecnik extends Zombie {
 
     /**
      * Stara sa o pohyb.
-     * Ked sa X-ova suradnica zombie rovna 800 alebo 500, zavola metodu zjavVedlajsichTanecnikov().
+     * Ked sa X-ova suradnica zombie rovna 800 alebo 400, zavola metodu zjavVedlajsichTanecnikov().
      * Metoda je spravovana Manazerom
      */
     @Override
     public void tikPohybu() {
         super.tikPohybu();
-        if (this.getX() == 800 || this.getX() == 500) {
+        if (this.getX() == 800 || this.getX() == 400) {
             this.zjavVedlajsichTanecnikov();
         }
     }
