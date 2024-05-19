@@ -80,4 +80,12 @@ public class HernaPlocha implements IKlikatelne {
     public boolean boloNaMnaKliknute(int x, int y) {
         return x > this.getX() && x < this.getX2() && y > this.getY() && y < this.getY2();
     }
+
+    public boolean jePolickoObsadene(int x, int y) {
+        return this.hernaPlocha[y][x].getObsadene();
+    }
+
+    public void nastavObsadeniePolicka(int x, int y, boolean stav) {
+        this.hernaPlocha[y][x].setObsadene(stav);
+    }
 }

@@ -7,6 +7,7 @@ import entity.rastliny.Zemiak;
 import entity.rastliny.strielajuceRastliny.StrielajucaRastlina;
 import entity.strely.Strela;
 import entity.zombies.Zombie;
+import hra.plocha.HernaPlocha;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class Kolizie {
     private List<Strela> strely;
     private List<Rastlina> rastliny;
     private List<Kosacka> kosacky;
+    private HernaPlocha hernaPlocha;
 
     /**
      * Konstruktor pre kolizie.
@@ -28,11 +30,12 @@ public class Kolizie {
      * @param rastliny zoznam rastlin
      * @param kosacky  zoznam kosaciek
      */
-    public Kolizie(List<Zombie> zombies, List<Strela> strely, List<Rastlina> rastliny, List<Kosacka> kosacky) {
+    public Kolizie(List<Zombie> zombies, List<Strela> strely, List<Rastlina> rastliny, List<Kosacka> kosacky, HernaPlocha hernaPlocha) {
         this.zombies = zombies;
         this.strely = strely;
         this.rastliny = rastliny;
         this.kosacky = kosacky;
+        this.hernaPlocha = hernaPlocha;
     }
 
     /**
@@ -68,9 +71,15 @@ public class Kolizie {
                         z.animaciaJedenia(true);
                         r.setJeJedena(true);
 
+                        // ak je raslina zjedena, vymaz ju a uvolni policko
                         if (r.getHp() <= 0) {
-                            naVymazanie.add(r);
                             z.animaciaJedenia(false);
+                            naVymazanie.add(r);
+
+                            int x = r.getX() / 100;
+                            int y = r.getY() / 100;
+
+                            this.hernaPlocha.nastavObsadeniePolicka(x, y, false);
                         }
 
                         // ak zombie jedol zemiak, vymaz ho

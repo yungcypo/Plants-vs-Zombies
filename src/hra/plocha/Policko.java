@@ -10,6 +10,7 @@ public class Policko {
     private int x;
     private int y;
     private String farba;
+    private boolean obsadene = false;
 
     /**
      * Konstruktor triedy Policko
@@ -29,5 +30,13 @@ public class Policko {
         this.stvorec.zmenFarbu(this.farba);
 
         this.stvorec.zobraz();
+    }
+
+    public boolean getObsadene() {
+        return this.obsadene;
+    }
+
+    public void setObsadene(boolean obsadene) {
+        this.obsadene = obsadene;
     }
 }

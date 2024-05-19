@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Collections;
 
 // singleton hra
 public class Hra {
@@ -88,7 +89,8 @@ public class Hra {
                 Collections.unmodifiableList(this.zombies),
                 Collections.unmodifiableList(this.strely),
                 Collections.unmodifiableList(this.rastliny),
-                Collections.unmodifiableList(this.kosacky)
+                Collections.unmodifiableList(this.kosacky),
+                this.hernaPlocha
         );
         this.manazer.spravujObjekt(this.kolizie);
         this.manazer.spravujObjekt(this);
@@ -111,43 +113,56 @@ public class Hra {
 
         // ak sa kliklo na hernu plochu
         if (this.hernaPlocha.boloNaMnaKliknute(x, y)) {
-            // ak je nejaka zvyraznena karta, spawni ju
-            if (this.hud.getZvyraznenaKarta() != null) {
-                int noveX = (x - 50) / 100;
-                int noveY = (y - 50) / 100;
+            // premeni suradnice na cislo policka
+            int noveX = (x - 50) / 100;
+            int noveY = (y - 50) / 100;
 
-                switch (this.hud.getZvyraznenaKarta().getTyp()) {
-                    case SLNECNICA:
-                        this.rastliny.add(new Slnecnica(noveX, noveY));
-                        break;
-                    case HRACH:
-                        this.rastliny.add(new Hrach(noveX, noveY));
-                        break;
-                    case HRACH_DVOJITY:
-                        this.rastliny.add(new HrachDvojity(noveX, noveY));
-                        break;
-                    case ORECH:
-                        this.rastliny.add(new Orech(noveX, noveY));
-                        break;
-                    case ZEMIAK:
-                        this.rastliny.add(new Zemiak(noveX, noveY));
-                        break;
-                    default:
-                        break;
+            // ak policko, na ktore sa kliklo nie je obsadene
+            if (!this.hernaPlocha.jePolickoObsadene(noveX, noveY)) {
+                // ak je nejaka zvyraznena karta, spawni ju
+                if (this.hud.getZvyraznenaKarta() != null) {
+
+                    boolean uspesneVytvorenie = true;
+                    switch (this.hud.getZvyraznenaKarta().getTyp()) {
+                        case SLNECNICA:
+                            this.rastliny.add(new Slnecnica(noveX, noveY));
+                            break;
+                        case HRACH:
+                            this.rastliny.add(new Hrach(noveX, noveY));
+                            break;
+                        case HRACH_DVOJITY:
+                            this.rastliny.add(new HrachDvojity(noveX, noveY));
+                            break;
+                        case ORECH:
+                            this.rastliny.add(new Orech(noveX, noveY));
+                            break;
+                        case ZEMIAK:
+                            this.rastliny.add(new Zemiak(noveX, noveY));
+                            break;
+                        default:
+                            uspesneVytvorenie = false;
+                            break;
+                    }
+                    if (uspesneVytvorenie) {
+                        this.hernaPlocha.nastavObsadeniePolicka(noveX, noveY, true);
+                    }
+
+                    // odcita hracovi prislusny pocet slniecok
+                    this.hracoveSlniecka -= this.hud.getZvyraznenaKarta().getCena();
+
+                    this.hud.getZvyraznenaKarta().resetNacitavania();
+                    this.hud.odzvyrazniKarty();
+                    this.hud.moznoSaBudeDatKliknut();
+
+                    this.spravujZoznam(this.rastliny);
+                    return;
                 }
-                // odcita hracovi prislusny pocet slniecok
-                this.hracoveSlniecka -= this.hud.getZvyraznenaKarta().getCena();
-
-                this.hud.getZvyraznenaKarta().resetNacitavania();
-                this.hud.odzvyrazniKarty();
-                this.hud.moznoSaBudeDatKliknut();
-
-                this.spravujZoznam(this.rastliny);
-                return;
             }
 
+            // ak existuju nejake slniecka
             if (!this.slnka.isEmpty()) {
                 Slnko kliknuteSlnko = null;
+                // ak bolo kliknute na nejake slnko
                 for (Slnko s : this.slnka) {
                     if (s.boloNaMnaKliknute(x, y)) {
                         this.hracoveSlniecka += 25;
@@ -285,7 +300,7 @@ public class Hra {
         // po skonceni hry sa prestanu spawnovat slnka, ako v original hre
         for (Rastlina r : this.rastliny) {
             if (r instanceof Slnecnica) {
-                ((Slnecnica)r).prestanSpawnovatSlnka();
+                ((Slnecnica) r).prestanSpawnovatSlnka();
             }
         }
 
