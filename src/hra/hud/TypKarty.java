@@ -11,9 +11,9 @@ public enum TypKarty {
     ORECH("orech", 50, 25),
     ZEMIAK("zemiak", 25, 10);
 
-    private String cesta;
-    private int cena;
-    private int dlzkaNacitavania;
+    private final String cesta;
+    private final int cena;
+    private final int dlzkaNacitavania;
 
     /**
      * Konstruktor pre typ karty

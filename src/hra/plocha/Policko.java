@@ -6,10 +6,10 @@ import fri.shapesge.Stvorec;
  * Reprezentuje jednotlive policka na hracej ploche
  */
 public class Policko {
-    private Stvorec stvorec;
-    private int x;
-    private int y;
-    private String farba;
+    private final Stvorec stvorec;
+    private final int x;
+    private final int y;
+    private final String farba;
     private boolean obsadene = false;
 
     /**

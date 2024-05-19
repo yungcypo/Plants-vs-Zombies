@@ -6,10 +6,10 @@ import hra.IKlikatelne;
  * Reprezentuje hernu plochu
  */
 public class HernaPlocha implements IKlikatelne {
-    private Policko[][] hernaPlocha;
-    private int pocetRiadkov = 5;
-    private int pocetStlpcov = 10;
-    private int rozmerPolicka = 100;
+    private final Policko[][] hernaPlocha;
+    private final int pocetRiadkov = 5;
+    private final int pocetStlpcov = 10;
+    private final int rozmerPolicka = 100;
 
     /**
      * Vytvori hernu plochu z 5 riadkov

@@ -14,7 +14,7 @@ public class Zombie extends Entita implements IHybajucaSaEntita {
     private boolean jeZamrazeny = false;
     private int zostavajuciCasZamrazenia = 0;
     private boolean toggleZamrazenia = false;
-    private Obrazok ladovec;
+    private final Obrazok ladovec;
 
     /**
      * Vytvori Zombie

@@ -11,11 +11,11 @@ import java.util.ArrayList;
 public abstract class Entita {
     private int x;
     private int y;
-    private Obrazok obrazok;
+    private final Obrazok obrazok;
     private int pocetObrazkov;
     private int aktualnyObrazok = 0;
     private String nazovAnimacieObrazku;
-    private ArrayList<DataObrazku> dataObrazku;
+    private final ArrayList<DataObrazku> dataObrazku;
     private boolean maBytZobrazena = true;
 
     /**

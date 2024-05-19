@@ -4,10 +4,10 @@ package hra;
  * Reprezentuje data potrebne na spawn zombie
  */
 public class ZombieData {
-    private int x;
-    private int y;
-    private int delay;
-    private int id;
+    private final int x;
+    private final int y;
+    private final int delay;
+    private final int id;
 
     /**
      * Konstruktor pre ZombieData

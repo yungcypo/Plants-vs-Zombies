@@ -16,17 +16,17 @@ import java.util.List;
  * Reprezentuje dolny riadok s kartami a poctom slniecok
  */
 public class HUD implements IKlikatelne {
-    private int x;
-    private int y;
-    private Obdlznik pozadie;
-    private ArrayList<Karta> karty;
-    private ArrayList<TypKarty> typyKariet;
-    private int sirkaZvyraznenia = 10;
-    private int padding = this.sirkaZvyraznenia * 2;
+    private final int x;
+    private final int y;
+    private final Obdlznik pozadie;
+    private final ArrayList<Karta> karty;
+    private final ArrayList<TypKarty> typyKariet;
+    private final int sirkaZvyraznenia = 10;
+    private final int padding = this.sirkaZvyraznenia * 2;
     private Karta zvyraznenaKarta = null;
-    private Obrazok obrazokSlnka;
+    private final Obrazok obrazokSlnka;
     private int pocetSlniek = 500;
-    private BlokTextu text;
+    private final BlokTextu text;
 
     /**
      * Vytvori HUD

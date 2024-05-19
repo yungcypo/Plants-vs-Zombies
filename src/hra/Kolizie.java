@@ -17,11 +17,11 @@ import java.util.List;
  * Trieda, ktora sa stara o kolizie medzi entitami
  */
 public class Kolizie {
-    private List<Zombie> zombies;
-    private List<Strela> strely;
-    private List<Rastlina> rastliny;
-    private List<Kosacka> kosacky;
-    private HernaPlocha hernaPlocha;
+    private final List<Zombie> zombies;
+    private final List<Strela> strely;
+    private final List<Rastlina> rastliny;
+    private final List<Kosacka> kosacky;
+    private final HernaPlocha hernaPlocha;
 
     /**
      * Konstruktor pre kolizie.
@@ -65,11 +65,7 @@ public class Kolizie {
                 if (z.getCisloRiadku() == r.getCisloRiadku()) {
                     // strielajuce rastliny strielaju iba vtedy, ked su na tom istom riadku ako nejaky zombie
                     if (r instanceof StrielajucaRastlina) {
-                        if (pocetZombieVRiadkoch[r.getCisloRiadku()] > 0) {
-                            ((StrielajucaRastlina)r).setMaStrielat(true);
-                        } else {
-                            ((StrielajucaRastlina)r).setMaStrielat(false);
-                        }
+                        ((StrielajucaRastlina)r).setMaStrielat(pocetZombieVRiadkoch[r.getCisloRiadku()] > 0);
                     }
 
                     // ak sa prekryvaju, zombie zacne jest rastlinu

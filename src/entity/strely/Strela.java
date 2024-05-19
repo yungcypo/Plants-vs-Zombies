@@ -9,7 +9,7 @@ import hra.Hra;
  * Reprezentuje strelu
  */
 public abstract class Strela extends Entita implements IHybajucaSaEntita {
-    private StrielajucaRastlina parent;
+    private final StrielajucaRastlina parent;
 
     /**
      * Konstruktor pre potomkov triedy

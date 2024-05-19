@@ -9,8 +9,8 @@ import java.util.ArrayList;
  * Reprezentuje Zombie s Ciapkou - ZombieKuzelka alebo ZombieVedro
  */
 public abstract class ZombieSCiapkou extends Zombie {
-    private ArrayList<DataObrazku> dataObrazkuCiapky = new ArrayList<>();
-    private Obrazok ciapka;
+    private final ArrayList<DataObrazku> dataObrazkuCiapky = new ArrayList<>();
+    private final Obrazok ciapka;
     private String nazovAnimacieCiapky;
     private int pocetObrazkovCiapky;
     private boolean maCiapku = true;

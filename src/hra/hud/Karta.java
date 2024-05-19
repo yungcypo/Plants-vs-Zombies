@@ -9,19 +9,19 @@ import hra.IKlikatelne;
  * Predstavuje jednotlive karty na HUD, pomocou ktorych sa pridavaju rastliny
  */
 public class Karta implements IKlikatelne {
-    private int x;
-    private int y;
-    private int sirkaZvyraznenia;
-    private TypKarty typ;
-    private String cesta;
-    private int cena;
-    private Obrazok obrazok;
-    private Obdlznik zvyraznenieObdlznik;
+    private final int x;
+    private final int y;
+    private final int sirkaZvyraznenia;
+    private final TypKarty typ;
+    private final String cesta;
+    private final int cena;
+    private final Obrazok obrazok;
+    private final Obdlznik zvyraznenieObdlznik;
     private boolean zvyraznena = false;
-    private int dlzkaNacitavania;
+    private final int dlzkaNacitavania;
     private int percentoNacitania = 100;
-    private Obdlznik nacitavatko;
-    private Obrazok tmavyObrazok;
+    private final Obdlznik nacitavatko;
+    private final Obrazok tmavyObrazok;
     private boolean mozeBytKliknuta = false;
 
     /**

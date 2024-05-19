@@ -36,20 +36,20 @@ import java.util.Collections;
  */
 public class Hra {
     private static Hra hra;
-    private Manazer manazer;
-    private HernaPlocha hernaPlocha;
-    private HUD hud;
-    private Kolizie kolizie;
-    private ArrayList<Zombie> zombies;
-    private ArrayList<Rastlina> rastliny;
-    private ArrayList<Kosacka> kosacky;
-    private ArrayList<Strela> strely;
-    private ArrayList<Slnko> slnka;
+    private final Manazer manazer;
+    private final HernaPlocha hernaPlocha;
+    private final HUD hud;
+    private final Kolizie kolizie;
+    private final ArrayList<Zombie> zombies;
+    private final ArrayList<Rastlina> rastliny;
+    private final ArrayList<Kosacka> kosacky;
+    private final ArrayList<Strela> strely;
+    private final ArrayList<Slnko> slnka;
     private int hracoveSlniecka = 50;
     private int cas = 0;
-    private String nazovSuboru;
-    private ArrayList<ZombieData> zombiesNaPridanie;
-    private BlokTextu text;
+    private final String nazovSuboru;
+    private final ArrayList<ZombieData> zombiesNaPridanie;
+    private final BlokTextu text;
     private int zombiesCelkovo;
     private int zombiesZniceni = 0;
 
